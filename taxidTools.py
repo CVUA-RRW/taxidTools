@@ -207,7 +207,7 @@ class Taxdump(object):
 		Arguments:
 		----------
 		name: str
-			Organism name according to the Taxdump definition files
+			Organism name according to the Taxdump definition files (Case-sensitive)
 			
 		Returns
 		-------
@@ -533,7 +533,6 @@ class GbToTaxid(ReadOnlyDict):
 			Path to translation file, assumes that accessions are in the first field and taxid in the second
 		"""
 		super().__init__(self)
-		#print("Parsing {}, be patient...".format(taxidfile))
 		with open(taxidfile, 'r') as trans:
 			for line in trans:
 				l = [item.strip() for item in line.split()]
