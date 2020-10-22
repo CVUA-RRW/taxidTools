@@ -4,13 +4,12 @@ Provides the Taxdump class to load ncbi taxonomy dumpfiles and work with taxids 
 Supports conversion of taxid numbers to Rank or names, finding lowest common ancestor from a list of taxids, recovering full lineages.
 """
 
-
-__version__ = "1.2.4"
 __author__ = "Gregoire Denay"
 __email__ = "gregoire.denay@cvua-rrw.de"
 
 
 from collections import UserDict
+
 
 FULL_TAXONOMY = ('forma',
 				 'varietas',
@@ -70,7 +69,7 @@ class ReadOnlyDict(UserDict):
 		Arguments:
 		----------
 		mapping: dict
-			Dict to populate the object
+			Dict to populate the object 
 		"""
 		super().__init__()
 		if mapping:
@@ -90,7 +89,7 @@ class ReadOnlyDict(UserDict):
 	setdefault = __readonly__
 	del __readonly__
 	
-	
+
 class Taxdump(object):
 	"""
 	Reads in taxdump files and provides methods to work on lineages.
@@ -152,7 +151,7 @@ class Taxdump(object):
 			Iterator of ranks from the lowest rank to the highest
 		"""
 		self.want_ranks= ranks
-		
+	
 	def getName(self, taxid):
 		"""
 		Get taxid name
@@ -200,6 +199,37 @@ class Taxdump(object):
 			Parent taxid
 		"""
 		return self._data[taxid][2]
+		
+	def getTaxid(self, name):
+		"""
+		Retrieve a list of taxid associated to a given Organism name
+		
+		Arguments:
+		----------
+		name: str
+			Organism name according to the Taxdump definition files
+			
+		Returns
+		-------
+		list:
+			list of associated Taxids
+		"""
+		try:
+			return self._flipped[name]
+			
+		except AttributeError:
+			# if the flipped dict doesn't exist, create it
+			flipped = {}
+			for key, value in self._data.items():
+				# The flipped dictionnary will not contain rank and parent informations!
+				if value not in flipped:
+					flipped[value[0]] = [key]
+				else:
+					flipped[value[0]].append[key]
+			# Make the flipped dictionnary Read-only
+			self._flipped = ReadOnlyDict(flipped)
+			# get taxid from name
+			return self._flipped[name]
 		
 	def getLineageAsDict(self, taxid, want_ranks=None, asNames=False):
 		"""
@@ -467,7 +497,7 @@ class Taxdump(object):
 			for r in list_of_ranks[::-1][1:]:
 				print("{}|_{}".format(" "*indent, r))
 				indent += 1
-
+	
 	def __len__(self):
 		return len(self._data)
 		
@@ -479,6 +509,12 @@ class Taxdump(object):
 	
 	def keys(self):
 		return self._data.keys()
+		
+	def values(self):
+		return self._data.values()
+		
+	def items(self):
+		return self._data.items()
 	
 class GbToTaxid(ReadOnlyDict):
 	"""
@@ -508,7 +544,6 @@ class GbToTaxid(ReadOnlyDict):
 		
 	def __exit__(self, exc_type, exc_value, exc_traceback):
 		pass
-	
 
 def _parse_dump(filepath):
 	"""
