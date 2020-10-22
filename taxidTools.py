@@ -4,8 +4,8 @@ Provides the Taxdump class to load ncbi taxonomy dumpfiles and work with taxids 
 Supports conversion of taxid numbers to Rank or names, finding lowest common ancestor from a list of taxids, recovering full lineages.
 """
 
+
 __author__ = "Gregoire Denay"
-__email__ = "gregoire.denay@cvua-rrw.de"
 
 
 from collections import UserDict
@@ -57,10 +57,10 @@ LINNE_TAXONOMY = ('species',
 				  )
 
 
-class ReadOnlyDict(UserDict):
+class _ReadOnlyDict(UserDict):
 	"""
 	Readonly subclass of UserDict. 
-	Can still be updated by using ReadOnlyDict.data[key] = val (Should only be used for object initialization)
+	Can still be updated by using _ReadOnlyDict.data[key] = val (Should only be used for object initialization)
 	"""
 	def __init__(self, mapping=None):
 		"""
@@ -112,7 +112,7 @@ class Taxdump(object):
 		"""
 		# useful data will be stored in a dict as {taxid: (name, rank, parent_taxid)} 
 		# the aim here is to keep data storage at a minimum to use as little memory as nescessary without the hurdle of indexing the files
-		self._data = ReadOnlyDict()
+		self._data = _ReadOnlyDict()
 		
 		# Parsing name file
 		tmp_name = {} # temporary storage for taxid-name pairs
@@ -227,7 +227,7 @@ class Taxdump(object):
 				else:
 					flipped[value[0]].append[key]
 			# Make the flipped dictionnary Read-only
-			self._flipped = ReadOnlyDict(flipped)
+			self._flipped = _ReadOnlyDict(flipped)
 			# get taxid from name
 			return self._flipped[name]
 		
@@ -516,7 +516,7 @@ class Taxdump(object):
 	def items(self):
 		return self._data.items()
 	
-class GbToTaxid(ReadOnlyDict):
+class GbToTaxid(_ReadOnlyDict):
 	"""
 	Read-only dictionnary to translate Genbank accession numbers to Taxids.
 	Can (should?) be used with :

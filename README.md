@@ -14,7 +14,7 @@ Taxidtools might be released as a python package in the future.
 
 ## Documentation
 
-TODO
+Please refer to the acoompanying Documentation.html document.
 
 ## Contributing
 
