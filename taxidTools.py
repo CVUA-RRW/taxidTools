@@ -5,7 +5,7 @@ Supports conversion of taxid numbers to Rank or names, finding lowest common anc
 """
 
 
-__version__ = "1.2.3"
+__version__ = "1.2.4"
 __author__ = "Gregoire Denay"
 __email__ = "gregoire.denay@cvua-rrw.de"
 
@@ -377,8 +377,9 @@ class Taxdump(object):
 		---------
 		taxid: str
 			Taxonomic identification number
-		want_ranks: list
+		want_ranks: list of ranks or "full"
 			List of wanted taxonomic ranks from the lowest node to the highest node
+			If providing "full" will return all ranks
 		asNames: bool
 			Report taxonomy with node names (default reports taxid)
 			
@@ -392,9 +393,13 @@ class Taxdump(object):
 		children = []
 
 		for key in self._data.keys():
-			if taxid in self.getFullLineage(key).values():
-				lineage = self.getLineageAsDict(key, want_ranks=want_ranks, asNames=asNames)
-				children.append(lineage)
+			fullLin = self.getFullLineage(key)
+			if taxid in fullLin.values():
+				if want_ranks=="full":
+					children.append(fullLin)
+				else:
+					lineage = self.getLineageAsDict(key, want_ranks=want_ranks, asNames=asNames)
+					children.append(lineage)
 				
 		return children
 		
@@ -441,7 +446,7 @@ class Taxdump(object):
 	@staticmethod	
 	def _filterLineage(dict_tax, want_ranks):
 		"""
-		Filter a dict to return only entries at the wanted ranks. Missing ranks are replaced bvy empty strings.
+		Filter a dict to return only entries at the wanted ranks. Missing ranks are replaced by empty strings.
 		"""
 		d = {}
 		for rank in want_ranks:
@@ -471,6 +476,9 @@ class Taxdump(object):
 		
 	def __iter__(self):
 		yield from self._data.keys()
+	
+	def keys(self):
+		return self._data.keys()
 	
 class GbToTaxid(ReadOnlyDict):
 	"""
