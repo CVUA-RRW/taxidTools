@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-Provides the Taxdump class to load ncbi taxonomy dumpfiles and work with taxids and lineages.
-Supports conversion of taxid numbers to Rank or names, finding lowest common ancestor from a list of taxids, recovering full lineages.
+Provides the Taxdump class to work with the NCBI Taxonomy informations from the taxdump files.
+Supports conversion of taxid numbers to rank or names, finding parents, retrieving ancestry and finding lowest common 
+ancestor from a list of taxids.
 """
 
 
@@ -9,52 +11,6 @@ __author__ = "Gregoire Denay"
 
 
 from collections import UserDict
-
-
-FULL_TAXONOMY = ('forma',
-				 'varietas',
-				 'subspecies',
-				 'species',
-				 'species subgroup', 
-				 'species group', 
-				 #'series', Inconsistent use between botany and zoology
-				 #'subsection', Inconsistent use between botany and Zoology
-				 #'section', Inconsistent use between botany and Zoology
-				 'subgenus',
-				 'genus',
-				 'subtribe',
-				 'tribe',
-				 'subfamily',
-				 'family',
-				 'superfamily',
-				 'parvorder',
-				 'infraorder',
-				 'suborder',
-				 'order',
-				 'superorder',
-				 'subcohort',
-				 'cohort',
-				 'infraclass',
-				 'subclass'
-				 'class',
-				 'superclass',
-				 'subphylum',
-				 'phylum',
-				 'superphylum',
-				 'subkingdom',
-				 'kingdom',
-				 'superkingdom',
-				 )
-				 
-LINNE_TAXONOMY = ('species', 
-				  'genus', 
-				  'family', 
-				  'order', 
-				  'class', 
-				  'phylum', 
-				  'kingdom', 
-				  'superkingdom',
-				  )
 
 
 class _ReadOnlyDict(UserDict):
@@ -93,11 +49,9 @@ class _ReadOnlyDict(UserDict):
 class Taxdump(object):
 	"""
 	Reads in taxdump files and provides methods to work on lineages.
-	
-	Methods returning taxonomic lineages will only return ranks based on the currently in use taxonomy. This is either defined by passing a list of
-	ranks during object creation, modifying it through the setTaxonomy() method or directly as an argument of the methods.
 	"""
-	def __init__(self, rankedlineage_dmp, nodes_dmp, want_ranks=None):
+	
+	def __init__(self, rankedlineage_dmp, nodes_dmp):
 		"""
 		Create a Taxdump object.
 		
@@ -107,8 +61,6 @@ class Taxdump(object):
 			Path to rankedlineage.dmp
 		nodes_dmp: str
 			Path to nodes.dmp
-		want_ranks: list or tuple 
-			Iterator of ranks as defined by the NCBI taxonomy nomenclature. Ordered from the lowest to the highest rank.
 		"""
 		# useful data will be stored in a dict as {taxid: (name, rank, parent_taxid)} 
 		# the aim here is to keep data storage at a minimum to use as little memory as nescessary without the hurdle of indexing the files
@@ -130,28 +82,15 @@ class Taxdump(object):
 			parent = line[1]
 			self._data.data[taxid] = (name, rank, parent)
 			
-		# defining taxonomy 
-		self.taxonomy_full = FULL_TAXONOMY
-		self.taxonomy_linne = LINNE_TAXONOMY
-		
-		if want_ranks:
-			self.want_ranks = want_ranks
-		else:
-			self.want_ranks = self.taxonomy_linne
+	def _check_input(func):
+		def wrapper(self, *args, **kwargs):
+			if isinstance(args[0], list):
+				return [func(self, e, *args[1:], **kwargs) for e in args[0]]
+			else:
+				return func(self, *args, **kwargs)
+		return wrapper
 	
-	def taxonomyInUse(self):
-		"Display the taxonomic ranks currently in use"
-		return self._taxonomyView(self.want_ranks)
-	
-	def setTaxonomy(self, ranks):
-		"""
-		Sets the default taxonomy ranks
-		
-		ranks: list or tuple
-			Iterator of ranks from the lowest rank to the highest
-		"""
-		self.want_ranks= ranks
-	
+	@_check_input
 	def getName(self, taxid):
 		"""
 		Get taxid name
@@ -168,6 +107,7 @@ class Taxdump(object):
 		"""
 		return self._data[taxid][0]
 		
+	@_check_input
 	def getRank(self, taxid):
 		"""
 		Get taxid rank
@@ -182,8 +122,9 @@ class Taxdump(object):
 		str:
 			node rank
 		"""
-		return self._data[taxid][1]		
+		return self._data[taxid][1]
 	
+	@_check_input
 	def getParent(self, taxid):
 		"""
 		Retrieve parent taxid 
@@ -199,7 +140,8 @@ class Taxdump(object):
 			Parent taxid
 		"""
 		return self._data[taxid][2]
-		
+	
+	@_check_input
 	def getTaxid(self, name):
 		"""
 		Retrieve a list of taxid associated to a given Organism name
@@ -218,286 +160,129 @@ class Taxdump(object):
 			return self._flipped[name]
 			
 		except AttributeError:
-			# if the flipped dict doesn't exist, create it
-			flipped = {}
-			for key, value in self._data.items():
-				# The flipped dictionnary will not contain rank and parent informations!
-				if value not in flipped:
-					flipped[value[0]] = [key]
-				else:
-					flipped[value[0]].append[key]
-			# Make the flipped dictionnary Read-only
-			self._flipped = _ReadOnlyDict(flipped)
-			# get taxid from name
+			self._flip_dict()
 			return self._flipped[name]
-		
-	def getLineageAsDict(self, taxid, want_ranks=None, asNames=False):
+			
+	@_check_input
+	def getAncestry(self, taxid):
 		"""
-		Get taxid ancestry
+		Retrieve the ancestry of the given taxid
 		
-		Arguments
-		---------
+		Arguments:
+		----------
 		taxid: str
 			Taxonomic identification number
-		want_ranks: list
-			List of wanted taxonomic ranks from the lowest node to the highest node
-		asNames: bool
-			Report taxonomy with node names (default reports taxid)
 		
-		Returns
-		-------
-		dict:
-			Dictionnary of taxonomy ranks and values.
-			Note that missing ranks will be omitted.
-		"""
-		want_ranks = want_ranks or self.want_ranks
-		
-		fulllineage = self.getFullLineage(taxid)
-		d = self._filterLineage(fulllineage, want_ranks)
-		
-		if asNames:
-			for key, val in d.items():
-				if val == '':
-					d[key] = ''
-				else: 
-					d[key]=self.getName(val)
-				
-		return d
-		
-	def getLineageAsList(self, taxid, want_ranks=None, asNames=False):
-		"""
-		Get taxid ancestry
-		
-		Arguments
-		---------
-		taxid: str
-			Taxonomic identification number
-		want_ranks: list
-			List of wanted taxonomic ranks from the lowest node to the highest node
-		asNames: bool
-			Report taxonomy with node names (default reports taxid)
-		
-		Returns
-		-------
+		Returns:
+		--------
 		list:
-			List of taxid values from the lowest to the highest node.
-			Note that missing ranks will be returned as an empty string
+			list of ancestors (from the lowest to the highest node)
 		"""
-		want_ranks = want_ranks or self.want_ranks
+		lineage=[taxid]
+		parent = self.getParent(taxid)
 		
-		l = []
-		lineage = self.getLineageAsDict(taxid, want_ranks=want_ranks, asNames=asNames)
-		for rank in want_ranks:
-			l.append(lineage[rank])
-		return l
+		while parent != '1':
+			lineage.append(parent)
+			parent = self.getParent(parent)
 		
-	def getLineageAsView(self, taxid, want_ranks=None):
+		lineage.append('1')
+		
+		return lineage
+	
+	@_check_input
+	def isAncestorOf(self, taxid, child):
 		"""
-		Display taxid ancestry
+		Test if taxid is an ancestor of child
 		
-		Arguments
-		---------
+		Arguments:
+		----------
 		taxid: str
 			Taxonomic identification number
-		want_ranks: list
-			List of wanted taxonomic ranks from the lowest node to the highest node
-		asNames: bool
-			Report taxonomy with node names (default reports taxid)
+			
+		child: str
+			Taxonomic identification number
+		
+		Returns:
+		--------
+		bool
 		"""
-		want_ranks = want_ranks or self.want_ranks
+		return taxid in self.getAncestry(child)[1:]
+	
+	@_check_input
+	def isDescendantOf(self, taxid, parent):
+		"""
+		Test if taxid is an descendant of parent
 		
-		l=[]
-		for key, val in self.getLineageAsDict(taxid, want_ranks=want_ranks).items():
-			l.append("{} ({}: {})".format(self.getName(val), key, val))
-		return self._taxonomyView(l)
+		Arguments:
+		----------
+		taxid: str
+			Taxonomic identification number
+			
+		parent: str
+			Taxonomic identification number
 		
-	def lowestCommonNode(self, taxid_list, want_ranks=None):
+		Returns:
+		--------
+		bool
+		"""
+		return parent in self.getAncestry(taxid)[1:]
+		
+	def lowestCommonNode(self, taxid_list):
 		"""
 		Get lowest common node of a bunch of taxids
 		
 		Arguments
 		---------
-		taxid: str
-			Taxonomic identification number
-		want_ranks: list
-			List of wanted taxonomic ranks from the lowest node to the highest node
+		taxid_list: list
+			list of taxonomic identification numbers (as str)
 			
 		Returns
 		-------
 		str: 
 			Lowest common taxid
 		"""
-		want_ranks = want_ranks or self.want_ranks
+		# Generate a top-down (highest node first) list of all ancestries
+		ancestries = [self.getAncestry(taxid)[::-1] for taxid in taxid_list]
 		
-		# Collect input ranks
-		ranks = []
-		for taxid in taxid_list:
-			rank = self.getRank(taxid)
+		# iterate over ancestries to find the first mismatch
+		i = 0
+		size = 0
+		while size <= 1:
+			size = len(set(l[i] for l in ancestries))
+			i += 1
 			
-			if rank in want_ranks:
-				ranks.append(rank)
-			
-			# If the rank is not in the want rank list, find all the ranks in the lineage and take the lowest one
-			else:
-				# Getting the list of all ranks in the lineage
-				rank_lineage = self.getFullLineage(taxid).keys()
-				indices = []
-				# finding rank index in want taxonomy ## BUG
-				for r in rank_lineage:
-					try:
-						indices.append(want_ranks.index(r))
-					except ValueError:
-						pass
-				# recovering lowest rank
-				ranks.append(want_ranks[min(indices)])
+		# return taxid from previous node
+		i -= 2 # i is incremented in the last while loop
+		lca = set(l[i] for l in ancestries)
+		return lca.pop()
 		
-		# Recover lowest possible rank determination
-		indices = []
-		for rank in set(ranks):
-			indices.append(want_ranks.index(rank))
-		tax_depth= want_ranks[max(indices):]
-		
-		# Creating a list of lineage lists, ranks are in the same order
-		lineages = []
-		for taxid in taxid_list:
-			lineages.append(self.getLineageAsList(taxid, tax_depth))
-		
-		# Use zip to create list of taxid by rank and set to check the number of different entries
-		# The rank variable keeps track of the rank index
-		rank = 0
-		for ranked in zip(*lineages):
-			if len(set(tuple(ranked))) == 1: 
-				break
-			else:
-				rank += 1
-				
-		return lineages[0][rank]
-		
-	def getFullLineage(self, taxid):
+	def filterRanks(self, taxid_list, ranks_list):
 		"""
-		Get the full lineage of a taxid
+		Filters a list of taxids to specific ranks
 		
 		Arguments
-		---------
-		taxid: str
-			Taxonomic identification number
+		----------
+		taxid_list: list
+			list of taxonomic identification numbers (as str)
+		ranks_list: list
+			List of ranks to return
 		
 		Returns
 		-------
-		dict: 
-			Full taxonomic lineage with ranks as keys
+		list:
+			list of taxids
 		"""
-		lineage = {self.getRank(taxid): taxid}
+		return [e for e in taxid_list if self.getRank(e) in ranks_list]
 		
-		parent = self.getParent(taxid)
-		prank = self.getRank(parent)
-		
-		while parent != '1': # taxid 1 is root 
-			lineage[prank] = parent
-			parent = self.getParent(parent)
-			prank = self.getRank(parent)
-		
-		return lineage
-		
-	def getChildren(self, taxid, want_ranks=None, asNames=False):
-		"""
-		Find the descendants of a taxonomic node
-		
-		Arguments
-		---------
-		taxid: str
-			Taxonomic identification number
-		want_ranks: list of ranks or "full"
-			List of wanted taxonomic ranks from the lowest node to the highest node
-			If providing "full" will return all ranks
-		asNames: bool
-			Report taxonomy with node names (default reports taxid)
-			
-		Returns
-		-------
-		list of dicts:
-			List of lineages as a dictionnary. Each downstream node will return a full lineage.
-		"""
-		want_ranks = want_ranks or self.want_ranks
-		
-		children = []
+	def _flip_dict(self):
+		"Creates a flipped dictionnary in the form {'name': 'taxid'}"
+		flipped = {}
+		for key, value in self._data.items():
+			# The flipped dictionnary will not contain rank and parent informations!
+			flipped[value[0]] = key
+		# Make the flipped dictionnary Read-only
+		self._flipped = _ReadOnlyDict(flipped)
 
-		for key in self._data.keys():
-			fullLin = self.getFullLineage(key)
-			if taxid in fullLin.values():
-				if want_ranks=="full":
-					children.append(fullLin)
-				else:
-					lineage = self.getLineageAsDict(key, want_ranks=want_ranks, asNames=asNames)
-					children.append(lineage)
-				
-		return children
-		
-	def groupByRank(self, taxid_list, rank, silent=True):
-		"""
-		Cluster a list of taxid at the given rank.
-		
-		Arguments
-		---------
-		taxid_list: list of str
-			List of taxid to cluster
-		rank: str
-			rank to which the taxid should be clustered
-		silent: bool
-			if False, will raise a KeyError if a taxid does not have a parent at the wanted rank.
-			if True, taxids that cannot be stratified will be grouped together
-			
-		Returns
-		-------
-		dict:
-			dict of clusters where keys are the nodes at the clustering rank and values are list of taxid under that node			
-		"""
-		d= {}
-		for taxid in taxid_list:
-			lineage = self.getFullLineage(taxid)
-			
-			# checking if rank is in the lineage
-			try: 
-				cluster = lineage[rank]
-			except KeyError:
-				if silent: 
-					cluster = "unassigned"
-				else: 
-					raise KeyError("Taxid: '{}' does not have a parent with the rank '{}'".format(taxid, rank))
-			
-			# appending taxid to cluster
-			try:
-				d[cluster].append(taxid)
-			except KeyError:
-				d[cluster]= [taxid]
-		
-		return d
-		
-	@staticmethod	
-	def _filterLineage(dict_tax, want_ranks):
-		"""
-		Filter a dict to return only entries at the wanted ranks. Missing ranks are replaced by empty strings.
-		"""
-		d = {}
-		for rank in want_ranks:
-			try: 
-				d[rank] = dict_tax[rank]
-			except KeyError:
-				d[rank] = ""
-		return d
-
-	@staticmethod
-	def _taxonomyView(list_of_ranks):
-		"""
-		Pretty view of taxonomy
-		"""
-		print(list_of_ranks[-1])
-		if len(list_of_ranks) >1: 
-			indent = 1
-			for r in list_of_ranks[::-1][1:]:
-				print("{}|_{}".format(" "*indent, r))
-				indent += 1
-	
 	def __len__(self):
 		return len(self._data)
 		
@@ -516,37 +301,10 @@ class Taxdump(object):
 	def items(self):
 		return self._data.items()
 	
-class GbToTaxid(_ReadOnlyDict):
-	"""
-	Read-only dictionnary to translate Genbank accession numbers to Taxids.
-	Can (should?) be used with :
-	with GbToTaxid("acc2taxid_file.tsv") as gb2tax:
-		# do something
-	"""
-	def __init__(self, taxidfile):
-		"""
-		Create a translator
-		
-		Arguments
-		---------
-		taxidfile: str
-			Path to translation file, assumes that accessions are in the first field and taxid in the second
-		"""
-		super().__init__(self)
-		with open(taxidfile, 'r') as trans:
-			for line in trans:
-				l = [item.strip() for item in line.split()]
-				self.data[l[0]] = l[1]
-		
-	def __enter__(self):
-		return self
-		
-	def __exit__(self, exc_type, exc_value, exc_traceback):
-		pass
-
+	
 def _parse_dump(filepath):
 	"""
-	Dump file line iterator, returns a list of fields
+	Dump file line iterator, returns a yields of fields
 	"""
 	with open(filepath, 'r') as dmp:
 		for line in dmp:
