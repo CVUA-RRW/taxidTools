@@ -1,3 +1,4 @@
 __pycache__/
 taxidTools_backup.py
 tests.py
+.gitignore

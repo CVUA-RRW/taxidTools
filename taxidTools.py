@@ -241,6 +241,10 @@ class Taxdump(object):
 		str: 
 			Lowest common taxid
 		"""
+		# if only one accession, LCA is straigthforward
+		if len(taxid_list) == 1:
+			return taxid_list[0]
+		
 		# Generate a top-down (highest node first) list of all ancestries
 		ancestries = [self.getAncestry(taxid)[::-1] for taxid in taxid_list]
 		
@@ -248,9 +252,17 @@ class Taxdump(object):
 		i = 0
 		size = 0
 		while size <= 1:
-			size = len(set(l[i] for l in ancestries))
-			i += 1
-			
+			try:
+				size = len(set(l[i] for l in ancestries))
+				i += 1
+				
+			# If one accession is an ancestor of all others, it will run out of entries and raise an IdenxError
+			# Then the LCA is the last index , return it from here
+			except IndexError:
+				i -= 1
+				lca = set(l[i] for l in ancestries)
+				return lca.pop()
+				
 		# return taxid from previous node
 		i -= 2 # i is incremented in the last while loop
 		lca = set(l[i] for l in ancestries)
