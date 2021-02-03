@@ -1,0 +1,9 @@
+README.md
+setup.py
+taxidTools/__init__.py
+taxidTools/taxidTools.py
+taxidTools.egg-info/PKG-INFO
+taxidTools.egg-info/SOURCES.txt
+taxidTools.egg-info/dependency_links.txt
+taxidTools.egg-info/requires.txt
+taxidTools.egg-info/top_level.txt
