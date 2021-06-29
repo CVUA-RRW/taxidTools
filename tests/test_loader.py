@@ -1,6 +1,6 @@
 import os
 import unittest
-from .context import taxidTools
+import taxidTools
 
 
 current_path = os.path.dirname(__file__)

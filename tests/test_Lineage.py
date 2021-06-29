@@ -1,5 +1,5 @@
 import unittest
-from .context import taxidTools
+import taxidTools
 
 class TestLineage(unittest.TestCase):
     
