@@ -1,7 +1,6 @@
 import unittest
 from .context import taxidTools
 
-
 class TestComplexTree(unittest.TestCase):
     # Test Tree
     #

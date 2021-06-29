@@ -12,12 +12,11 @@ class Node(object):
     """
     Stores node information.
     """
-   
     def __init__(self, 
                  taxid: Union[str,int], 
-                 name: Optional[str]=None, 
-                 rank: Optional[str]=None, 
-                 parent: Optional[str]=None) -> None:
+                 name: Optional[str] = None, 
+                 rank: Optional[str] = None, 
+                 parent: Optional[str] = None) -> None:
         """
         Create a Node object
         
@@ -33,10 +32,12 @@ class Node(object):
             The parent Node object
         """
         self._children = []
-        self.name = name
-        self.rank = rank
-        self.parent = parent
-        self.taxid = str(taxid)
+        self._name = name
+        self._rank = rank
+        self._parent = parent
+        self._taxid = str(taxid)
+        
+        self._updateParent()
     
     # Property methods
     @property
