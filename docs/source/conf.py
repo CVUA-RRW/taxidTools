@@ -33,7 +33,8 @@ release = '2.0.0'
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.napoleon',
               'sphinx_autodoc_typehints',
-              'myst_parser']
+              'myst_parser',
+              'sphinx.ext.githubpages',]
 
 
 source_suffix = {

@@ -1,40 +1,44 @@
 # This workflow will build sphinx documentation and push it to gh-page
-# For more information see: https://github.com/marketplace/actions/sphinx-build
+# From: https://blog.flozz.fr/2020/09/21/deployer-automatiquement-sur-github-pages-avec-github-actions/
 
-name: Build doc and push
+
+name: "Build and deploy Github pages"
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  build:
   
+  build-and-deploy:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v1
-    - uses: ammaraskar/sphinx-action@master
-      with:
-        docs-folder: "docs/"
     
-    - name: Commit documentation changes
-      run: |
-        git clone https://github.com/ammaraskar/sphinx-action-test.git --branch gh-pages --single-branch gh-pages
-        cp -r docs/_build/html/* gh-pages/
-        cd gh-pages
-        touch .nojekyll
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add .
-        git commit -m "Update documentation" -a || true
-        # The above command will fail if no changes were present, so we ignore
-        # that.
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        branch: gh-pages
-        directory: gh-pages
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: "Checkout"
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      
+      - name: "Set up Python"
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+      
+      - name: "Install Python dependencies"
+        run: |
+          pip3 install setuptools
+          pip3 install sphinx sphinx-autodoc-typehints myst-parser
+
+      - name: "Build Sphinx Doc"
+        run: |
+          sphinx-apidoc -f -o docs/source taxidTools/
+          make -C docs html
+      
+      - name: "Deploy Github Pages"
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: build/html/
