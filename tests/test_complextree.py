@@ -70,7 +70,7 @@ class TestComplexTree(unittest.TestCase):
         self.assertEqual(self.txd.distance("11", "1"), 1)
         self.assertEqual(self.txd.distance("121", "22"), 5)
     
-    def test_listChildren(self):
+    def test_listDescendant(self):
         self.assertSetEqual(set(self.txd.listDescendant(1)),
                             set([self.node11, self.node12, self.node121, self.node122]))
         self.assertEqual(self.txd.listDescendant(11), [])

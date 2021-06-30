@@ -203,7 +203,7 @@ class Taxonomy(UserDict):
             taxid of the new root
         """
         new_root_node = self[str(new_root)]
-        nodes = self.listChildren(new_root)
+        nodes = self.listDescendant(new_root)
         
         new = Taxonomy()
         new._addNode(new_root_node)
