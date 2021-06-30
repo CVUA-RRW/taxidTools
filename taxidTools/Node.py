@@ -10,7 +10,9 @@ from typing import Union, Optional
 
 class Node(object):
     """
-    Stores node information.
+    Taxonomic Node
+    
+    Store information relative to a specific taxonomic node.
     """
     def __init__(self, 
                  taxid: Union[str,int], 
@@ -22,13 +24,13 @@ class Node(object):
         
         Parameters
         ---------
-        taxid: str or int
+        taxid: 
             Taxonomic identification number
-        name: str
+        name: 
             Node name
-        rank: str
+        rank: 
             Node rank
-        parent: Node
+        parent: 
             The parent Node object
         """
         self._children = []
@@ -42,22 +44,27 @@ class Node(object):
     # Property methods
     @property
     def taxid(self) -> str:
+        """Taxonomic identification number"""
         return self._taxid
     
     @property
     def name(self) -> str:
+        """Name of the taxonomic node"""
         return self._name
     
     @property
     def rank(self) -> str:
+        """Rank of the taxonomic node"""
         return self._rank
     
     @property
     def parent(self) -> str:
+        """Parent node"""
         return self._parent
     
     @property
     def children(self) -> list:
+        """Children nodes"""
         return self._children
     
     # Setter methods
@@ -75,6 +82,7 @@ class Node(object):
     
     @parent.setter
     def parent(self, parent: Node) -> None:
+        "Set parent node and update children attribute of parent node"
         if parent and parent.taxid != self.taxid: # root node as circular reference to self..
             assert isinstance(parent, Node)
             self._parent = parent
@@ -91,5 +99,4 @@ class Node(object):
             return f"Node object:\n\tTaxid: {self.taxid}\n\tName: {self.name}\n\tRank: {self.rank}\n\tParent: {self.parent.taxid}"
         else:
             return f"Node object:\n\tTaxid: {self.taxid}\n\tName: {self.name}\n\tRank: {self.rank}\n\tParent: {self.parent}"
-    
     

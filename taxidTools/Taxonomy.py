@@ -1,5 +1,5 @@
 """
-Taxdump object definition
+Taxonomy object definition
 """
 
 
@@ -10,11 +10,10 @@ from .Node import Node
 from .Lineage import Lineage
 
 
-class Taxdump(UserDict):
+class Taxonomy(UserDict):
     """
-    Store Taxdump nodes
+    Store Taxonomy nodes
     """
-   
     def _addNode(self, node: Node) -> None:
         self[node.taxid] = node
     
@@ -24,13 +23,8 @@ class Taxdump(UserDict):
         
         Parameters
         ----------
-        taxid: str or int
+        taxid: 
             Taxonomic identification number
-        
-        Returns
-        -------
-        str
-            node name
         """
         return self[str(taxid)].name
     
@@ -40,31 +34,27 @@ class Taxdump(UserDict):
         
         Parameters
         ----------
-        taxid: str or int
+        taxid: 
             Taxonomic identification number
-        
-        Returns
-        -------
-        str
-            node rank
         """
         return self[str(taxid)].rank
     
-    def getParent(self, taxid: Union[str,int]) -> str:
+    def getParent(self, taxid: Union[str,int]) -> Node:
         """
-        Retrieve parent taxid
+        Retrieve parent Node
         
         Parameters
         ----------
-        taxid: str or int
+        taxid: 
             Taxonomic identification number
-        
-        Returns
-        -------
-        str
-            Parent taxid
         """
         return self[str(taxid)].parent
+    
+    def getChildren(self, taxid: Union[str, int]) -> list[Node]:
+        """
+        Retrieve the children Nodes
+        """
+        return self[str(taxid)].children
     
     def getAncestry(self, taxid: Union[str,int]) -> Lineage:
         """
@@ -72,13 +62,8 @@ class Taxdump(UserDict):
         
         Parameters
         ----------
-        taxid: str or int
+        taxid: 
             Taxonomic identification number
-        
-        Returns
-        -------
-        Lineage
-            List of ancestors (from the lowest to the highest node)
         """
         return Lineage(self[str(taxid)])
     
@@ -88,15 +73,11 @@ class Taxdump(UserDict):
         
         Parameters
         ----------
-        taxid: str or int
+        taxid: 
             Taxonomic identification number
         
         child: str or int
             Taxonomic identification number
-        
-        Returns
-        -------
-        bool
         """
         if str(taxid) == str(child):
             return False
@@ -110,15 +91,11 @@ class Taxdump(UserDict):
         
         Parameters
         ----------
-        taxid: str or int
+        taxid: 
             Taxonomic identification number
         
         parent: str or int
             Taxonomic identification number
-        
-        Returns
-        -------
-        bool
         """
         if str(taxid) == str(parent):
             return False
@@ -132,16 +109,11 @@ class Taxdump(UserDict):
         
         Parameters
         ----------
-        taxid_list: list
+        taxid_list: 
             list of taxonomic identification numbers
-        min_consensus: float
+        min_consensus: 
             minimal consensus level, between 0.5 and 1.
             Note that a minimal consensus of 1 will return the same result as `lastCommonNode()`
-        
-        Returns
-        -------
-        str
-            Consensus taxid
         """
         # Consensus under 50% is ambiguous
         if min_consensus <= 0.5 or min_consensus > 1:
@@ -174,12 +146,8 @@ class Taxdump(UserDict):
         
         Parameters
         ----------
-        taxid_list: list
+        taxid_list: 
             list of taxonomic identification numbers
-        Returns
-        -------
-        str
-            Lowest common taxid
         """
         return self.consensus(taxid_list, 1)
     
@@ -189,16 +157,11 @@ class Taxdump(UserDict):
         
         Parameters
         ----------
-        taxid1: str or int
+        taxid1: 
             Taxonomic identification number
         
-        taxid2: str or int
+        taxid2: 
             Taxonomic identification number
-        
-        Returns
-        -------
-        int
-            Distance value
         """
         lca = self.lca([taxid1, taxid2])
         
@@ -208,19 +171,14 @@ class Taxdump(UserDict):
         
         return d1 + d2 - 2 * dlca
     
-    def listChildren(self, taxid: Union[str, int]) -> list:
+    def listDescendant(self, taxid: Union[str, int]) -> list[Node]:
         """
         List all descendant of node
         
         Parameters
         ----------
-        taxid: str or int
+        taxid: 
             Taxonomic identification number
-        
-        Returns
-        -------
-        list
-            List of all descendant nodes 
         """
         current = self[str(taxid)].children
         next = flatten([child.children for child in current])
@@ -235,51 +193,39 @@ class Taxdump(UserDict):
         return all
     
     
-    def subtree(self, new_root: Union[str, int]) -> Taxdump:
+    def subtree(self, new_root: Union[str, int]) -> Taxonomy:
         """
         Returns a sutree with the given taxid as new root.
         
         Parameters
         ----------
-        new_root: int or str
+        new_root: 
             taxid of the new root
-            
-        Returns
-        -------
-        Taxdump
-            A new Taxdump object
         """
         new_root_node = self[str(new_root)]
         nodes = self.listChildren(new_root)
         
-        new = Taxdump()
+        new = Taxonomy()
         new._addNode(new_root_node)
         
         for node in nodes:
             new._addNode(node)
         
         return new
-    
 
-flatten = lambda t: [item for sublist in t for item in sublist]
 
-def load_taxdump(nodes: str, rankedlineage: str) -> Taxdump:
+def load_taxdump(nodes: str, rankedlineage: str) -> Taxonomy:
     """
     Parse NCBI taxdump files
     
     Parameters
     ----------
-    nodes: str
+    nodes: 
         Path to the nodes.dmp file
-    rankedlineage: str
+    rankedlineage: 
         Path to the rankedlineage.dmp file
-    
-    Returns
-    -------
-    Taxdump
-        A taxdump object
     """
-    txd = Taxdump()
+    txd = Taxonomy()
     parent_dict = {}
     
     # Creating nodes
@@ -304,3 +250,5 @@ def _parse_dump(filepath: str) -> Iterator:
     with open(filepath, 'r') as dmp:
         for line in dmp:
             yield [item.strip() for item in line.split("|")]
+
+flatten = lambda t: [item for sublist in t for item in sublist]

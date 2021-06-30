@@ -40,7 +40,7 @@ class TestComplexTree(unittest.TestCase):
             "122" : self.node122
             }
             
-        self.txd = taxidTools.Taxdump(nodes)
+        self.txd = taxidTools.Taxonomy(nodes)
         
     
     def test_consens(self):
@@ -71,9 +71,9 @@ class TestComplexTree(unittest.TestCase):
         self.assertEqual(self.txd.distance("121", "22"), 5)
     
     def test_listChildren(self):
-        self.assertSetEqual(set(self.txd.listChildren(1)),
+        self.assertSetEqual(set(self.txd.listDescendant(1)),
                             set([self.node11, self.node12, self.node121, self.node122]))
-        self.assertEqual(self.txd.listChildren(11), [])
+        self.assertEqual(self.txd.listDescendant(11), [])
     
     def test_subtree(self):
         subtree = self.txd.subtree(1)

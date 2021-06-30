@@ -6,7 +6,7 @@ class TestTaxdump(unittest.TestCase):
     def setUp(self):
         self.parent = taxidTools.Node(taxid = 0, name = "root", rank = "root", parent = None)
         self.child = taxidTools.Node(taxid = 1, name = "child", rank = "child", parent = self.parent)
-        self.txd = taxidTools.Taxdump()
+        self.txd = taxidTools.Taxonomy()
         self.txd._addNode(self.child)
         self.txd._addNode(self.parent)
     

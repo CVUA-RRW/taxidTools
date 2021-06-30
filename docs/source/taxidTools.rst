@@ -20,10 +20,10 @@ taxidTools.Node module
    :undoc-members:
    :show-inheritance:
 
-taxidTools.Taxdump module
--------------------------
+taxidTools.Taxonomy module
+--------------------------
 
-.. automodule:: taxidTools.Taxdump
+.. automodule:: taxidTools.Taxonomy
    :members:
    :undoc-members:
    :show-inheritance:
