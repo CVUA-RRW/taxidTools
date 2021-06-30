@@ -1,8 +1,21 @@
 # Usage
 
+The easiest way to get started with tha package is todownload the 
+taxdump files from the NCBI FTP server and start python.
+
 ## Loading taxdump files
 
-load_taxdump
+Once you downlaoded the up-to-date taxdump files from the NCBI FTP server,
+you can load the full taxonomy as simply as:
+
+```python
+import taxidTools as txd
+
+nodes_dmp = "path/to/nodes.dmp"
+rankedlineage = "path/to/rankedlineage.dmp"
+
+tax = txd.load_taxdump(nodes_dmp, rankedlineage_dmp)
+```
 
 ## Retrieving node informations
 

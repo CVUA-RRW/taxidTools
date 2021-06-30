@@ -94,7 +94,7 @@ class Node(object):
         if self.parent:
             self.parent.children.append(self)
     
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         if self.parent:
             return f"Node object:\n\tTaxid: {self.taxid}\n\tName: {self.name}\n\tRank: {self.rank}\n\tParent: {self.parent.taxid}"
         else:

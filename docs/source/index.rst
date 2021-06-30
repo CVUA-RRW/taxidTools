@@ -6,7 +6,6 @@ Welcome to taxidTools's documentation!
    :caption: Contents:
    
    readme
-   usage
    modules
 
 
