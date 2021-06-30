@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Usage &#8212; taxidTools 2.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">taxidTools 2.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Usage</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section class="tex2jax_ignore mathjax_ignore" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>The easiest way to get started with tha package is todownload the
+taxdump files from the NCBI FTP server and start python.</p>
+<section id="loading-taxdump-files">
+<h2>Loading taxdump files<a class="headerlink" href="#loading-taxdump-files" title="Permalink to this headline">¶</a></h2>
+<p>Once you downlaoded the up-to-date taxdump files from the NCBI FTP server,
+you can load the full taxonomy as simply as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">taxidTools</span> <span class="k">as</span> <span class="nn">txd</span>
+
+<span class="n">nodes_dmp</span> <span class="o">=</span> <span class="s2">&quot;path/to/nodes.dmp&quot;</span>
+<span class="n">rankedlineage</span> <span class="o">=</span> <span class="s2">&quot;path/to/rankedlineage.dmp&quot;</span>
+
+<span class="n">tax</span> <span class="o">=</span> <span class="n">txd</span><span class="o">.</span><span class="n">load_taxdump</span><span class="p">(</span><span class="n">nodes_dmp</span><span class="p">,</span> <span class="n">rankedlineage_dmp</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="retrieving-node-informations">
+<h2>Retrieving node informations<a class="headerlink" href="#retrieving-node-informations" title="Permalink to this headline">¶</a></h2>
+<p>access node str or int</p>
+<p>getParent</p>
+<p>getRank</p>
+<p>getName</p>
+</section>
+<section id="working-with-lineages">
+<h2>Working with lineages<a class="headerlink" href="#working-with-lineages" title="Permalink to this headline">¶</a></h2>
+<section id="simple-relationship-tests">
+<h3>Simple relationship tests<a class="headerlink" href="#simple-relationship-tests" title="Permalink to this headline">¶</a></h3>
+<p>isDescendantOf</p>
+<p>isAncestorOf</p>
+</section>
+<section id="full-ancestries">
+<h3>Full ancestries<a class="headerlink" href="#full-ancestries" title="Permalink to this headline">¶</a></h3>
+<p>Lineage() and getAncestry</p>
+<p>Lineage behavior</p>
+</section>
+</section>
+<section id="taxonomy-subsets">
+<h2>Taxonomy subsets<a class="headerlink" href="#taxonomy-subsets" title="Permalink to this headline">¶</a></h2>
+<p>getChildren</p>
+<p>subtree</p>
+</section>
+<section id="operations-on-multiple-nodes">
+<h2>Operations on multiple nodes<a class="headerlink" href="#operations-on-multiple-nodes" title="Permalink to this headline">¶</a></h2>
+<p>distance</p>
+<p>lca</p>
+<p>consensus</p>
+</section>
+<section id="creating-a-taxonomy-without-taxdump-files">
+<h2>Creating a taxonomy without Taxdump files<a class="headerlink" href="#creating-a-taxonomy-without-taxdump-files" title="Permalink to this headline">¶</a></h2>
+<section id="creating-nodes">
+<h3>Creating Nodes<a class="headerlink" href="#creating-nodes" title="Permalink to this headline">¶</a></h3>
+<p>Node creation</p>
+</section>
+<section id="updating-parents">
+<h3>Updating parents<a class="headerlink" href="#updating-parents" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="constructing-taxonomy">
+<h3>Constructing taxonomy<a class="headerlink" href="#constructing-taxonomy" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Usage</a><ul>
+<li><a class="reference internal" href="#loading-taxdump-files">Loading taxdump files</a></li>
+<li><a class="reference internal" href="#retrieving-node-informations">Retrieving node informations</a></li>
+<li><a class="reference internal" href="#working-with-lineages">Working with lineages</a><ul>
+<li><a class="reference internal" href="#simple-relationship-tests">Simple relationship tests</a></li>
+<li><a class="reference internal" href="#full-ancestries">Full ancestries</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#taxonomy-subsets">Taxonomy subsets</a></li>
+<li><a class="reference internal" href="#operations-on-multiple-nodes">Operations on multiple nodes</a></li>
+<li><a class="reference internal" href="#creating-a-taxonomy-without-taxdump-files">Creating a taxonomy without Taxdump files</a><ul>
+<li><a class="reference internal" href="#creating-nodes">Creating Nodes</a></li>
+<li><a class="reference internal" href="#updating-parents">Updating parents</a></li>
+<li><a class="reference internal" href="#constructing-taxonomy">Constructing taxonomy</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/usage.md.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">taxidTools 2.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Usage</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Gregoire Denay.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
+    </div>
+  </body>
+</html>
