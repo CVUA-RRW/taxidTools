@@ -12,27 +12,57 @@ class Node(object):
     """
     Taxonomic Node
     
-    Store information relative to a specific taxonomic node.
+    Create a Node object contining taxonomic information
+    as well as a link to parent and children nodes.
+    
+    Parameters
+    ---------
+    taxid: 
+        Taxonomic identification number
+    name: 
+        Node name
+    rank: 
+        Node rank
+    parent: 
+        The parent Node object
+    
+    Notes
+    -----
+    The `children` property will be dynamically populated when children Nodes
+    declare a Node as parent.
+    
+    Examples
+    --------
+    >>> root = Node(1, "root", "root")
+    >>> child = Node(2, "child", "child_rank", root)
+    
+    >>> child.taxid
+    '2'
+    >>> child.rank
+    'child_rank'
+    >>> child.name
+    'child'
+    
+    >>> child.parent
+    Node object:
+            Taxid: 1
+            Name: root
+            Rank: root
+            Parent: None
+    
+    >>> root.children
+    [Node object:
+            Taxid: 2
+            Name: child
+            Rank: child_rank
+            Parent: 1]
     """
+    
     def __init__(self, 
                  taxid: Union[str,int], 
                  name: Optional[str] = None, 
                  rank: Optional[str] = None, 
                  parent: Optional[str] = None) -> None:
-        """
-        Create a Node object
-        
-        Parameters
-        ---------
-        taxid: 
-            Taxonomic identification number
-        name: 
-            Node name
-        rank: 
-            Node rank
-        parent: 
-            The parent Node object
-        """
         self._children = []
         self._name = name
         self._rank = rank
@@ -82,7 +112,7 @@ class Node(object):
     
     @parent.setter
     def parent(self, parent: Node) -> None:
-        "Set parent node and update children attribute of parent node"
+        """Set parent node and update children attribute of parent node"""
         if parent and parent.taxid != self.taxid: # root node as circular reference to self..
             assert isinstance(parent, Node)
             self._parent = parent
@@ -90,7 +120,7 @@ class Node(object):
         else:
             self._parent = None
     
-    def _updateParent(self):
+    def _updateParent(self) -> None:
         if self.parent:
             self.parent.children.append(self)
     

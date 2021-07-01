@@ -13,8 +13,124 @@ from .Lineage import Lineage
 class Taxonomy(UserDict):
     """
     Store Taxonomy nodes
+    
+    A Taxonomy is instanciated as a dictionnary and 
+    each Node can be accessed by its taxid.
+    The proper way to populate a Taxonomy is to use the
+    `Taxonomy.addNode` method or use a factory function such as
+    `load_taxdump`.
+    
+    See Also
+    --------
+    Taxidtools.Taxonomy.load_taxdump: load a Taxonomy object from taxdump files
+    
+    Examples
+    --------
+    >>> root = Node(1, "root", "root")
+    >>> branch1 = Node(11, "node11", "middle", root)
+    >>> branch2 = Node(12, "node12", "middel", root)
+    >>> leaf1 = Node(111, "node111", "leaf", branch1)
+    >>> leaf2 = Node(112, "node112", "leaf", branch1)
+    >>> leaf3 = Node(121, "node121", "leaf", branch2)
+    >>> leaf4 = Node(13, "node13", "leaf", root)
+    >>> tax = Taxonomy()
+    >>> for node in [root, branch1, branch2, leaf1, leaf2, leaf3, leaf4]:
+    ...     tax._addNode(node)
+    ...
+    >>> tax
+    {'1': Node object:
+            Taxid: 1
+            Name: root
+            Rank: root
+            Parent: None, '11': Node object:
+            Taxid: 11
+            Name: node11
+            Rank: middle
+            Parent: 1, '12': Node object:
+            Taxid: 12
+            Name: node12
+            Rank: middel
+            Parent: 1, '111': Node object:
+            Taxid: 111
+            Name: node111
+            Rank: leaf
+            Parent: 11, '112': Node object:
+            Taxid: 112
+            Name: node112
+            Rank: leaf
+            Parent: 11, '121': Node object:
+            Taxid: 121
+            Name: node121
+            Rank: leaf
+            Parent: 12, '13': Node object:
+            Taxid: 13
+            Name: node13
+            Rank: leaf
+            Parent: 1}
+    
+    You can also pass a dict of Nodes:
+    
+    >>> tax = Taxonomy({"1" : root,
+    ...     11: branch1,
+    ...     12: branch2,
+    ...     111: leaf1,
+    ...     112: leaf2,
+    ...     121: leaf3,
+    ...     13: leaf4})
+    >>> tax
+    {'1': Node object:
+            Taxid: 1
+            Name: root
+            Rank: root
+            Parent: None, 11: Node object:
+            Taxid: 11
+            Name: node11
+            Rank: middle
+            Parent: 1, 12: Node object:
+            Taxid: 12
+            Name: node12
+            Rank: middel
+            Parent: 1, 111: Node object:
+            Taxid: 111
+            Name: node111
+            Rank: leaf
+            Parent: 11, 112: Node object:
+            Taxid: 112
+            Name: node112
+            Rank: leaf
+            Parent: 11, 121: Node object:
+            Taxid: 121
+            Name: node121
+            Rank: leaf
+            Parent: 12, 13: Node object:
+            Taxid: 13
+            Name: node13
+            Rank: leaf
+            Parent: 1}
     """
-    def _addNode(self, node: Node) -> None:
+    
+    def addNode(self, node: Node) -> None:
+        """
+        Add a Node to an existing Taxonomy object.
+        
+        The Node taxid will be used a key to access element.
+        
+        Parameters
+        ----------
+        node:
+            A Node to add to the Taxonomy
+        
+        Examples
+        --------
+        >>> tax = Taxonomy()
+        >>> tax.addNode(Node(1))
+        >>> tax
+        {'1': Node object:
+                Taxid: 1
+                Name: None
+                Rank: None
+                Parent: None}
+        """
         self[node.taxid] = node
     
     def getName(self, taxid: Union[str,int]) -> str:
@@ -25,6 +141,13 @@ class Taxonomy(UserDict):
         ----------
         taxid: 
             Taxonomic identification number
+        
+        Examples
+        --------
+        >>> node = Node(1, "node", "rank")
+        >>> tax = Taxonomy({'1':node})
+        >>> tax.getName(1)
+        'node'
         """
         return self[str(taxid)].name
     
@@ -36,6 +159,13 @@ class Taxonomy(UserDict):
         ----------
         taxid: 
             Taxonomic identification number
+        
+        Examples
+        --------
+        >>> node = Node(1, "node", "rank")
+        >>> tax = Taxonomy({'1':node})
+        >>> tax.getRank(1)
+        'rank'
         """
         return self[str(taxid)].rank
     
@@ -47,12 +177,41 @@ class Taxonomy(UserDict):
         ----------
         taxid: 
             Taxonomic identification number
+        
+        Examples
+        --------
+        >>> root = Node(1, "root", "root")
+        >>> node = Node(2, "node", "rank", root)
+        >>> tax = Taxonomy({'1': root, '2': node})
+        >>> tax.getParent(2)
+        Node object:
+                Taxid: 1
+                Name: root
+                Rank: root
+                Parent: None
         """
         return self[str(taxid)].parent
     
     def getChildren(self, taxid: Union[str, int]) -> list[Node]:
         """
         Retrieve the children Nodes
+        
+         Parameters
+        ----------
+        taxid: 
+            Taxonomic identification number
+        
+        Examples
+        --------
+        >>> root = Node(1, "root", "root")
+        >>> node = Node(2, "node", "rank", root)
+        >>> tax = Taxonomy({'1': root, '2': node})
+        >>> tax.getChildren(1)
+        [Node object:
+                Taxid: 2
+                Name: node
+                Rank: rank
+                Parent: 1]
         """
         return self[str(taxid)].children
     
@@ -64,6 +223,14 @@ class Taxonomy(UserDict):
         ----------
         taxid: 
             Taxonomic identification number
+        
+        Examples
+        --------
+        >>> root = Node(1, "root", "root")
+        >>> node = Node(2, "node", "rank", root)
+        >>> tax = Taxonomy({'1': root, '2': node})
+        >>> tax.getAncestry(2)
+        Lineage(['2', '1'])
         """
         return Lineage(self[str(taxid)])
     
@@ -75,9 +242,18 @@ class Taxonomy(UserDict):
         ----------
         taxid: 
             Taxonomic identification number
-        
-        child: str or int
+        child: 
             Taxonomic identification number
+        
+        Examples
+        --------
+        >>> root = Node(1, "root", "root")
+        >>> node = Node(2, "node", "rank", root)
+        >>> tax = Taxonomy({'1': root, '2': node})
+        >>> tax.isAncestorOf(1, 2)
+        True
+        >>> tax.isAncestorOf(2, 1)
+        False
         """
         if str(taxid) == str(child):
             return False
@@ -93,9 +269,18 @@ class Taxonomy(UserDict):
         ----------
         taxid: 
             Taxonomic identification number
-        
-        parent: str or int
+        parent: 
             Taxonomic identification number
+        
+        Examples
+        --------
+        >>> root = Node(1, "root", "root")
+        >>> node = Node(2, "node", "rank", root)
+        >>> tax = Taxonomy({'1': root, '2': node})
+        >>> tax.isDescendantOf(1, 2)
+        False
+        >>> tax.isDescendantOf(2, 1)
+        True
         """
         if str(taxid) == str(parent):
             return False
@@ -206,10 +391,10 @@ class Taxonomy(UserDict):
         nodes = self.listDescendant(new_root)
         
         new = Taxonomy()
-        new._addNode(new_root_node)
+        new.addNode(new_root_node)
         
         for node in nodes:
-            new._addNode(node)
+            new.addNode(node)
         
         return new
 
@@ -230,7 +415,7 @@ def load_taxdump(nodes: str, rankedlineage: str) -> Taxonomy:
     
     # Creating nodes
     for line in _parse_dump(nodes):
-        txd._addNode(Node(taxid = line[0], rank = str(line[2])))
+        txd.addNode(Node(taxid = line[0], rank = str(line[2])))
         parent_dict[str(line[0])] = line[1] # storing parent id
     
     # Add names form rankedlineage
