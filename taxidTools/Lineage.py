@@ -54,7 +54,7 @@ class Lineage(UserList):
     """
     
     def __init__(self, base_node: Node, ascending: bool = True) -> None:
-         if not isinstance(base_node, Node):
+        if not isinstance(base_node, Node):
             raise ValueError("Lineage should be instanciated with a Node or list of Nodes")
         
         self._baseNode = base_node
