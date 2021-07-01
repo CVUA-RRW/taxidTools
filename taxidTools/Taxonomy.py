@@ -196,7 +196,7 @@ class Taxonomy(UserDict):
         """
         Retrieve the children Nodes
         
-         Parameters
+        Parameters
         ----------
         taxid: 
             Taxonomic identification number
