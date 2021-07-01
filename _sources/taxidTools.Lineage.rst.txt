@@ -1,0 +1,7 @@
+taxidTools.Lineage module
+=========================
+
+.. automodule:: taxidTools.Lineage
+   :members:
+   :undoc-members:
+   :show-inheritance:

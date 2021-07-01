@@ -1,0 +1,7 @@
+taxidTools.Taxonomy module
+==========================
+
+.. automodule:: taxidTools.Taxonomy
+   :members:
+   :undoc-members:
+   :show-inheritance:

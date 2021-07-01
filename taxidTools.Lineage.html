@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>taxidTools.Lineage module &#8212; taxidTools 2.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="taxidTools.Node module" href="taxidTools.Node.html" />
+    <link rel="prev" title="taxidTools package" href="taxidTools.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="taxidTools.Node.html" title="taxidTools.Node module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="taxidTools.html" title="taxidTools package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">taxidTools 2.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >taxidTools</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="taxidTools.html" accesskey="U">taxidTools package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">taxidTools.Lineage module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-taxidTools.Lineage">
+<span id="taxidtools-lineage-module"></span><h1>taxidTools.Lineage module<a class="headerlink" href="#module-taxidTools.Lineage" title="Permalink to this headline">¶</a></h1>
+<p>Lineage object definition</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="taxidTools.Lineage.Lineage">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">taxidTools.Lineage.</span></span><span class="sig-name descname"><span class="pre">Lineage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ascending</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Lineage.Lineage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.UserList</span></code></p>
+<p>Taxomic Lineage</p>
+<p>Defines a linear and ordered succession of Nodes.
+A Lineage is created by providing a single Node that
+will be used as a base to retrieve higher Nodes.
+Ranks are ascending by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_node</strong> (<a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>) – The base node, from which the ancestry should be retrieved</p></li>
+<li><p><strong>ascending</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Should the Lineage by sorted by ascending ranks?</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>A Lineage does not have to be continuous. Nodes can have parents that
+are not included in the Lineage, as long as Nodes in a Lineage form a
+linear path.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">child1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;child1&quot;</span><span class="p">,</span> <span class="s2">&quot;child_rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">child2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;child2&quot;</span><span class="p">,</span> <span class="s2">&quot;sub_child_rank&quot;</span><span class="p">,</span> <span class="n">child1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Lineage</span><span class="p">(</span><span class="n">child2</span><span class="p">)</span>
+<span class="go">Lineage([&#39;3&#39;, &#39;2&#39;, &#39;1&#39;])</span>
+</pre></div>
+</div>
+<p>Lineage elements are the Node objects themselves</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Lineage</span><span class="p">(</span><span class="n">child2</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">Node object:</span>
+<span class="go">        Taxid: 1</span>
+<span class="go">        Name: root</span>
+<span class="go">        Rank: root</span>
+<span class="go">        Parent: None</span>
+</pre></div>
+</div>
+<p>A Lineage can also be descending
+&gt;&gt;&gt; Lineage(child2, ascending = False)
+Lineage([‘1’, ‘2’, ‘3’])</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Lineage.Lineage.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ranks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ascending</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Lineage.Lineage.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter a lineage to keep specific ranks</p>
+<p>Lineage order will be conserved and missing ranks will be ignored.
+Be careful that the returned list can be shorter that the input ranks!
+If you want the output length to be consistent with the input length,
+use <cite>forceRanks</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ranks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – List of ranks to keep. Missing ranks in the Lineage will be skipped.</p></li>
+<li><p><strong>ascending</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Should the Lineage by sorted by ascending ranks?</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The Nodes are not modified by this method! That means that Node.parent will
+still point to the original parent Node, even if it was masked in the Lineage.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">taxidTools.Lineage.forceRanks</span></code></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">child1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;child1&quot;</span><span class="p">,</span> <span class="s2">&quot;child_rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">child2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;child2&quot;</span><span class="p">,</span> <span class="s2">&quot;sub_child_rank&quot;</span><span class="p">,</span> <span class="n">child1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span> <span class="o">=</span> <span class="n">Lineage</span><span class="p">(</span><span class="n">child2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span><span class="o">.</span><span class="n">filter</span><span class="p">([</span><span class="s2">&quot;sub_child_rank&quot;</span><span class="p">,</span> <span class="s2">&quot;child_rank&quot;</span><span class="p">])</span>
+<span class="go">Lineage([&#39;3&#39;, &#39;2&#39;])</span>
+</pre></div>
+</div>
+<p>Node order is conserved</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span><span class="o">.</span><span class="n">filter</span><span class="p">([</span><span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;sub_child_rank&quot;</span><span class="p">])</span>
+<span class="go">Lineage([&#39;3&#39;, &#39;1&#39;])</span>
+</pre></div>
+</div>
+<p>Missing ranks are ignored</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span><span class="o">.</span><span class="n">filter</span><span class="p">([</span><span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;norank&quot;</span><span class="p">,</span> <span class="s2">&quot;name_rank&quot;</span><span class="p">,</span> <span class="s2">&quot;sub_child_rank&quot;</span><span class="p">])</span>
+<span class="go">Lineage([&#39;3&#39;, &#39;1&#39;])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#taxidTools.Lineage.Lineage" title="taxidTools.Lineage.Lineage"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lineage</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Lineage.Lineage.forceRanks">
+<span class="sig-name descname"><span class="pre">forceRanks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ranks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Lineage.Lineage.forceRanks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Force ranks and order on a Lineage</p>
+<p>This force the given rank structure on the Lineage.
+As a result, the ranks will be reordered to follow the input.
+Missing ranks in the Lineage will be filled with None values.</p>
+<p>Not implemented</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#taxidTools.Lineage.Lineage" title="taxidTools.Lineage.Lineage"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lineage</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="taxidTools.Lineage.formatLineages">
+<span class="sig-prename descclassname"><span class="pre">taxidTools.Lineage.</span></span><span class="sig-name descname"><span class="pre">formatLineages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lineages</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Lineage.formatLineages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Not Implemented</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="#taxidTools.Lineage.Lineage" title="taxidTools.Lineage.Lineage"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lineage</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="taxidTools.html"
+                        title="previous chapter">taxidTools package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="taxidTools.Node.html"
+                        title="next chapter">taxidTools.Node module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/taxidTools.Lineage.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="taxidTools.Node.html" title="taxidTools.Node module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="taxidTools.html" title="taxidTools package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">taxidTools 2.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >taxidTools</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="taxidTools.html" >taxidTools package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">taxidTools.Lineage module</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Gregoire Denay.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
+    </div>
+  </body>
+</html>
