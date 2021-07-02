@@ -1,14 +1,41 @@
+import os
 import unittest
 import taxidTools
+
+
+current_path = os.path.dirname(__file__)
+nodes = os.path.join(current_path, "data", "mininodes.dmp")
+rankedlineage = os.path.join(current_path, "data", "minirankedlineage.dmp")
+
 
 class TestTaxdump(unittest.TestCase):
     
     def setUp(self):
         self.parent = taxidTools.Node(taxid = 0, name = "root", rank = "root", parent = None)
         self.child = taxidTools.Node(taxid = 1, name = "child", rank = "child", parent = self.parent)
+        self.txd = taxidTools.Taxonomy({'0': self.parent, '1': self.child})
+    
+    def test_factory_dict(self):
+        self.txd = taxidTools.Taxonomy({'0': self.parent, '1': self.child})
+        self.assertEqual(len(self.txd.keys()), 2)
+    
+    def test_factory_add_node(self):
         self.txd = taxidTools.Taxonomy()
         self.txd.addNode(self.child)
         self.txd.addNode(self.parent)
+        self.assertEqual(len(self.txd.keys()), 2)
+    
+    def test_factory_list(self):
+        self.txd = taxidTools.Taxonomy.from_list([self.parent, self.child])
+        self.assertEqual(len(self.txd.keys()), 2)
+        
+    def test_factory_taxdump(self):
+        self.txd = taxidTools.load_taxdump(nodes, rankedlineage)
+        self.assertEqual(self.txd["9913"].parent.taxid, "9903")
+        
+        ancestry = taxidTools.Lineage(self.txd["9903"])
+        self.assertEqual(len(ancestry), 29)
+        self.assertEqual(ancestry[-1].taxid, "1")
     
     def test_getters(self):
         self.assertEqual(self.txd.getName(1), "child")

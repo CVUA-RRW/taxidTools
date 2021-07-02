@@ -39,28 +39,28 @@ class TestComplexTree(unittest.TestCase):
             "121" : self.node121,
             "122" : self.node122
             }
-            
+        
         self.txd = taxidTools.Taxonomy(nodes)
         
     
     def test_consens(self):
-        self.assertEqual(self.txd.consensus(["11", "12", "21", "22", "23"], 1),
+        self.assertEqual(self.txd.consensus(["11", "12", "21", "22", "23"], 1).taxid,
                          "0")
-        self.assertEqual(self.txd.consensus(["11", "12", "21", "22", "23"], 0.6), 
+        self.assertEqual(self.txd.consensus(["11", "12", "21", "22", "23"], 0.6).taxid, 
                          "2")
-        self.assertEqual(self.txd.consensus(["11", "12", "21", "22"], 0.51),
+        self.assertEqual(self.txd.consensus(["11", "12", "21", "22"], 0.51).taxid,
                          "0")
-        self.assertEqual(self.txd.consensus(["11", "11", "12", "22"], 0.75),
+        self.assertEqual(self.txd.consensus(["11", "11", "12", "22"], 0.75).taxid,
                          "1")
-        self.assertEqual(self.txd.consensus(["11", "11", "11", "22", "12"], 0.51),
+        self.assertEqual(self.txd.consensus(["11", "11", "11", "22", "12"], 0.51).taxid,
                          "11")
-        self.assertEqual(self.txd.consensus(["121", "121", "122", "22", "12"], 0.51),
+        self.assertEqual(self.txd.consensus(["121", "121", "122", "22", "12"], 0.51).taxid,
                          "12")
-        self.assertEqual(self.txd.consensus(["121", "121", "23", "22", "22"], 0.51),
+        self.assertEqual(self.txd.consensus(["121", "121", "23", "22", "22"], 0.51).taxid,
                          "2")
-        self.assertEqual(self.txd.lca(["11", "11", "12", "22"]),
+        self.assertEqual(self.txd.lca(["11", "11", "12", "22"]).taxid,
                          "0")
-        self.assertEqual(self.txd.lca(["11", "11", "12"]),
+        self.assertEqual(self.txd.lca(["11", "11", "12"]).taxid,
                          "1")
     
     def test_dist(self):

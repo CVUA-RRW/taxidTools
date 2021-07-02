@@ -16,13 +16,15 @@ class Taxonomy(UserDict):
     
     A Taxonomy is instanciated as a dictionnary and 
     each Node can be accessed by its taxid.
-    The proper way to populate a Taxonomy is to use the
-    `Taxonomy.addNode` method or use a factory function such as
-    `load_taxdump`.
+    A Taoxonomy object can be instanciated directly from a dictionnary,
+    iteratively with the method `Taxonomy.addNode` method or from a 
+    list of taxdump files..
     
     See Also
     --------
-    Taxidtools.Taxonomy.load_taxdump: load a Taxonomy object from taxdump files
+    Taxidtools.Taxonomy.from_taxdump: load a Taxonomy object from taxdump files
+    Taxidtools.Taxonomy.from_list: load a Taxonomy object from a list of Node
+    Taxidtools.Taxonomy.addNode: add a Node to a Taxonomy
     
     Examples
     --------
@@ -33,42 +35,6 @@ class Taxonomy(UserDict):
     >>> leaf2 = Node(112, "node112", "leaf", branch1)
     >>> leaf3 = Node(121, "node121", "leaf", branch2)
     >>> leaf4 = Node(13, "node13", "leaf", root)
-    >>> tax = Taxonomy()
-    >>> for node in [root, branch1, branch2, leaf1, leaf2, leaf3, leaf4]:
-    ...     tax._addNode(node)
-    ...
-    >>> tax
-    {'1': Node object:
-            Taxid: 1
-            Name: root
-            Rank: root
-            Parent: None, '11': Node object:
-            Taxid: 11
-            Name: node11
-            Rank: middle
-            Parent: 1, '12': Node object:
-            Taxid: 12
-            Name: node12
-            Rank: middel
-            Parent: 1, '111': Node object:
-            Taxid: 111
-            Name: node111
-            Rank: leaf
-            Parent: 11, '112': Node object:
-            Taxid: 112
-            Name: node112
-            Rank: leaf
-            Parent: 11, '121': Node object:
-            Taxid: 121
-            Name: node121
-            Rank: leaf
-            Parent: 12, '13': Node object:
-            Taxid: 13
-            Name: node13
-            Rank: leaf
-            Parent: 1}
-    
-    You can also pass a dict of Nodes:
     
     >>> tax = Taxonomy({"1" : root,
     ...     11: branch1,
@@ -77,37 +43,84 @@ class Taxonomy(UserDict):
     ...     112: leaf2,
     ...     121: leaf3,
     ...     13: leaf4})
-    >>> tax
-    {'1': Node object:
-            Taxid: 1
-            Name: root
-            Rank: root
-            Parent: None, 11: Node object:
-            Taxid: 11
-            Name: node11
-            Rank: middle
-            Parent: 1, 12: Node object:
-            Taxid: 12
-            Name: node12
-            Rank: middel
-            Parent: 1, 111: Node object:
-            Taxid: 111
-            Name: node111
-            Rank: leaf
-            Parent: 11, 112: Node object:
-            Taxid: 112
-            Name: node112
-            Rank: leaf
-            Parent: 11, 121: Node object:
-            Taxid: 121
-            Name: node121
-            Rank: leaf
-            Parent: 12, 13: Node object:
-            Taxid: 13
-            Name: node13
-            Rank: leaf
-            Parent: 1}
+    
+    Instanciate from a list:
+    
+    >>> tax = Taxonomy.from_list([root, branch1, branch2, leaf1, leaf2, leaf3, leaf4])
+    
+    Or iteratively:
+    
+    >>> tax = Taxonomy()
+    >>> for node in [root, branch1, branch2, leaf1, leaf2, leaf3, leaf4]:
+    ...     tax._addNode(node)
+    ...
+    
+    Or from the taxdump files:
+    
+    >>> tax = Taxonomy.from_taxdump("nodes.dmp', 'rankedlineage.dmp')
     """
+    
+    @classmethod
+    def from_list(cls, node_list: list[Node]) -> Taxonomy:
+        """
+        Create a Taxonomy object from a list of Nodes
+        
+        Convert a list of Nodes into a valid Taxonomy object 
+        where each Node can be accessed using its taxid as key.
+        
+        Parameters
+        ----------
+        node_list:
+            List of Node objects
+        
+        Examples
+        --------
+        >>> txd = Taxonomy.from_list([Node(1), Node(2)])
+        """
+        for node in node_list:
+            if not isinstance(node, Node):
+                raise ValueError("Elements of node_list must be of type Node")
+        
+        as_dict = {node.taxid : node for node in node_list}
+        
+        return cls(as_dict)
+    
+    @classmethod
+    def from_taxdump(cls, nodes: str, rankedlineage: str) -> Taxonomy:
+        """
+        Create a Taxonomy object from the NBI Taxdump files
+        
+        Load the taxonomic infromation form the nodes.dmp and
+        rankedlineage.dmp files available from the NCBI servers.
+        
+        Parameters
+        ----------
+        nodes: 
+            Path to the nodes.dmp file
+        rankedlineage: 
+            Path to the rankedlineage.dmp file
+        
+        Examples
+        --------
+        >>> tax = Taxonomy.from_taxdump("nodes.dmp', 'rankedlineage.dmp')
+        """
+        txd = {}
+        parent_dict = {}
+        
+        # Creating nodes
+        for line in _parse_dump(nodes):
+            txd[line[0]] = Node(taxid = line[0], rank = str(line[2]))
+            parent_dict[str(line[0])] = line[1] # storing parent id
+        
+        # Add names form rankedlineage
+        for line in _parse_dump(rankedlineage):
+            txd[line[0]].name = line[1]
+        
+        # Update parent info
+        for k, v in parent_dict.items():
+            txd[k].parent = txd[v]
+        
+        return cls(txd)
     
     def addNode(self, node: Node) -> None:
         """
@@ -245,6 +258,10 @@ class Taxonomy(UserDict):
         child: 
             Taxonomic identification number
         
+        See Also
+        --------
+        Taxonomy.isDescendantOf
+        
         Examples
         --------
         >>> root = Node(1, "root", "root")
@@ -271,6 +288,10 @@ class Taxonomy(UserDict):
             Taxonomic identification number
         parent: 
             Taxonomic identification number
+        
+        See Also
+        --------
+        Taxonomy.isAncestorOf
         
         Examples
         --------
@@ -299,6 +320,37 @@ class Taxonomy(UserDict):
         min_consensus: 
             minimal consensus level, between 0.5 and 1.
             Note that a minimal consensus of 1 will return the same result as `lastCommonNode()`
+        
+        Notes
+        -----
+        If no consensus can be found (for example because the Taxonomy contains multiple trees),
+        an `IndexError` will be raised.
+        
+        See Also
+        --------
+        Taxonomy.lca
+        
+        
+        Examples
+        --------
+        >>> node0 = Node(taxid = 0, name = "root", rank = "root", parent = None)
+        >>> node1 = Node(taxid = 1, name = "node1", rank = "rank1", parent = node0)
+        >>> node2 = Node(taxid = 2, name = "node2", rank = "rank1", parent = node0)
+        >>> node11 = Node(taxid = 11, name = "node11", rank = "rank2", parent = node1)
+        >>> node12 = Node(taxid = 12, name = "node12", rank = "rank2", parent = node1)
+        >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
+        >>> tax.consensus([11, 12, 2], 0.8)
+        Node object:
+                Taxid: 0
+                Name: root
+                Rank: root
+                Parent: None
+        >>> tax.consensus([11, 12, 2], 0.6)
+        Node object:
+                Taxid: 1
+                Name: node1
+                Rank: rank1
+                Parent: 0
         """
         # Consensus under 50% is ambiguous
         if min_consensus <= 0.5 or min_consensus > 1:
@@ -312,12 +364,12 @@ class Taxonomy(UserDict):
         i=0
         
         while i < max_iter: 
-            count = Counter([lin[i].taxid for lin in lineages])
+            count = Counter([lin[i] for lin in lineages])
             mostCommon = count.most_common(1)
             
             if mostCommon[0][1]/total >= min_consensus:
                 # save current succesful consensus, and check the next one
-                last = str(mostCommon[0][0])
+                last = mostCommon[0][0]
                 i+=1
             
             else:
@@ -333,6 +385,25 @@ class Taxonomy(UserDict):
         ----------
         taxid_list: 
             list of taxonomic identification numbers
+        
+        See Also
+        --------
+        Taxonomy.consensus
+        
+        Examples
+        --------
+        >>> node0 = Node(taxid = 0, name = "root", rank = "root", parent = None)
+        >>> node1 = Node(taxid = 1, name = "node1", rank = "rank1", parent = node0)
+        >>> node2 = Node(taxid = 2, name = "node2", rank = "rank1", parent = node0)
+        >>> node11 = Node(taxid = 11, name = "node11", rank = "rank2", parent = node1)
+        >>> node12 = Node(taxid = 12, name = "node12", rank = "rank2", parent = node1)
+        >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
+        >>> tax.lca([11, 12, 2])
+        Node object:
+                Taxid: 0
+                Name: root
+                Rank: root
+                Parent: None
         """
         return self.consensus(taxid_list, 1)
     
@@ -344,36 +415,69 @@ class Taxonomy(UserDict):
         ----------
         taxid1: 
             Taxonomic identification number
-        
         taxid2: 
             Taxonomic identification number
-        """
-        lca = self.lca([taxid1, taxid2])
         
-        d1 = len(Lineage(self[taxid1])) - 1
-        d2 = len(Lineage(self[taxid2])) - 1
+        Examples
+        --------
+        >>> node0 = Node(taxid = 0, name = "root", rank = "root", parent = None)
+        >>> node1 = Node(taxid = 1, name = "node1", rank = "rank1", parent = node0)
+        >>> node2 = Node(taxid = 2, name = "node2", rank = "rank1", parent = node0)
+        >>> node11 = Node(taxid = 11, name = "node11", rank = "rank2", parent = node1)
+        >>> node12 = Node(taxid = 12, name = "node12", rank = "rank2", parent = node1)
+        >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
+        >>> tax.distance(11, 2)
+        3
+        >>> tax.distance(11, 12)
+        2
+        """
+        lca = self.lca([str(taxid1), str(taxid2)]).taxid
+        
+        d1 = len(Lineage(self[str(taxid1)])) - 1
+        d2 = len(Lineage(self[str(taxid2)])) - 1
         dlca = len(Lineage(self[lca])) - 1
         
         return d1 + d2 - 2 * dlca
     
     def listDescendant(self, taxid: Union[str, int]) -> list[Node]:
         """
-        List all descendant of node
+        List all descendant of a node
         
         Parameters
         ----------
         taxid: 
             Taxonomic identification number
+        
+        Examples
+        --------
+        >>> node0 = Node(taxid = 0, name = "root", rank = "root", parent = None)
+        >>> node1 = Node(taxid = 1, name = "node1", rank = "rank1", parent = node0)
+        >>> node2 = Node(taxid = 2, name = "node2", rank = "rank1", parent = node0)
+        >>> node11 = Node(taxid = 11, name = "node11", rank = "rank2", parent = node1)
+        >>> node12 = Node(taxid = 12, name = "node12", rank = "rank2", parent = node1)
+        >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
+        >>> tax.listDescendant(1)
+        [Node object:
+                Taxid: 11
+                Name: node11
+                Rank: rank2
+                Parent: 1, Node object:
+                Taxid: 12
+                Name: node12
+                Rank: rank2
+                Parent: 1]
+        >>> tax.listDescendant(2)
+        []
         """
         current = self[str(taxid)].children
-        next = flatten([child.children for child in current])
+        next = _flatten([child.children for child in current])
         
         all = current
         
         while next:
             all.extend(next)
             current = next
-            next = flatten([child.children for child in current])
+            next = _flatten([child.children for child in current])
         
         return all
     
@@ -386,6 +490,29 @@ class Taxonomy(UserDict):
         ----------
         new_root: 
             taxid of the new root
+        
+        Examples
+        --------
+        >>> node0 = Node(taxid = 0, name = "root", rank = "root", parent = None)
+        >>> node1 = Node(taxid = 1, name = "node1", rank = "rank1", parent = node0)
+        >>> node2 = Node(taxid = 2, name = "node2", rank = "rank1", parent = node0)
+        >>> node11 = Node(taxid = 11, name = "node11", rank = "rank2", parent = node1)
+        >>> node12 = Node(taxid = 12, name = "node12", rank = "rank2", parent = node1)
+        >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
+        >>> tax.subtree(1)
+        {'1': Node object:
+                Taxid: 1
+                Name: node1
+                Rank: rank1
+                Parent: 0, '11': Node object:
+                Taxid: 11
+                Name: node11
+                Rank: rank2
+                Parent: 1, '12': Node object:
+                Taxid: 12
+                Name: node12
+                Rank: rank2
+                Parent: 1}
         """
         new_root_node = self[str(new_root)]
         nodes = self.listDescendant(new_root)
@@ -399,35 +526,6 @@ class Taxonomy(UserDict):
         return new
 
 
-def load_taxdump(nodes: str, rankedlineage: str) -> Taxonomy:
-    """
-    Parse NCBI taxdump files
-    
-    Parameters
-    ----------
-    nodes: 
-        Path to the nodes.dmp file
-    rankedlineage: 
-        Path to the rankedlineage.dmp file
-    """
-    txd = Taxonomy()
-    parent_dict = {}
-    
-    # Creating nodes
-    for line in _parse_dump(nodes):
-        txd.addNode(Node(taxid = line[0], rank = str(line[2])))
-        parent_dict[str(line[0])] = line[1] # storing parent id
-    
-    # Add names form rankedlineage
-    for line in _parse_dump(rankedlineage):
-        txd[line[0]].name = line[1]
-    
-    # Update parent info
-    for k, v in parent_dict.items():
-        txd[k].parent = txd[v]
-    
-    return txd
-
 def _parse_dump(filepath: str) -> Iterator:
     """
     Dump file line iterator, returns a yields of fields
@@ -436,4 +534,4 @@ def _parse_dump(filepath: str) -> Iterator:
         for line in dmp:
             yield [item.strip() for item in line.split("|")]
 
-flatten = lambda t: [item for sublist in t for item in sublist]
+_flatten = lambda t: [item for sublist in t for item in sublist]
