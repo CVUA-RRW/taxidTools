@@ -52,7 +52,7 @@ class Taxonomy(UserDict):
     
     >>> tax = Taxonomy()
     >>> for node in [root, branch1, branch2, leaf1, leaf2, leaf3, leaf4]:
-    ...     tax._addNode(node)
+    ...     tax.addNode(node)
     ...
     
     Or from the taxdump files:
@@ -309,7 +309,7 @@ class Taxonomy(UserDict):
             ancestors = Lineage(self[str(taxid)])
             return str(parent) in [node.taxid for node in ancestors]
     
-    def consensus(self, taxid_list: list[Union[str, int]], min_consensus: float) -> str:
+    def consensus(self, taxid_list: list[Union[str, int]], min_consensus: float) -> Node:
         """
         Find a taxonomic consensus for the given taxid with a minimal agreement level.
         
@@ -377,7 +377,7 @@ class Taxonomy(UserDict):
         
         return last
     
-    def lca(self, taxid_list: list[Union[str, int]]) -> str:
+    def lca(self, taxid_list: list[Union[str, int]]) -> Node:
         """
         Get lowest common node of a bunch of taxids
         
