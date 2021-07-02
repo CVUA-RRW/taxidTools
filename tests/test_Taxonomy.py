@@ -30,7 +30,7 @@ class TestTaxdump(unittest.TestCase):
         self.assertEqual(len(self.txd.keys()), 2)
         
     def test_factory_taxdump(self):
-        self.txd = taxidTools.load_taxdump(nodes, rankedlineage)
+        self.txd = taxidTools.Taxonomy.from_taxdump(nodes, rankedlineage)
         self.assertEqual(self.txd["9913"].parent.taxid, "9903")
         
         ancestry = taxidTools.Lineage(self.txd["9903"])
