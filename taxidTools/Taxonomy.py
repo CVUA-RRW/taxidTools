@@ -22,9 +22,9 @@ class Taxonomy(UserDict):
     
     See Also
     --------
-    Taxidtools.Taxonomy.from_taxdump: load a Taxonomy object from taxdump files
-    Taxidtools.Taxonomy.from_list: load a Taxonomy object from a list of Node
-    Taxidtools.Taxonomy.addNode: add a Node to a Taxonomy
+    Taxonomy.from_taxdump: load a Taxonomy object from taxdump files
+    Taxonomy.from_list: load a Taxonomy object from a list of Node
+    Taxonomy.addNode: add a Node to a Taxonomy
     
     Examples
     --------
