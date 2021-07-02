@@ -91,7 +91,7 @@ list of taxdump files..</p>
 <p>Or iteratively:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="p">[</span><span class="n">root</span><span class="p">,</span> <span class="n">branch1</span><span class="p">,</span> <span class="n">branch2</span><span class="p">,</span> <span class="n">leaf1</span><span class="p">,</span> <span class="n">leaf2</span><span class="p">,</span> <span class="n">leaf3</span><span class="p">,</span> <span class="n">leaf4</span><span class="p">]:</span>
-<span class="gp">... </span>    <span class="n">tax</span><span class="o">.</span><span class="n">_addNode</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">tax</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
 <span class="gp">...</span>
 </pre></div>
 </div>
@@ -170,7 +170,7 @@ an <cite>IndexError</cite> will be raised.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+<dd class="field-odd"><p><a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -476,7 +476,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+<dd class="field-odd"><p><a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
