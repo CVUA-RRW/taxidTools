@@ -69,12 +69,13 @@ Ranks are ascending by default.</p>
 <p>A Lineage does not have to be continuous. Nodes can have parents that
 are not included in the Lineage, as long as Nodes in a Lineage form a
 linear path.</p>
+<p>Lineage methods will never modify the Node objects it contains</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">child1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;child1&quot;</span><span class="p">,</span> <span class="s2">&quot;child_rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">child2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;child2&quot;</span><span class="p">,</span> <span class="s2">&quot;sub_child_rank&quot;</span><span class="p">,</span> <span class="n">child1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Lineage</span><span class="p">(</span><span class="n">child2</span><span class="p">)</span>
-<span class="go">Lineage([&#39;3&#39;, &#39;2&#39;, &#39;1&#39;])</span>
+<span class="go">Lineage([Node(3), Node(2), Node(1)])</span>
 </pre></div>
 </div>
 <p>Lineage elements are the Node objects themselves</p>
@@ -88,82 +89,50 @@ linear path.</p>
 </div>
 <p>A Lineage can also be descending
 &gt;&gt;&gt; Lineage(child2, ascending = False)
-Lineage([‘1’, ‘2’, ‘3’])</p>
+Lineage([Node(1), Node(2), Node(3)])</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Lineage.Lineage.filter">
-<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ranks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ascending</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Lineage.Lineage.filter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Filter a lineage to keep specific ranks</p>
-<p>Lineage order will be conserved and missing ranks will be ignored.
-Be careful that the returned list can be shorter that the input ranks!
-If you want the output length to be consistent with the input length,
-use <cite>forceRanks</cite>.</p>
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ranks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['species',</span> <span class="pre">'genus',</span> <span class="pre">'family',</span> <span class="pre">'order',</span> <span class="pre">'class',</span> <span class="pre">'phylum',</span> <span class="pre">'kingdom']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Lineage.Lineage.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter a Lineage to a set of specified ranks.</p>
+<p>Modifies a Lineage in-place.
+Lineage order will not be conserved and dummy nodes will
+be added as placeholders for missing ranks.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ranks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – List of ranks to keep. Missing ranks in the Lineage will be skipped.</p></li>
-<li><p><strong>ascending</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Should the Lineage by sorted by ascending ranks?</p></li>
+<li><p><strong>ranks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – List of ranks to filter. It is assumed to be sorted
+in the same order as Lineage.</p></li>
+<li><p><strong>no_check</strong> – Do not check the length of the ouput. This can result in
+the output being longer than the input list of ranks.</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
 <p>The Nodes are not modified by this method! That means that Node.parent will
 still point to the original parent Node, even if it was masked in the Lineage.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">taxidTools.Lineage.forceRanks</span></code></p>
-</div>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">child1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;child1&quot;</span><span class="p">,</span> <span class="s2">&quot;child_rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">child2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;child2&quot;</span><span class="p">,</span> <span class="s2">&quot;sub_child_rank&quot;</span><span class="p">,</span> <span class="n">child1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span> <span class="o">=</span> <span class="n">Lineage</span><span class="p">(</span><span class="n">child2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span><span class="o">.</span><span class="n">filter</span><span class="p">([</span><span class="s2">&quot;sub_child_rank&quot;</span><span class="p">,</span> <span class="s2">&quot;child_rank&quot;</span><span class="p">])</span>
-<span class="go">Lineage([&#39;3&#39;, &#39;2&#39;])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span><span class="o">.</span><span class="n">filter</span><span class="p">([</span><span class="s2">&quot;sub_child_rank&quot;</span><span class="p">,</span> <span class="s2">&quot;norank&quot;</span><span class="p">,</span> <span class="s2">&quot;child_rank&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span>
+<span class="go">Lineage([Node(3), &#39;dummy&#39;, Node(2)])</span>
 </pre></div>
 </div>
-<p>Node order is conserved</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span><span class="o">.</span><span class="n">filter</span><span class="p">([</span><span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;sub_child_rank&quot;</span><span class="p">])</span>
-<span class="go">Lineage([&#39;3&#39;, &#39;1&#39;])</span>
-</pre></div>
-</div>
-<p>Missing ranks are ignored</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span><span class="o">.</span><span class="n">filter</span><span class="p">([</span><span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;norank&quot;</span><span class="p">,</span> <span class="s2">&quot;name_rank&quot;</span><span class="p">,</span> <span class="s2">&quot;sub_child_rank&quot;</span><span class="p">])</span>
-<span class="go">Lineage([&#39;3&#39;, &#39;1&#39;])</span>
+<p>Order is not conserved!</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span> <span class="o">=</span> <span class="n">Lineage</span><span class="p">(</span><span class="n">child2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span><span class="o">.</span><span class="n">filter</span><span class="p">([</span><span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;sub_child_rank&quot;</span><span class="p">])</span>
+<span class="go">Lineage([Node(1), Node(3)])</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#taxidTools.Lineage.Lineage" title="taxidTools.Lineage.Lineage"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lineage</span></code></a></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="taxidTools.Lineage.Lineage.forceRanks">
-<span class="sig-name descname"><span class="pre">forceRanks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ranks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Lineage.Lineage.forceRanks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Force ranks and order on a Lineage</p>
-<p>This force the given rank structure on the Lineage.
-As a result, the ranks will be reordered to follow the input.
-Missing ranks in the Lineage will be filled with None values.</p>
-<p>Not implemented</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#taxidTools.Lineage.Lineage" title="taxidTools.Lineage.Lineage"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lineage</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="taxidTools.Lineage.formatLineages">
-<span class="sig-prename descclassname"><span class="pre">taxidTools.Lineage.</span></span><span class="sig-name descname"><span class="pre">formatLineages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lineages</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Lineage.formatLineages" title="Permalink to this definition">¶</a></dt>
-<dd><p>Not Implemented</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="#taxidTools.Lineage.Lineage" title="taxidTools.Lineage.Lineage"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lineage</span></code></a>]</p>
-</dd>
-</dl>
 </dd></dl>
 
 </section>
@@ -225,7 +194,7 @@ Missing ranks in the Lineage will be filled with None values.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Gregoire Denay.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
     </div>
   </body>
 </html>

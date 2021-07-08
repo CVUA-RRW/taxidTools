@@ -49,7 +49,6 @@
  | <a href="#N"><strong>N</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
- | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  
 </div>
@@ -64,8 +63,12 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="taxidTools.Node.html#taxidTools.Node.Node.children">children (taxidTools.Node.Node property)</a>
+      <li><a href="taxidTools.Node.html#taxidTools.Node.DummyNode.children">children (taxidTools.Node.DummyNode property)</a>
+
+      <ul>
+        <li><a href="taxidTools.Node.html#taxidTools.Node.Node.children">(taxidTools.Node.Node property)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.consensus">consensus() (taxidTools.Taxonomy.Taxonomy method)</a>
@@ -79,6 +82,10 @@
       <li><a href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.distance">distance() (taxidTools.Taxonomy.Taxonomy method)</a>
 </li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="taxidTools.Node.html#taxidTools.Node.DummyNode">DummyNode (class in taxidTools.Node)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="F">F</h2>
@@ -86,12 +93,10 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="taxidTools.Lineage.html#taxidTools.Lineage.Lineage.filter">filter() (taxidTools.Lineage.Lineage method)</a>
 </li>
-      <li><a href="taxidTools.Lineage.html#taxidTools.Lineage.Lineage.forceRanks">forceRanks() (taxidTools.Lineage.Lineage method)</a>
+      <li><a href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.filterRanks">filterRanks() (taxidTools.Taxonomy.Taxonomy method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="taxidTools.Lineage.html#taxidTools.Lineage.formatLineages">formatLineages() (in module taxidTools.Lineage)</a>
-</li>
       <li><a href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.from_list">from_list() (taxidTools.Taxonomy.Taxonomy class method)</a>
 </li>
       <li><a href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.from_taxdump">from_taxdump() (taxidTools.Taxonomy.Taxonomy class method)</a>
@@ -120,12 +125,22 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.isAncestorOf">isAncestorOf() (taxidTools.Taxonomy.Taxonomy method)</a>
+      <li><a href="taxidTools.Node.html#taxidTools.Node.DummyNode.insertNode">insertNode() (taxidTools.Node.DummyNode method)</a>
 </li>
+      <li><a href="taxidTools.Node.html#taxidTools.Node.Node.isAncestorOf">isAncestorOf() (taxidTools.Node.Node method)</a>
+
+      <ul>
+        <li><a href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.isAncestorOf">(taxidTools.Taxonomy.Taxonomy method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.isDescendantOf">isDescendantOf() (taxidTools.Taxonomy.Taxonomy method)</a>
+      <li><a href="taxidTools.Node.html#taxidTools.Node.Node.isDescendantOf">isDescendantOf() (taxidTools.Node.Node method)</a>
+
+      <ul>
+        <li><a href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.isDescendantOf">(taxidTools.Taxonomy.Taxonomy method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -134,9 +149,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.lca">lca() (taxidTools.Taxonomy.Taxonomy method)</a>
 </li>
+      <li><a href="taxidTools.Lineage.html#taxidTools.Lineage.Lineage">Lineage (class in taxidTools.Lineage)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="taxidTools.Lineage.html#taxidTools.Lineage.Lineage">Lineage (class in taxidTools.Lineage)</a>
+      <li><a href="taxidTools.utils.html#taxidTools.utils.linne">linne() (in module taxidTools.utils)</a>
 </li>
       <li><a href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.listDescendant">listDescendant() (taxidTools.Taxonomy.Taxonomy method)</a>
 </li>
@@ -158,6 +175,8 @@
 </li>
         <li><a href="taxidTools.Taxonomy.html#module-taxidTools.Taxonomy">taxidTools.Taxonomy</a>
 </li>
+        <li><a href="taxidTools.utils.html#module-taxidTools.utils">taxidTools.utils</a>
+</li>
       </ul></li>
   </ul></td>
 </tr></table>
@@ -165,11 +184,17 @@
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="taxidTools.Node.html#taxidTools.Node.Node.name">name (taxidTools.Node.Node property)</a>
+      <li><a href="taxidTools.Node.html#taxidTools.Node.DummyNode.name">name (taxidTools.Node.DummyNode property)</a>
+
+      <ul>
+        <li><a href="taxidTools.Node.html#taxidTools.Node.Node.name">(taxidTools.Node.Node property)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="taxidTools.Node.html#taxidTools.Node.Node">Node (class in taxidTools.Node)</a>
+</li>
+      <li><a href="taxidTools.Node.html#taxidTools.Node.Node.node_info">node_info (taxidTools.Node.Node property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -177,7 +202,15 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="taxidTools.Node.html#taxidTools.Node.Node.parent">parent (taxidTools.Node.Node property)</a>
+      <li><a href="taxidTools.Node.html#taxidTools.Node.DummyNode.parent">parent (taxidTools.Node.DummyNode property)</a>
+
+      <ul>
+        <li><a href="taxidTools.Node.html#taxidTools.Node.Node.parent">(taxidTools.Node.Node property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.prune">prune() (taxidTools.Taxonomy.Taxonomy method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -185,24 +218,24 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="taxidTools.Node.html#taxidTools.Node.Node.rank">rank (taxidTools.Node.Node property)</a>
-</li>
-  </ul></td>
-</tr></table>
+      <li><a href="taxidTools.Node.html#taxidTools.Node.DummyNode.rank">rank (taxidTools.Node.DummyNode property)</a>
 
-<h2 id="S">S</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.subtree">subtree() (taxidTools.Taxonomy.Taxonomy method)</a>
+      <ul>
+        <li><a href="taxidTools.Node.html#taxidTools.Node.Node.rank">(taxidTools.Node.Node property)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="taxidTools.Node.html#taxidTools.Node.Node.taxid">taxid (taxidTools.Node.Node property)</a>
+      <li><a href="taxidTools.Node.html#taxidTools.Node.DummyNode.taxid">taxid (taxidTools.Node.DummyNode property)</a>
+
+      <ul>
+        <li><a href="taxidTools.Node.html#taxidTools.Node.Node.taxid">(taxidTools.Node.Node property)</a>
 </li>
+      </ul></li>
       <li>
     taxidTools
 
@@ -231,6 +264,13 @@
 
       <ul>
         <li><a href="taxidTools.Taxonomy.html#module-taxidTools.Taxonomy">module</a>
+</li>
+      </ul></li>
+      <li>
+    taxidTools.utils
+
+      <ul>
+        <li><a href="taxidTools.utils.html#module-taxidTools.utils">module</a>
 </li>
       </ul></li>
       <li><a href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy">Taxonomy (class in taxidTools.Taxonomy)</a>
@@ -275,7 +315,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Gregoire Denay.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
     </div>
   </body>
 </html>

@@ -4,4 +4,5 @@ taxidTools
 .. toctree::
    :maxdepth: 4
 
+   setup
    taxidTools

@@ -1,0 +1,7 @@
+taxidTools.utils module
+=======================
+
+.. automodule:: taxidTools.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:

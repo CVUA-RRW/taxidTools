@@ -15,6 +15,7 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="taxidTools.utils module" href="taxidTools.utils.html" />
     <link rel="prev" title="taxidTools.Node module" href="taxidTools.Node.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -26,6 +27,9 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="taxidTools.utils.html" title="taxidTools.utils module"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="taxidTools.Node.html" title="taxidTools.Node module"
              accesskey="P">previous</a> |</li>
@@ -54,6 +58,11 @@ each Node can be accessed by its taxid.
 A Taoxonomy object can be instanciated directly from a dictionnary,
 iteratively with the method <cite>Taxonomy.addNode</cite> method or from a
 list of taxdump files..</p>
+<p class="rubric">Notes</p>
+<p>Taxonomy objects are mutable and some methods will modify the
+underlying Node objects.
+Do a deep copy if you wish to keep the original object.</p>
+<p>A Taxonomy always assumes a unique root node.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
@@ -112,12 +121,6 @@ list of taxdump files..</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span>
-<span class="go">{&#39;1&#39;: Node object:</span>
-<span class="go">        Taxid: 1</span>
-<span class="go">        Name: None</span>
-<span class="go">        Rank: None</span>
-<span class="go">        Parent: None}</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
@@ -155,17 +158,9 @@ an <cite>IndexError</cite> will be raised.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">node12</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node12&quot;</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">node0</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">,</span> <span class="n">node11</span><span class="p">,</span> <span class="n">node12</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">consensus</span><span class="p">([</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mf">0.8</span><span class="p">)</span>
-<span class="go">Node object:</span>
-<span class="go">        Taxid: 0</span>
-<span class="go">        Name: root</span>
-<span class="go">        Rank: root</span>
-<span class="go">        Parent: None</span>
+<span class="go">Node(0)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">consensus</span><span class="p">([</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mf">0.6</span><span class="p">)</span>
-<span class="go">Node object:</span>
-<span class="go">        Taxid: 1</span>
-<span class="go">        Name: node1</span>
-<span class="go">        Rank: rank1</span>
-<span class="go">        Parent: 0</span>
+<span class="go">Node(1)</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
@@ -203,6 +198,54 @@ an <cite>IndexError</cite> will be raised.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.filterRanks">
+<span class="sig-name descname"><span class="pre">filterRanks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ranks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['species',</span> <span class="pre">'genus',</span> <span class="pre">'family',</span> <span class="pre">'order',</span> <span class="pre">'class',</span> <span class="pre">'phylum',</span> <span class="pre">'kingdom']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.filterRanks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter a Taxonomy to keep only the ranks provided as arguments.</p>
+<p>Modifies Taxonomy in-place to keep only the Nodes at the requested
+ranks. Nodes will be modified to conserve linkage in the Taxonomy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ranks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – List of ranks to keep. Must be sorted by ascending ranks.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>In order to enforce ankering of the Taxonomy, the root node will
+always be kept</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node11</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank1&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node111</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node11</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node001</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s1">&#39;001&#39;</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">node1</span><span class="p">,</span> <span class="n">node11</span><span class="p">,</span> <span class="n">node111</span><span class="p">,</span> <span class="n">node001</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">filterRanks</span><span class="p">([</span><span class="s1">&#39;rank2&#39;</span><span class="p">,</span> <span class="s1">&#39;rank1&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span>
+<span class="go">{Node(1), Node(11), DummyNode(tO841ymu), Node(111), Node(001)}</span>
+</pre></div>
+</div>
+<p>DummyNodes are created s placeholders for missing ranks in the taxonomy:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node001</span><span class="o">.</span><span class="n">parent</span>
+<span class="go">DummyNode(tO841ymu)</span>
+</pre></div>
+</div>
+<p>Note that the root will be kept regardless of the input:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node11</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank1&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node111</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node11</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node001</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s1">&#39;001&#39;</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">node1</span><span class="p">,</span> <span class="n">node11</span><span class="p">,</span> <span class="n">node111</span><span class="p">,</span> <span class="n">node001</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">filterRanks</span><span class="p">([</span><span class="s1">&#39;rank2&#39;</span><span class="p">,</span> <span class="s1">&#39;rank1&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span>
+<span class="go">{DummyNode(wmnar5QT), Node(001), Node(1), Node(11), Node(111)}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -268,7 +311,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">({</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">root</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="n">node</span><span class="p">})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getAncestry</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="go">Lineage([&#39;2&#39;, &#39;1&#39;])</span>
+<span class="go">Lineage([Node(2), Node(1)])</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
@@ -292,11 +335,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">({</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">root</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="n">node</span><span class="p">})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getChildren</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">[Node object:</span>
-<span class="go">        Taxid: 2</span>
-<span class="go">        Name: node</span>
-<span class="go">        Rank: rank</span>
-<span class="go">        Parent: 1]</span>
+<span class="go">[Node(2)]</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
@@ -343,11 +382,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">({</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">root</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="n">node</span><span class="p">})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getParent</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="go">Node object:</span>
-<span class="go">        Taxid: 1</span>
-<span class="go">        Name: root</span>
-<span class="go">        Rank: root</span>
-<span class="go">        Parent: None</span>
+<span class="go">Node(1)</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
@@ -467,11 +502,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">node12</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node12&quot;</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">node0</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">,</span> <span class="n">node11</span><span class="p">,</span> <span class="n">node12</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">lca</span><span class="p">([</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-<span class="go">Node object:</span>
-<span class="go">        Taxid: 0</span>
-<span class="go">        Name: root</span>
-<span class="go">        Rank: root</span>
-<span class="go">        Parent: None</span>
+<span class="go">Node(0)</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
@@ -483,11 +514,14 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.listDescendant">
-<span class="sig-name descname"><span class="pre">listDescendant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.listDescendant" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">listDescendant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.listDescendant" title="Permalink to this definition">¶</a></dt>
 <dd><p>List all descendant of a node</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>taxid</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Taxonomic identification number</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>taxid</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Taxonomic identification number</p></li>
+<li><p><strong>ranks</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>]) – list of ranks for which to return nodes</p></li>
+</ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -498,15 +532,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">node12</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node12&quot;</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">node0</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">,</span> <span class="n">node11</span><span class="p">,</span> <span class="n">node12</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">listDescendant</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">[Node object:</span>
-<span class="go">        Taxid: 11</span>
-<span class="go">        Name: node11</span>
-<span class="go">        Rank: rank2</span>
-<span class="go">        Parent: 1, Node object:</span>
-<span class="go">        Taxid: 12</span>
-<span class="go">        Name: node12</span>
-<span class="go">        Rank: rank2</span>
-<span class="go">        Parent: 1]</span>
+<span class="go">[Node(11), Node(12)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">listDescendant</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">[]</span>
 </pre></div>
@@ -519,9 +545,12 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.subtree">
-<span class="sig-name descname"><span class="pre">subtree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_root</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.subtree" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a sutree with the given taxid as new root.</p>
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.prune">
+<span class="sig-name descname"><span class="pre">prune</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_root</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.prune" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prune the Taxonomy to the given taxid</p>
+<p>Higher ranks taxids will be discarded and the new root node
+will be unlinked from its parent Node.
+This modifies the Taxonomy in-place.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>new_root</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – taxid of the new root</p>
@@ -534,25 +563,18 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">node11</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node11&quot;</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">node12</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node12&quot;</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">node0</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">,</span> <span class="n">node11</span><span class="p">,</span> <span class="n">node12</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">subtree</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">{&#39;1&#39;: Node object:</span>
-<span class="go">        Taxid: 1</span>
-<span class="go">        Name: node1</span>
-<span class="go">        Rank: rank1</span>
-<span class="go">        Parent: 0, &#39;11&#39;: Node object:</span>
-<span class="go">        Taxid: 11</span>
-<span class="go">        Name: node11</span>
-<span class="go">        Rank: rank2</span>
-<span class="go">        Parent: 1, &#39;12&#39;: Node object:</span>
-<span class="go">        Taxid: 12</span>
-<span class="go">        Name: node12</span>
-<span class="go">        Rank: rank2</span>
-<span class="go">        Parent: 1}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">prune</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">{Node(1), Node(11), Node(12)}</span>
+</pre></div>
+</div>
+<p>The new root is unliked from its parent Node</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node1</span><span class="o">.</span><span class="n">parent</span>
+<span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#taxidTools.Taxonomy.Taxonomy" title="taxidTools.Taxonomy.Taxonomy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Taxonomy</span></code></a></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -571,6 +593,9 @@ rankedlineage.dmp files available from the NCBI servers.</p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="taxidTools.Node.html"
                         title="previous chapter">taxidTools.Node module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="taxidTools.utils.html"
+                        title="next chapter">taxidTools.utils module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -602,6 +627,9 @@ rankedlineage.dmp files available from the NCBI servers.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
+          <a href="taxidTools.utils.html" title="taxidTools.utils module"
+             >next</a> |</li>
+        <li class="right" >
           <a href="taxidTools.Node.html" title="taxidTools.Node module"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">taxidTools 2.0.0 documentation</a> &#187;</li>
@@ -612,7 +640,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Gregoire Denay.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
     </div>
   </body>
 </html>

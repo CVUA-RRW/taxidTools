@@ -10,6 +10,7 @@ Submodules
    taxidTools.Lineage
    taxidTools.Node
    taxidTools.Taxonomy
+   taxidTools.utils
 
 Module contents
 ---------------
