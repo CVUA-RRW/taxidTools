@@ -1,11 +1,12 @@
 import setuptools
+from taxidTools import __version__
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="taxidTools",
-    version="2.0.0",
+    version=__version__,
     author="Gregoire Denay",
     author_email="gregoire.denay@cvua-rrw.de",
     description="A Python Toolkit for Taxonomy",

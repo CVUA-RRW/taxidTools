@@ -6,8 +6,9 @@ Taxonomy object definition
 from __future__ import annotations
 from typing import List, Union, Iterator
 from collections import UserDict, Counter
-from .Node import Node
+from .Node import Node, DummyNode
 from .Lineage import Lineage
+from .utils import linne
 
 
 class Taxonomy(UserDict):
@@ -19,6 +20,14 @@ class Taxonomy(UserDict):
     A Taoxonomy object can be instanciated directly from a dictionnary,
     iteratively with the method `Taxonomy.addNode` method or from a 
     list of taxdump files..
+    
+    Notes
+    -----
+    Taxonomy objects are mutable and some methods will modify the 
+    underlying Node objects.
+    Do a deep copy if you wish to keep the original object.
+    
+    A Taxonomy always assumes a unique root node.
     
     See Also
     --------
@@ -137,12 +146,6 @@ class Taxonomy(UserDict):
         --------
         >>> tax = Taxonomy()
         >>> tax.addNode(Node(1))
-        >>> tax
-        {'1': Node object:
-                Taxid: 1
-                Name: None
-                Rank: None
-                Parent: None}
         """
         self[node.taxid] = node
     
@@ -197,11 +200,7 @@ class Taxonomy(UserDict):
         >>> node = Node(2, "node", "rank", root)
         >>> tax = Taxonomy({'1': root, '2': node})
         >>> tax.getParent(2)
-        Node object:
-                Taxid: 1
-                Name: root
-                Rank: root
-                Parent: None
+        Node(1)
         """
         return self[str(taxid)].parent
     
@@ -220,11 +219,7 @@ class Taxonomy(UserDict):
         >>> node = Node(2, "node", "rank", root)
         >>> tax = Taxonomy({'1': root, '2': node})
         >>> tax.getChildren(1)
-        [Node object:
-                Taxid: 2
-                Name: node
-                Rank: rank
-                Parent: 1]
+        [Node(2)]
         """
         return self[str(taxid)].children
     
@@ -243,7 +238,7 @@ class Taxonomy(UserDict):
         >>> node = Node(2, "node", "rank", root)
         >>> tax = Taxonomy({'1': root, '2': node})
         >>> tax.getAncestry(2)
-        Lineage(['2', '1'])
+        Lineage([Node(2), Node(1)])
         """
         return Lineage(self[str(taxid)])
     
@@ -272,11 +267,7 @@ class Taxonomy(UserDict):
         >>> tax.isAncestorOf(2, 1)
         False
         """
-        if str(taxid) == str(child):
-            return False
-        else:
-            ancestors = Lineage(self[str(child)])
-            return str(taxid) in [node.taxid for node in ancestors]
+        return self[str(taxid)].isAncestorOf(self[str(child)])
     
     def isDescendantOf(self, taxid: Union[str,int], parent: Union[str,int]) -> bool:
         """
@@ -303,11 +294,7 @@ class Taxonomy(UserDict):
         >>> tax.isDescendantOf(2, 1)
         True
         """
-        if str(taxid) == str(parent):
-            return False
-        else:
-            ancestors = Lineage(self[str(taxid)])
-            return str(parent) in [node.taxid for node in ancestors]
+        return self[str(taxid)].isDescendantOf(self[str(parent)])
     
     def consensus(self, taxid_list: list[Union[str, int]], min_consensus: float) -> Node:
         """
@@ -340,18 +327,11 @@ class Taxonomy(UserDict):
         >>> node12 = Node(taxid = 12, name = "node12", rank = "rank2", parent = node1)
         >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
         >>> tax.consensus([11, 12, 2], 0.8)
-        Node object:
-                Taxid: 0
-                Name: root
-                Rank: root
-                Parent: None
+        Node(0)
         >>> tax.consensus([11, 12, 2], 0.6)
-        Node object:
-                Taxid: 1
-                Name: node1
-                Rank: rank1
-                Parent: 0
+        Node(1)
         """
+        #TODO deal with DummyNode
         # Consensus under 50% is ambiguous
         if min_consensus <= 0.5 or min_consensus > 1:
             raise ValueError("Minimal consensus should be above 0.5 and under 1")
@@ -362,16 +342,17 @@ class Taxonomy(UserDict):
         max_iter = min([len(lin) for lin in lineages])
         
         i=0
+        last = None
         
         while i < max_iter: 
             count = Counter([lin[i] for lin in lineages])
             mostCommon = count.most_common(1)
             
             if mostCommon[0][1]/total >= min_consensus:
-                # save current succesful consensus, and check the next one
-                last = mostCommon[0][0]
+                if not(isinstance(mostCommon[0][0], DummyNode)):
+                    # save current succesful consensus, and check the next one
+                    last = mostCommon[0][0]
                 i+=1
-            
             else:
                 break
         
@@ -399,11 +380,7 @@ class Taxonomy(UserDict):
         >>> node12 = Node(taxid = 12, name = "node12", rank = "rank2", parent = node1)
         >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
         >>> tax.lca([11, 12, 2])
-        Node object:
-                Taxid: 0
-                Name: root
-                Rank: root
-                Parent: None
+        Node(0)
         """
         return self.consensus(taxid_list, 1)
     
@@ -439,7 +416,7 @@ class Taxonomy(UserDict):
         
         return d1 + d2 - 2 * dlca
     
-    def listDescendant(self, taxid: Union[str, int]) -> list[Node]:
+    def listDescendant(self, taxid: Union[str, int], ranks: Optional[list] = None) -> list[Node]:
         """
         List all descendant of a node
         
@@ -447,6 +424,8 @@ class Taxonomy(UserDict):
         ----------
         taxid: 
             Taxonomic identification number
+        ranks:
+            list of ranks for which to return nodes
         
         Examples
         --------
@@ -457,15 +436,7 @@ class Taxonomy(UserDict):
         >>> node12 = Node(taxid = 12, name = "node12", rank = "rank2", parent = node1)
         >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
         >>> tax.listDescendant(1)
-        [Node object:
-                Taxid: 11
-                Name: node11
-                Rank: rank2
-                Parent: 1, Node object:
-                Taxid: 12
-                Name: node12
-                Rank: rank2
-                Parent: 1]
+        [Node(11), Node(12)]
         >>> tax.listDescendant(2)
         []
         """
@@ -482,10 +453,14 @@ class Taxonomy(UserDict):
         return all
     
     
-    def subtree(self, new_root: Union[str, int]) -> Taxonomy:
+    def prune(self, new_root: Union[str, int]) -> None:
         """
-        Returns a sutree with the given taxid as new root.
+        Prune the Taxonomy to the given taxid
         
+        Higher ranks taxids will be discarded and the new root node
+        will be unlinked from its parent Node.
+        This modifies the Taxonomy in-place.
+         
         Parameters
         ----------
         new_root: 
@@ -499,31 +474,125 @@ class Taxonomy(UserDict):
         >>> node11 = Node(taxid = 11, name = "node11", rank = "rank2", parent = node1)
         >>> node12 = Node(taxid = 12, name = "node12", rank = "rank2", parent = node1)
         >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
-        >>> tax.subtree(1)
-        {'1': Node object:
-                Taxid: 1
-                Name: node1
-                Rank: rank1
-                Parent: 0, '11': Node object:
-                Taxid: 11
-                Name: node11
-                Rank: rank2
-                Parent: 1, '12': Node object:
-                Taxid: 12
-                Name: node12
-                Rank: rank2
-                Parent: 1}
+        >>> tax.prune(1)
+        {Node(1), Node(11), Node(12)}
+        
+        The new root is unliked from its parent Node
+        
+        >>> node1.parent
+        >>>
         """
         new_root_node = self[str(new_root)]
+        
+        new_root_node.parent = None
+        
         nodes = self.listDescendant(new_root)
         
-        new = Taxonomy()
-        new.addNode(new_root_node)
+        self.data = {node.taxid: node for node in nodes}
+        self.addNode(new_root_node)
+    
+    def filterRanks(self, ranks: list[str] = linne()) -> None:
+        """
+        Filter a Taxonomy to keep only the ranks provided as arguments.
         
-        for node in nodes:
-            new.addNode(node)
+        Modifies Taxonomy in-place to keep only the Nodes at the requested
+        ranks. Nodes will be modified to conserve linkage in the Taxonomy.
         
-        return new
+        Parameters
+        ----------
+        ranks:
+            List of ranks to keep. Must be sorted by ascending ranks.
+        
+        Notes
+        -----
+        In order to enforce ankering of the Taxonomy, the root node will
+        always be kept
+        
+        Examples
+        --------
+        >>> node1 = Node(1, rank = "root")
+        >>> node11 = Node(11, rank = "rank1", parent = node1)
+        >>> node111 = Node(111, rank = "rank2", parent = node11)
+        >>> node001 = Node('001', rank = "rank2", parent = node1)
+        >>> tax = Taxonomy.from_list([node1, node11, node111, node001])
+        >>> tax.filterRanks(['rank2', 'rank1', 'root'])
+        >>> tax
+        {Node(1), Node(11), DummyNode(tO841ymu), Node(111), Node(001)}
+        
+        DummyNodes are created s placeholders for missing ranks in the taxonomy:
+        
+        >>> node001.parent
+        DummyNode(tO841ymu)
+        
+        Note that the root will be kept regardless of the input:
+        
+        >>> node1 = Node(1, rank = "root")
+        >>> node11 = Node(11, rank = "rank1", parent = node1)
+        >>> node111 = Node(111, rank = "rank2", parent = node11)
+        >>> node001 = Node('001', rank = "rank2", parent = node1)
+        >>> tax = Taxonomy.from_list([node1, node11, node111, node001])
+        >>> tax.filterRanks(['rank2', 'rank1'])
+        >>> tax
+        {DummyNode(wmnar5QT), Node(001), Node(1), Node(11), Node(111)}
+        """
+        
+        def _insert_nodes_recc(node: Node, index: int, ranks: list[str]) -> list[Node]:
+            """
+            reccursively relink all nodes under node
+            to follow the order given by ranks (descending).
+            index keeps track of the position in ranks.
+            Returns the list of added nodes
+            """
+            # Keep track of created dummyNodes to add to the taxonomy listing later
+            new_nodes = []
+            
+            if index == len(ranks):
+                return []
+            
+            for child in node.children:
+                if child.rank != ranks[index]:
+                    # Create a dummy node and insert it
+                    dummy = DummyNode(rank = ranks[index])
+                    dummy.insertNode(parent = node, child = child)
+                    
+                    # Keep listing of added nodes
+                    new_nodes.append(dummy)
+            
+            # Go down one step with updated children list
+            for child in node.children:
+                new_nodes.extend(_insert_nodes_recc(child, index + 1, ranks))
+            
+            return new_nodes
+        
+        # Create a list of nodes that will be used to update self
+        new_nodes = []
+        
+        # Remove unwanted nodes
+        for node in self.values():
+            if node.rank not in ranks:
+                try:
+                    node._relink()
+                except: 
+                    # relinking a parent-less node raises TypeError
+                    # The root will be kept what ever is asked to keep coherence
+                    new_nodes.append(node)
+            else:
+                new_nodes.append(node)
+        
+        # Get list of ranks (descending)
+        parent = Lineage(new_nodes[0])[-1] # Assumes a unique root
+        
+        # Case where the root rank is given as input
+        if parent.rank == ranks[-1]:
+            ranks = ranks[:-1]
+        
+        new_nodes.extend(_insert_nodes_recc(parent, 0, ranks[::-1]))
+        
+        # Update self
+        self.data = {node.taxid: node for node in new_nodes}
+    
+    def __repr__(self):
+        return f"{set(self.values())}"
 
 
 def _parse_dump(filepath: str) -> Iterator:

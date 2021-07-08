@@ -6,7 +6,10 @@ class TestLineage(unittest.TestCase):
     def setUp(self):
         self.parent = taxidTools.Node(taxid = 0, name = "root", rank = "root", parent = None)
         self.rank1 = taxidTools.Node(taxid = 1, name = "node1", rank = "rank1", parent = self.parent)
-    
+        self.rank2 = taxidTools.Node(taxid = 2, name = "node2", rank = "rank2", parent = self.rank1)
+        self.rank3 = taxidTools.Node(taxid = 3, name = "node3", rank = "rank3", parent = self.rank2)
+  
+        
     def test_init(self):
         # From Node
         self.lin = taxidTools.Lineage(self.rank1)
@@ -17,14 +20,20 @@ class TestLineage(unittest.TestCase):
         self.assertEqual(len(self.linrev), 2)
         self.assertEqual(self.linrev[0].taxid, "0")
         self.assertEqual(self.linrev[1].taxid, "1")
-    
+        
     def test_filter(self):
-        self.rank2 = taxidTools.Node(taxid = 2, name = "node2", rank = "rank2", parent = self.rank1)
-        self.rank3 = taxidTools.Node(taxid = 3, name = "node3", rank = "rank3", parent = self.rank2)
+        fil1 = taxidTools.Lineage(self.rank3)
+        fil1.filter(["rank3", "rank1"])
+        self.assertEqual(len(fil1), 2)
         
+        fil2 = taxidTools.Lineage(self.rank3)
+        fil1.filter(["rank3", "norank", "rank1"])
+        self.assertEqual(len(fil1), 3)
+        self.assertTrue(isinstance(fil1[1], taxidTools.DummyNode))
+   
         self.lin2 = taxidTools.Lineage(self.rank3)
-        fil= self.lin2.filter(["rank1", "rank3"])
-        self.assertEqual(len(fil), 2)
-        self.assertEqual(fil[0], self.rank3)
-        
-        
+        self.lin2.filter(["rank1", "rank3", "rank99", "rank2"])
+        self.assertTrue(isinstance(self.lin2[2], taxidTools.DummyNode))
+        self.assertEqual(self.lin2[0], self.rank1)
+        self.assertEqual(self.lin2[1], self.rank3)
+        self.assertEqual(self.lin2[3], self.rank2)

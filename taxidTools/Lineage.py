@@ -6,7 +6,8 @@ Lineage object definition
 from __future__ import annotations
 from typing import List
 from collections import UserList
-from .Node import Node
+from .Node import Node, DummyNode
+from .utils import linne
 
 
 class Lineage(UserList):
@@ -31,13 +32,15 @@ class Lineage(UserList):
     are not included in the Lineage, as long as Nodes in a Lineage form a 
     linear path.
     
+    Lineage methods will never modify the Node objects it contains
+    
     Examples
     --------
     >>> root = Node(1, "root", "root")
     >>> child1 = Node(2, "child1", "child_rank", root)
     >>> child2 = Node(3, "child2", "sub_child_rank", child1)
     >>> Lineage(child2)
-    Lineage(['3', '2', '1'])
+    Lineage([Node(3), Node(2), Node(1)])
     
     Lineage elements are the Node objects themselves
     
@@ -50,7 +53,7 @@ class Lineage(UserList):
     
     A Lineage can also be descending
     >>> Lineage(child2, ascending = False)
-    Lineage(['1', '2', '3'])
+    Lineage([Node(1), Node(2), Node(3)])
     """
     
     def __init__(self, base_node: Node, ascending: bool = True) -> None:
@@ -69,30 +72,28 @@ class Lineage(UserList):
         if not ascending:
             self.reverse()
     
-    def filter(self, ranks: list[str], ascending: bool = True) -> Lineage:
+    def filter(self, ranks: list[str] = linne()) -> None:
         """
-        Filter a lineage to keep specific ranks
+        Filter a Lineage to a set of specified ranks.
         
-        Lineage order will be conserved and missing ranks will be ignored.
-        Be careful that the returned list can be shorter that the input ranks!
-        If you want the output length to be consistent with the input length, 
-        use `forceRanks`.
+        Modifies a Lineage in-place.
+        Lineage order will not be conserved and dummy nodes will
+        be added as placeholders for missing ranks.
         
         Parameters
         ----------
         ranks:
-            List of ranks to keep. Missing ranks in the Lineage will be skipped.
-        ascending: 
-            Should the Lineage by sorted by ascending ranks?
+            List of ranks to filter. It is assumed to be sorted
+            in the same order as Lineage.
+        no_check:
+            Do not check the length of the ouput. This can result in 
+            the output being longer than the input list of ranks.
         
         Notes
         -----
         The Nodes are not modified by this method! That means that Node.parent will
         still point to the original parent Node, even if it was masked in the Lineage.
         
-        See Also
-        --------
-        taxidTools.Lineage.forceRanks
         
         Examples
         --------
@@ -100,38 +101,26 @@ class Lineage(UserList):
         >>> child1 = Node(2, "child1", "child_rank", root)
         >>> child2 = Node(3, "child2", "sub_child_rank", child1)
         >>> lin = Lineage(child2)
-        >>> lin.filter(["sub_child_rank", "child_rank"])
-        Lineage(['3', '2'])
+        >>> lin.filter(["sub_child_rank", "norank", "child_rank"])
+        >>> lin
+        Lineage([Node(3), 'dummy', Node(2)])
         
-        Node order is conserved
+        Order is not conserved!
         
+        >>> lin = Lineage(child2)
         >>> lin.filter(["root", "sub_child_rank"])
-        Lineage(['3', '1'])
-        
-        Missing ranks are ignored
-        
-        >>> lin.filter(["root", "norank", "name_rank", "sub_child_rank"])
-        Lineage(['3', '1'])
+        Lineage([Node(1), Node(3)])
         """
-        new = Lineage(self._baseNode)
-        new.data = [node for node in self.data if node.rank in ranks]
-        return new
-    
-    def forceRanks(self, ranks: list[str]) -> Lineage:
-        """
-        Force ranks and order on a Lineage
+        nodedict = {node.rank: node for node in self if node.rank in ranks}    
         
-        This force the given rank structure on the Lineage.
-        As a result, the ranks will be reordered to follow the input.
-        Missing ranks in the Lineage will be filled with None values.
+        new = []
+        for rank in ranks:
+            try:
+                new.append(nodedict[rank])
+            except KeyError:
+                new.append(DummyNode(rank = rank))
         
-        Not implemented
-        """
-        raise NotImplementedError
-    
+        self.data = new
+
     def __repr__(self):
-        return f"Lineage({[node.taxid for node in self]})"
-    
-def formatLineages(lineages: list[Lineage]) -> list[Lineage]:
-    """Not Implemented"""
-    raise NotImplementedError
+        return f"Lineage({[node for node in self]})"

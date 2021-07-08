@@ -12,6 +12,9 @@
 
 import os
 import sys
+from taxidTools import __version__
+
+
 sys.path.insert(0, os.path.abspath('../..'))
 sys.setrecursionlimit(1500)
 
@@ -22,7 +25,7 @@ copyright = '2021, Gregoire Denay'
 author = 'Gregoire Denay'
 
 # The full version, including alpha/beta/rc tags
-release = '2.0.0'
+release = __version__
 
 
 # -- General configuration ---------------------------------------------------

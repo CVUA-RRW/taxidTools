@@ -4,13 +4,13 @@ import taxidTools
 class TestComplexTree(unittest.TestCase):
     # Test Tree
     #
-    # 0
+    # 0(-/ --/ -- 001) for testing filterRanks
     # |- 1
     # |  |- 11
     # |  |- 12
     # |      |- 121
     # |      |- 122
-    # |-2
+    # |- 2
     #    |- 21
     #    |- 22
     #    |- 23
@@ -63,6 +63,17 @@ class TestComplexTree(unittest.TestCase):
         self.assertEqual(self.txd.lca(["11", "11", "12"]).taxid,
                          "1")
     
+    def test_consensus_dummynodes(self):
+        node0 = taxidTools.Node(0)
+        node1 = taxidTools.Node(1, parent = node0)
+        dummy1 = taxidTools.DummyNode(parent = node0)
+        node2 = taxidTools.Node(2, parent = node1)
+        node3 = taxidTools.Node(3, parent = dummy1)
+        node4 = taxidTools.Node(4, parent = dummy1)
+        tax = taxidTools.Taxonomy.from_list([node0, node1, dummy1, node2, node3, node4])
+        cons = tax.consensus(["2", "3", "4"], 0.51)
+        self.assertEqual(cons, node0)
+        
     def test_dist(self):
         self.assertEqual(self.txd.distance("11", "12"), 2)
         self.assertEqual(self.txd.distance("11", "21"), 4)
@@ -76,10 +87,20 @@ class TestComplexTree(unittest.TestCase):
         self.assertEqual(self.txd.listDescendant(11), [])
     
     def test_subtree(self):
-        subtree = self.txd.subtree(1)
-        ids = [node.taxid for node in subtree.values()]
+        self.txd.prune(1)
+        ids = [node.taxid for node in self.txd.values()]
         self.assertSetEqual(set(ids), {"1", "11", "12", "121", "122"})
+        self.assertEqual(self.node1.parent, None)
         
-        subtree = self.txd.subtree(11)
-        ids = [node.taxid for node in subtree.values()]
+        self.txd.prune(11)
+        ids = [node.taxid for node in self.txd.values()]
         self.assertSetEqual(set(ids), {"11"})
+    
+    def test_filter(self):
+        node001 = taxidTools.Node('001', name = "node0011", rank = "rank3", parent = self.node0)
+        self.txd.addNode(node001)
+        self.txd.filterRanks(ranks=['rank3', 'rank1'])
+        self.assertEqual(len(self.txd), 7)
+        # test relinking
+        self.assertEqual(self.node121.parent, self.node1)
+        self.assertTrue(isinstance(node001.parent, taxidTools.DummyNode))

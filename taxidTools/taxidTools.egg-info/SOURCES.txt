@@ -1,8 +1,0 @@
-LICENSE
-README.md
-pyproject.toml
-setup.py
-taxidTools/taxidTools.egg-info/PKG-INFO
-taxidTools/taxidTools.egg-info/SOURCES.txt
-taxidTools/taxidTools.egg-info/dependency_links.txt
-taxidTools/taxidTools.egg-info/top_level.txt
