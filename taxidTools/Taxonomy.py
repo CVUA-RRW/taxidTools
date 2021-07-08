@@ -4,7 +4,7 @@ Taxonomy object definition
 
 
 from __future__ import annotations
-from typing import List, Union, Iterator
+from typing import List, Union, Iterator, Optional
 from collections import UserDict, Counter
 from .Node import Node, DummyNode
 from .Lineage import Lineage
