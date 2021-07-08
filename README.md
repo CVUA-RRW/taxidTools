@@ -11,7 +11,8 @@ Currently impelemented:
 * Find last common ancestor or consensus node from a list of ids
 * Calculate the distance between two nodes
 * List all children of a given node
-* Retrieve subtrees
+* Re-root Taxonomy
+* Format to given ranks
 
 ## Requirements
 

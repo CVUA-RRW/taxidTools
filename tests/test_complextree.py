@@ -87,12 +87,12 @@ class TestComplexTree(unittest.TestCase):
         self.assertEqual(self.txd.listDescendant(11), [])
     
     def test_subtree(self):
-        self.txd.prune(1)
+        self.txd.reroot(1)
         ids = [node.taxid for node in self.txd.values()]
         self.assertSetEqual(set(ids), {"1", "11", "12", "121", "122"})
         self.assertEqual(self.node1.parent, None)
         
-        self.txd.prune(11)
+        self.txd.reroot(11)
         ids = [node.taxid for node in self.txd.values()]
         self.assertSetEqual(set(ids), {"11"})
     
