@@ -453,9 +453,9 @@ class Taxonomy(UserDict):
         return all
     
     
-    def prune(self, new_root: Union[str, int]) -> None:
+    def reroot(self, new_root: Union[str, int]) -> None:
         """
-        Prune the Taxonomy to the given taxid
+        reroot the Taxonomy to the given taxid
         
         Higher ranks taxids will be discarded and the new root node
         will be unlinked from its parent Node.
@@ -474,7 +474,7 @@ class Taxonomy(UserDict):
         >>> node11 = Node(taxid = 11, name = "node11", rank = "rank2", parent = node1)
         >>> node12 = Node(taxid = 12, name = "node12", rank = "rank2", parent = node1)
         >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
-        >>> tax.prune(1)
+        >>> tax.reroot(1)
         {Node(1), Node(11), Node(12)}
         
         The new root is unliked from its parent Node
