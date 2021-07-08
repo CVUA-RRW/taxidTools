@@ -2,9 +2,6 @@ from .Node import Node, DummyNode
 from .Taxonomy import Taxonomy
 from .Lineage import Lineage
 from .utils import linne
-
-
-__version__ = "2.0.0"
-__author__ = "Gregoire Denay"
-__url__ = "https://github.com/CVUA-RRW/taxidTools"
-
+from .__version__ import __version__, __title__, __description__
+from .__version__ import __author__, __author_email__, __licence__
+from .__version__ import __url__

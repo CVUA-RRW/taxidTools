@@ -1,18 +1,29 @@
-import setuptools
-from taxidTools import __version__
+import os
+from setuptools import setup
 
-with open("README.md", "r", encoding="utf-8") as fh:
+
+here = os.path.abspath(os.path.dirname(__file__))
+
+
+about = {}
+with open(os.path.join(here, 'taxidTools', '__version__.py'), 'r') as f:
+    exec(f.read(), about)
+
+with open(os.path.join(here, "README.md"), "r") as fh:
     long_description = fh.read()
 
-setuptools.setup(
-    name="taxidTools",
-    version=__version__,
-    author="Gregoire Denay",
-    author_email="gregoire.denay@cvua-rrw.de",
-    description="A Python Toolkit for Taxonomy",
-    long_description=long_description,
+packages = ['taxidTools']
+
+setup(
+    name=about['__title__'],
+    version=about['__version__'],
+    author=about['__author__'],
+    author_email=about['__author_email__'],
+    description=about['__description__'],
+    long_desription=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/CVUA-RRW/taxidTools",
+    url=about['__url__'],
+    license=about['__licence__'],
     project_urls={
         "Bug Tracker": "https://github.com/CVUA-RRW/taxidTools/issues",
     },
@@ -21,7 +32,8 @@ setuptools.setup(
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
     ],
-    package_dir={"": "taxidTools"},
-    packages=setuptools.find_packages(where="src"),
+    package_dir={"taxidTools": "taxidTools"},
+    packages=packages,
     python_requires=">=3.9",
+    include_package_data=True,
 )
