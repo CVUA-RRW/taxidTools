@@ -33,7 +33,7 @@ jobs:
 
       - name: "Build Sphinx Doc"
         run: |
-          sphinx-apidoc -f -e -o docs/source . tests
+          sphinx-apidoc -f -e -o docs/source . tests setup.py
           make -C docs html
       
       - name: "Deploy Github Pages"
