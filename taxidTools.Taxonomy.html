@@ -545,9 +545,9 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.prune">
-<span class="sig-name descname"><span class="pre">prune</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_root</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.prune" title="Permalink to this definition">¶</a></dt>
-<dd><p>Prune the Taxonomy to the given taxid</p>
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.reroot">
+<span class="sig-name descname"><span class="pre">reroot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_root</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.reroot" title="Permalink to this definition">¶</a></dt>
+<dd><p>reroot the Taxonomy to the given taxid</p>
 <p>Higher ranks taxids will be discarded and the new root node
 will be unlinked from its parent Node.
 This modifies the Taxonomy in-place.</p>
@@ -563,7 +563,7 @@ This modifies the Taxonomy in-place.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">node11</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node11&quot;</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">node12</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node12&quot;</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">node0</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">,</span> <span class="n">node11</span><span class="p">,</span> <span class="n">node12</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">prune</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">reroot</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">{Node(1), Node(11), Node(12)}</span>
 </pre></div>
 </div>
