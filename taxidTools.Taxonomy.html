@@ -8,7 +8,7 @@
 
     <title>taxidTools.Taxonomy module &#8212; taxidTools 2.0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -16,33 +16,21 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="taxidTools.utils module" href="taxidTools.utils.html" />
-    <link rel="prev" title="taxidTools.Node module" href="taxidTools.Node.html" /> 
+    <link rel="prev" title="taxidTools.Node module" href="taxidTools.Node.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
   </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="taxidTools.utils.html" title="taxidTools.utils module"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="taxidTools.Node.html" title="taxidTools.Node module"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">taxidTools 2.0.0 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="modules.html" >taxidTools</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="taxidTools.html" accesskey="U">taxidTools package</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">taxidTools.Taxonomy module</a></li> 
-      </ul>
-    </div>  
+  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <section id="module-taxidTools.Taxonomy">
@@ -50,7 +38,7 @@
 <p>Taxonomy object definition</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">taxidTools.Taxonomy.</span></span><span class="sig-name descname"><span class="pre">Taxonomy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">taxidTools.Taxonomy.</span></span><span class="sig-name descname"><span class="pre">Taxonomy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.UserDict</span></code></p>
 <p>Store Taxonomy nodes</p>
 <p>A Taxonomy is instanciated as a dictionnary and
@@ -110,7 +98,7 @@ Do a deep copy if you wish to keep the original object.</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.addNode">
-<span class="sig-name descname"><span class="pre">addNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.addNode" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">addNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.addNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.addNode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a Node to an existing Taxonomy object.</p>
 <p>The Node taxid will be used a key to access element.</p>
 <dl class="field-list simple">
@@ -132,7 +120,7 @@ Do a deep copy if you wish to keep the original object.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.consensus">
-<span class="sig-name descname"><span class="pre">consensus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_consensus</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.consensus" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">consensus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_consensus</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.consensus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.consensus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find a taxonomic consensus for the given taxid with a minimal agreement level.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -172,7 +160,7 @@ an <cite>IndexError</cite> will be raised.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.distance">
-<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taxid2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.distance" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taxid2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Measures the distance between two nodes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -204,7 +192,7 @@ an <cite>IndexError</cite> will be raised.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.filterRanks">
-<span class="sig-name descname"><span class="pre">filterRanks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ranks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['species',</span> <span class="pre">'genus',</span> <span class="pre">'family',</span> <span class="pre">'order',</span> <span class="pre">'class',</span> <span class="pre">'phylum',</span> <span class="pre">'kingdom']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.filterRanks" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">filterRanks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ranks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['species',</span> <span class="pre">'genus',</span> <span class="pre">'family',</span> <span class="pre">'order',</span> <span class="pre">'class',</span> <span class="pre">'phylum',</span> <span class="pre">'kingdom']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.filterRanks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.filterRanks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Filter a Taxonomy to keep only the ranks provided as arguments.</p>
 <p>Modifies Taxonomy in-place to keep only the Nodes at the requested
 ranks. Nodes will be modified to conserve linkage in the Taxonomy.</p>
@@ -252,7 +240,7 @@ always be kept</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.from_list">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.from_list" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.from_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.from_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a Taxonomy object from a list of Nodes</p>
 <p>Convert a list of Nodes into a valid Taxonomy object
 where each Node can be accessed using its taxid as key.</p>
@@ -274,7 +262,7 @@ where each Node can be accessed using its taxid as key.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.from_taxdump">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_taxdump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rankedlineage</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.from_taxdump" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_taxdump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rankedlineage</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.from_taxdump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.from_taxdump" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a Taxonomy object from the NBI Taxdump files</p>
 <p>Load the taxonomic infromation form the nodes.dmp and
 rankedlineage.dmp files available from the NCBI servers.</p>
@@ -299,7 +287,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.getAncestry">
-<span class="sig-name descname"><span class="pre">getAncestry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.getAncestry" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">getAncestry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.getAncestry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.getAncestry" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve the ancestry of the given taxid</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -323,7 +311,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.getChildren">
-<span class="sig-name descname"><span class="pre">getChildren</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.getChildren" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">getChildren</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.getChildren"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.getChildren" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve the children Nodes</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -347,7 +335,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.getName">
-<span class="sig-name descname"><span class="pre">getName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.getName" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">getName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.getName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.getName" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get taxid name</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -370,7 +358,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.getParent">
-<span class="sig-name descname"><span class="pre">getParent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.getParent" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">getParent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.getParent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.getParent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve parent Node</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -394,7 +382,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.getRank">
-<span class="sig-name descname"><span class="pre">getRank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.getRank" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">getRank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.getRank"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.getRank" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get taxid rank</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -417,7 +405,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.isAncestorOf">
-<span class="sig-name descname"><span class="pre">isAncestorOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.isAncestorOf" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">isAncestorOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.isAncestorOf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.isAncestorOf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if taxid is an ancestor of child</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -450,7 +438,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.isDescendantOf">
-<span class="sig-name descname"><span class="pre">isDescendantOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.isDescendantOf" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">isDescendantOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.isDescendantOf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.isDescendantOf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if taxid is an descendant of parent</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -483,7 +471,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.lca">
-<span class="sig-name descname"><span class="pre">lca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.lca" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">lca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.lca"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.lca" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get lowest common node of a bunch of taxids</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -514,7 +502,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.listDescendant">
-<span class="sig-name descname"><span class="pre">listDescendant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.listDescendant" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">listDescendant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.listDescendant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.listDescendant" title="Permalink to this definition">¶</a></dt>
 <dd><p>List all descendant of a node</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -546,7 +534,7 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.reroot">
-<span class="sig-name descname"><span class="pre">reroot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_root</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.reroot" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">reroot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_root</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.reroot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.reroot" title="Permalink to this definition">¶</a></dt>
 <dd><p>reroot the Taxonomy to the given taxid</p>
 <p>Higher ranks taxids will be discarded and the new root node
 will be unlinked from its parent Node.
@@ -584,25 +572,51 @@ This modifies the Taxonomy in-place.</p>
 </section>
 
 
-            <div class="clearer"></div>
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="taxidTools.Node.html"
-                        title="previous chapter">taxidTools.Node module</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="taxidTools.utils.html"
-                        title="next chapter">taxidTools.utils module</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/taxidTools.Taxonomy.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
+<h1 class="logo"><a href="index.html">taxidTools</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=CVUA-RRW&repo=taxidTools&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Readme</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">taxidTools</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="taxidTools.html">taxidTools package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">taxidTools</a><ul>
+  <li><a href="taxidTools.html">taxidTools package</a><ul>
+      <li>Previous: <a href="taxidTools.Node.html" title="previous chapter">taxidTools.Node module</a></li>
+      <li>Next: <a href="taxidTools.utils.html" title="next chapter">taxidTools.utils module</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -613,34 +627,25 @@ This modifies the Taxonomy in-place.</p>
     </div>
 </div>
 <script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="taxidTools.utils.html" title="taxidTools.utils module"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="taxidTools.Node.html" title="taxidTools.Node module"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">taxidTools 2.0.0 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="modules.html" >taxidTools</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="taxidTools.html" >taxidTools package</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">taxidTools.Taxonomy module</a></li> 
-      </ul>
+    <div class="footer">
+      &copy;2021, Gregoire Denay.
+      
     </div>
-    <div class="footer" role="contentinfo">
-        &#169; Copyright 2021, Gregoire Denay.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
-    </div>
+
+    
+
+    
   </body>
 </html>

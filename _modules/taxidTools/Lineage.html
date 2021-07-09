@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>taxidTools.Lineage &#8212; taxidTools 2.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for taxidTools.Lineage</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Lineage object definition</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">UserList</span>
+<span class="kn">from</span> <span class="nn">.Node</span> <span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">DummyNode</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">linne</span>
+
+
+<div class="viewcode-block" id="Lineage"><a class="viewcode-back" href="../../taxidTools.Lineage.html#taxidTools.Lineage.Lineage">[docs]</a><span class="k">class</span> <span class="nc">Lineage</span><span class="p">(</span><span class="n">UserList</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Taxomic Lineage</span>
+<span class="sd">    </span>
+<span class="sd">    Defines a linear and ordered succession of Nodes.</span>
+<span class="sd">    A Lineage is created by providing a single Node that </span>
+<span class="sd">    will be used as a base to retrieve higher Nodes.</span>
+<span class="sd">    Ranks are ascending by default.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    base_node: </span>
+<span class="sd">        The base node, from which the ancestry should be retrieved</span>
+<span class="sd">    ascending: </span>
+<span class="sd">        Should the Lineage by sorted by ascending ranks?</span>
+<span class="sd">    </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    A Lineage does not have to be continuous. Nodes can have parents that</span>
+<span class="sd">    are not included in the Lineage, as long as Nodes in a Lineage form a </span>
+<span class="sd">    linear path.</span>
+<span class="sd">    </span>
+<span class="sd">    Lineage methods will never modify the Node objects it contains</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; root = Node(1, &quot;root&quot;, &quot;root&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; child1 = Node(2, &quot;child1&quot;, &quot;child_rank&quot;, root)</span>
+<span class="sd">    &gt;&gt;&gt; child2 = Node(3, &quot;child2&quot;, &quot;sub_child_rank&quot;, child1)</span>
+<span class="sd">    &gt;&gt;&gt; Lineage(child2)</span>
+<span class="sd">    Lineage([Node(3), Node(2), Node(1)])</span>
+<span class="sd">    </span>
+<span class="sd">    Lineage elements are the Node objects themselves</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; Lineage(child2)[-1]</span>
+<span class="sd">    Node object:</span>
+<span class="sd">            Taxid: 1</span>
+<span class="sd">            Name: root</span>
+<span class="sd">            Rank: root</span>
+<span class="sd">            Parent: None</span>
+<span class="sd">    </span>
+<span class="sd">    A Lineage can also be descending</span>
+<span class="sd">    &gt;&gt;&gt; Lineage(child2, ascending = False)</span>
+<span class="sd">    Lineage([Node(1), Node(2), Node(3)])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_node</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">ascending</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">base_node</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Lineage should be instanciated with a Node or list of Nodes&quot;</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_baseNode</span> <span class="o">=</span> <span class="n">base_node</span>
+        
+        <span class="n">vec</span> <span class="o">=</span> <span class="p">[</span><span class="n">base_node</span><span class="p">]</span>
+        
+        <span class="k">while</span> <span class="n">vec</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+            <span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">vec</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ascending</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+    
+<div class="viewcode-block" id="Lineage.filter"><a class="viewcode-back" href="../../taxidTools.Lineage.html#taxidTools.Lineage.Lineage.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ranks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">linne</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Filter a Lineage to a set of specified ranks.</span>
+<span class="sd">        </span>
+<span class="sd">        Modifies a Lineage in-place.</span>
+<span class="sd">        Lineage order will not be conserved and dummy nodes will</span>
+<span class="sd">        be added as placeholders for missing ranks.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ranks:</span>
+<span class="sd">            List of ranks to filter. It is assumed to be sorted</span>
+<span class="sd">            in the same order as Lineage.</span>
+<span class="sd">        no_check:</span>
+<span class="sd">            Do not check the length of the ouput. This can result in </span>
+<span class="sd">            the output being longer than the input list of ranks.</span>
+<span class="sd">        </span>
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        The Nodes are not modified by this method! That means that Node.parent will</span>
+<span class="sd">        still point to the original parent Node, even if it was masked in the Lineage.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; root = Node(1, &quot;root&quot;, &quot;root&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; child1 = Node(2, &quot;child1&quot;, &quot;child_rank&quot;, root)</span>
+<span class="sd">        &gt;&gt;&gt; child2 = Node(3, &quot;child2&quot;, &quot;sub_child_rank&quot;, child1)</span>
+<span class="sd">        &gt;&gt;&gt; lin = Lineage(child2)</span>
+<span class="sd">        &gt;&gt;&gt; lin.filter([&quot;sub_child_rank&quot;, &quot;norank&quot;, &quot;child_rank&quot;])</span>
+<span class="sd">        &gt;&gt;&gt; lin</span>
+<span class="sd">        Lineage([Node(3), &#39;dummy&#39;, Node(2)])</span>
+<span class="sd">        </span>
+<span class="sd">        Order is not conserved!</span>
+<span class="sd">        </span>
+<span class="sd">        &gt;&gt;&gt; lin = Lineage(child2)</span>
+<span class="sd">        &gt;&gt;&gt; lin.filter([&quot;root&quot;, &quot;sub_child_rank&quot;])</span>
+<span class="sd">        Lineage([Node(1), Node(3)])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nodedict</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="o">.</span><span class="n">rank</span><span class="p">:</span> <span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">rank</span> <span class="ow">in</span> <span class="n">ranks</span><span class="p">}</span>    
+        
+        <span class="n">new</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">rank</span> <span class="ow">in</span> <span class="n">ranks</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">new</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nodedict</span><span class="p">[</span><span class="n">rank</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="n">new</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DummyNode</span><span class="p">(</span><span class="n">rank</span> <span class="o">=</span> <span class="n">rank</span><span class="p">))</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">new</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Lineage(</span><span class="si">{</span><span class="p">[</span><span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">taxidTools</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=CVUA-RRW&repo=taxidTools&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">taxidTools</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Gregoire Denay.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
