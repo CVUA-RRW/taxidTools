@@ -27,7 +27,7 @@ author = 'Gregoire Denay'
 
 # The full version, including alpha/beta/rc tags
 release = taxidTools.__version__
-
+version = taxidTools.__version__
 
 # -- General configuration ---------------------------------------------------
 
