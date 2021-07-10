@@ -1,9 +1,6 @@
 taxidTools: A Python Toolkit for Taxonomy
 =========================================
 
-Release v\ |version|. 
-
-
 .. image:: https://img.shields.io/github/v/release/CVUA-RRW/taxidTools   :alt: GitHub release (latest by date)
 
 .. image:: https://img.shields.io/pypi/l/Django?style=plastic   :alt: License
@@ -37,8 +34,8 @@ some examples of common operations.
 .. toctree::
    :maxdepth: 2
    
-   usage/quickstart
-   usage/advanced
+   Quickstart <usage/quickstart>
+   Advanced examples <usage/advanced>
 
 API Documentation
 -----------------
@@ -48,7 +45,7 @@ Source code documentation.
 .. toctree::
    :maxdepth: 2
    
-   taxidTools.Taxonomy
-   taxidTools.Lineage
-   taxidTools.Node
-   taxidTools.utils
+   Taxonomy API <taxidTools.Taxonomy.rst>
+   Lineage API <taxidTools.Lineage>
+   Node API <taxidTools.Node>
+   utils <taxidTools.utils>
