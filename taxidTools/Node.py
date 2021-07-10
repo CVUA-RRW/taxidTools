@@ -200,7 +200,17 @@ class Node(object):
     
     def __repr__(self) -> str:
         return f"Node({self.taxid})"
-
+    
+    def _to_dict(self):
+        """
+        Create a dict of self with information to recreate the object.
+        """
+        dic = self.__dict__
+        if self.parent:
+            dic['_parent'] = dic['_parent'].taxid
+        dic['type'] = self.__class__.__name__
+        del dic['_children']
+        return dic
 
 class DummyNode(Node):
     """

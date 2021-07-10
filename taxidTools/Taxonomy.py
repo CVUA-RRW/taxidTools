@@ -6,6 +6,7 @@ Taxonomy object definition
 from __future__ import annotations
 from typing import List, Union, Iterator, Optional
 from collections import UserDict, Counter
+import json 
 from .Node import Node, DummyNode
 from .Lineage import Lineage
 from .utils import linne
@@ -33,6 +34,7 @@ class Taxonomy(UserDict):
     --------
     Taxonomy.from_taxdump: load a Taxonomy object from taxdump files
     Taxonomy.from_list: load a Taxonomy object from a list of Node
+    Taxonomy.from_json: load a Taxonomy from a previously exported json file
     Taxonomy.addNode: add a Node to a Taxonomy
     
     Examples
@@ -128,6 +130,44 @@ class Taxonomy(UserDict):
         # Update parent info
         for k, v in parent_dict.items():
             txd[k].parent = txd[v]
+        
+        return cls(txd)
+    
+    @classmethod
+    def from_json(cls, path: str) -> Taxonomy:
+        """
+        Load a Taxonomy from a previously exported json file.
+        
+        Parameters
+        ----------
+        path:
+            Path of file to load
+        
+        See Also
+        --------
+        Taxonomy.write
+        """
+        # parse json
+        with open(path, 'r') as fi:
+            parser = json.loads(fi.read())
+        
+        txd = {}
+        parent_dict = {}
+        
+        # Create nodes from records
+        for record in parser:
+            class_call = eval(record['type'])
+            txd[record['_taxid']] = class_call(record['_taxid'],
+                                            record['_name'],
+                                            record['_rank'])
+            parent_dict[record['_taxid']] = record['_parent']
+        
+        # Update parent info
+        for k, v in parent_dict.items():
+            try:
+                txd[k].parent = txd[v]
+            except:
+                pass
         
         return cls(txd)
     
@@ -591,6 +631,19 @@ class Taxonomy(UserDict):
         # Update self
         self.data = {node.taxid: node for node in new_nodes}
     
+    def write(self, path: str) -> None:
+        """
+        Write taxonomy to a JSON file.
+        
+        Parameters
+        ----------
+        path:
+            File path for the output
+        """
+        writer = json.dumps([node._to_dict() for node in self.values()], indent = 4)
+        with open(path, 'w') as fi:
+            fi.write(writer)
+        
     def __repr__(self):
         return f"{set(self.values())}"
 

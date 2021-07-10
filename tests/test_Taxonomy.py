@@ -37,6 +37,15 @@ class TestTaxdump(unittest.TestCase):
         self.assertEqual(len(ancestry), 29)
         self.assertEqual(ancestry[-1].taxid, "1")
     
+    def test_IO_json(self):
+        self.txd = taxidTools.Taxonomy.from_taxdump(nodes, rankedlineage)
+        self.txd.write("test.json")
+        self.reload = taxidTools.Taxonomy.from_json("test.json")
+        
+        ancestry = taxidTools.Lineage(self.reload["9903"])
+        self.assertEqual(len(ancestry), 29)
+        self.assertEqual(ancestry[-1].taxid, "1")
+    
     def test_getters(self):
         self.assertEqual(self.txd.getName(1), "child")
         self.assertEqual(self.txd.getRank(1), "child")
@@ -56,4 +65,4 @@ class TestTaxdump(unittest.TestCase):
         self.assertTrue(self.txd.isDescendantOf(1,0))
         self.assertFalse(self.txd.isDescendantOf(0,1))
         self.assertFalse(self.txd.isDescendantOf(1,1))
-
+    
