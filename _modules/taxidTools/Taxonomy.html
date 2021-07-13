@@ -608,7 +608,7 @@
 <span class="sd">        &gt;&gt;&gt; tax</span>
 <span class="sd">        {DummyNode(wmnar5QT), Node(001), Node(1), Node(11), Node(111)}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        
+        <span class="c1"># FIXME not working properly </span>
         <span class="k">def</span> <span class="nf">_insert_nodes_recc</span><span class="p">(</span><span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ranks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]:</span>
             <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            reccursively relink all nodes under node</span>
@@ -680,6 +680,21 @@
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
+
+<div class="viewcode-block" id="load"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.load">[docs]</a><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Taxonomy</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a Taxonomy from a previously exported json file.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path:</span>
+<span class="sd">            Path of file to load</span>
+<span class="sd">        </span>
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        Taxonomy.write</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
 
 <span class="k">def</span> <span class="nf">_parse_dump</span><span class="p">(</span><span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>

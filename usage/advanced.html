@@ -35,11 +35,119 @@
             
   <section class="tex2jax_ignore mathjax_ignore" id="advanced-usage">
 <h1>Advanced usage<a class="headerlink" href="#advanced-usage" title="Permalink to this headline">¶</a></h1>
-<p>prune</p>
-<p>filter</p>
-<p>IO</p>
-<p>consensus and distances</p>
-<p>Creating custom taxonomies</p>
+<p>If you mastered the <a class="reference internal" href="quickstart.html"><span class="doc std std-doc">basic operations</span></a> on Taxonomies, here are some
+more advances uses.</p>
+<section id="a-word-of-caution-on-mutable-types">
+<h2>A word of caution on mutable types<a class="headerlink" href="#a-word-of-caution-on-mutable-types" title="Permalink to this headline">¶</a></h2>
+<p>All three object types in this package are mutable types.
+That means that methods will modify the object rather than
+return a new instance of the class.</p>
+<p>However a big difference exists between Lineage and Taxonomy objects:</p>
+<ul class="simple">
+<li><p>Lineages are used as simple references to Nodes, therefore methods
+modifying a Lineage, such as <code class="docutils literal notranslate"><span class="pre">Lineage.filter</span></code> will never mutate the underlying
+Node objects.</p></li>
+<li><p>Taxonomy are a description of the nodes relationships. Therefore methods
+modifying the Taxonomy such as <code class="docutils literal notranslate"><span class="pre">Taxonomy.reroot</span></code>, <code class="docutils literal notranslate"><span class="pre">Taxonomy.filterRanks</span></code> do
+modify at least some of the underlying nodes. This is nescessary to relink
+Nodes after unwanted ranks have been discarded in the case of <code class="docutils literal notranslate"><span class="pre">filterRanks</span></code>
+for example.</p></li>
+</ul>
+<p>Should you want to keep a copy of the original Taxonomy (and the Nodes), you should
+do a deep copy:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax_copy</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">tax</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Alternatively you can save the Taxonomy in JSON format for a later use (see next section).</p>
+</section>
+<section id="create-save-and-load-subtrees">
+<h2>Create, save and load subtrees<a class="headerlink" href="#create-save-and-load-subtrees" title="Permalink to this headline">¶</a></h2>
+<p>If you don’t care about part of the Taxonomy
+you can extract a subtree and/or filter the Taxonomy to keep only specific
+ranks.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">reroot</span><span class="p">(</span><span class="s1">&#39;40674&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">filterRanks</span><span class="p">([</span><span class="s1">&#39;species&#39;</span><span class="p">,</span> <span class="s1">&#39;genus&#39;</span><span class="p">,</span> <span class="s1">&#39;family&#39;</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="s1">&#39;phylum&#39;</span><span class="p">,</span> <span class="s1">&#39;kingdom&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getAncestry</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">)</span>
+<span class="go"># Fix method - currently broken</span>
+</pre></div>
+</div>
+<p>Note the presence of a special kind of Node is this Lineage.
+The DummyNode objects are place-holders for non-existing nodes.
+Here it replaces the phylum and kingdom ranks, that were removed
+by rerooting the tree at the Chardates (class) node.</p>
+<p>Dummy nodes will also be inserted between existing nodes if you request a
+rank that does not exist in a Lineage:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO example</span>
+</pre></div>
+</div>
+<p>As you probably already noticed, parsing the Taxonomy definition can
+take a couple of minutes. If you plan on regularly using a subset of the Taxonomy,
+it can be beneficial to save a filtered version to a JSON file and to reload it later.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;my_filtered_taxonomy.json&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_tax</span> <span class="o">=</span> <span class="n">taxidTools</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;my_filtered_taxonomy.json&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="consensus-determination">
+<h2>Consensus determination<a class="headerlink" href="#consensus-determination" title="Permalink to this headline">¶</a></h2>
+<p>LCA and consensus</p>
+</section>
+<section id="distances">
+<h2>Distances<a class="headerlink" href="#distances" title="Permalink to this headline">¶</a></h2>
+<p>Rank normalization for distances</p>
+</section>
+<section id="working-with-non-ncbi-taxonomies">
+<h2>Working with non-NCBI taxonomies<a class="headerlink" href="#working-with-non-ncbi-taxonomies" title="Permalink to this headline">¶</a></h2>
+<p>Creating a Taxonomy object can also be done without the Taxdump files.
+You can either manually create Nodes and build a Taxonomy from them:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">taxidTools</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s1">&#39;root&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node1</span> <span class="o">=</span> <span class="n">taxidTools</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;node1&#39;</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s1">&#39;rank1&#39;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">root</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">taxidTools</span><span class="o">.</span><span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">root</span><span class="p">,</span> <span class="n">node1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node2</span> <span class="o">=</span> <span class="n">taxidTools</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;node2&#39;</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s1">&#39;rank1&#39;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">root</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">node2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you have a Taxonomy definition file, the best thing to do is
+to create a parsing function to:</p>
+<ul class="simple">
+<li><p>Create Node objects</p></li>
+<li><p>Link parents and children</p></li>
+<li><p>Create a Taxonomy</p></li>
+</ul>
+<p>Here a boilerplate code for such a function, assuming that each node
+is defined on a single line:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">custom_parser</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+    <span class="c1"># Create two empty dict that will store the node</span>
+    <span class="c1"># information and parent information respectively</span>
+    <span class="n">txd</span> <span class="o">=</span> <span class="p">{}</span> 
+    <span class="n">parent_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="c1"># Creating nodes</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+        <span class="c1"># Parse file information, one node record at a time</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fi</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+            <span class="c1"># Get the taxid field and so on for the other fields</span>
+            <span class="n">taxid</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">sep</span><span class="p">)[</span><span class="n">index</span><span class="p">]</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="o">...</span>
+            <span class="n">rank</span> <span class="o">=</span> <span class="o">...</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="o">...</span>
+            
+            <span class="c1"># Create nodes</span>
+            <span class="n">txd</span><span class="p">[</span><span class="n">taxid</span><span class="p">]</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="n">rank</span><span class="p">)</span>
+            <span class="c1"># need to delay parent linking as the parent node might not exist yet</span>
+            <span class="n">parent_dict</span><span class="p">[</span><span class="n">taxid</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent</span>
+        
+    <span class="c1"># Update parent info now that all Nodes are created</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">parent_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">txd</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">txd</span><span class="p">[</span><span class="n">v</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="n">taxidTools</span><span class="o">.</span><span class="n">Taxonomy</span><span class="p">(</span><span class="n">txd</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Also check the implementations of <code class="docutils literal notranslate"><span class="pre">Taxonomy.from_taxdump</span></code> and <code class="docutils literal notranslate"><span class="pre">Taxonomy.from_json</span></code> for
+specific examples.</p>
+</section>
 </section>
 
 
@@ -69,7 +177,14 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#a-word-of-caution-on-mutable-types">A word of caution on mutable types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-save-and-load-subtrees">Create, save and load subtrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#consensus-determination">Consensus determination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#distances">Distances</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#working-with-non-ncbi-taxonomies">Working with non-NCBI taxonomies</a></li>
+</ul>
+</li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../taxidTools.Taxonomy.html">Taxonomy module</a></li>
