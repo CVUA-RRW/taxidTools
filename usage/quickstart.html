@@ -15,8 +15,8 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Advanced examples" href="advanced.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="install.html" />
+    <link rel="next" title="Advanced usage" href="advanced.html" />
+    <link rel="prev" title="Installation guide" href="install.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -35,7 +35,81 @@
             
   <section class="tex2jax_ignore mathjax_ignore" id="quickstart-guide">
 <h1>Quickstart guide<a class="headerlink" href="#quickstart-guide" title="Permalink to this headline">¶</a></h1>
-<p>Todo</p>
+<p>No time to read everything, here is how to start
+using the package:</p>
+<p>Make sure that:</p>
+<ul class="simple">
+<li><p>taxidTools is <a class="reference internal" href="install.html"><span class="doc std std-doc">installed</span></a></p></li>
+<li><p>You have a local copy of the <a class="reference external" href="https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/new_taxdump/">NCBI taxdump files</a></p></li>
+</ul>
+<p>While you can use the package with other taxonomy definitions (or none!),
+using the Taxdump files is the easiest solution.</p>
+<section id="loading-taxonomy-information">
+<h2>Loading taxonomy information<a class="headerlink" href="#loading-taxonomy-information" title="Permalink to this headline">¶</a></h2>
+<p>Start by importing taxidTools:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">taxidTools</span>
+</pre></div>
+</div>
+<p>Then load the taxdump files that you saved and unpacked locally:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">taxidTools</span><span class="o">.</span><span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_taxdump</span><span class="p">(</span>
+<span class="go">        &quot;path/to/nodes.dmp&quot;, </span>
+<span class="go">        &quot;path/to/rankedlineage.dmp&quot;)</span>
+</pre></div>
+</div>
+<p>Parsing the whole files can take a moment!
+Speeding up this process will be discussed in the <span class="xref myst">advanced usage</span> section.</p>
+<p>The nodes.dmp and rankedlineage.dmp are the only files you need
+from the taxdump archive.</p>
+</section>
+<section id="accessing-node-infos">
+<h2>Accessing node infos<a class="headerlink" href="#accessing-node-infos" title="Permalink to this headline">¶</a></h2>
+<p>A Taxonomy object contains a bunch of nodes that represent
+individual branchings or organisms within the clasification.</p>
+<p>Each node has three basic properties:</p>
+<ul class="simple">
+<li><p>A unique identifier (taxid)</p></li>
+<li><p>A name, scientific or common. Beware that these names are not
+nescessarily unique and may be shared by several nodes.</p></li>
+<li><p>A rank, representing where this node is place in the taxonomy.
+Some ranks are unique (e.g. species or genus) but some other appear
+at different heights in the Taxonomy (e.g. clade or the well named norank).</p></li>
+</ul>
+<p>Additionally each node has a single parent, the node directly above it in
+the Taxonomy and can have any number of children. The only parent-less node
+is refered to as root node and represent the top of the taxonomy.</p>
+<p>All these properties can be easily accessed, using the taxid number:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getName</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">)</span>
+<span class="go">&#39;Homo sapiens&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getRank</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">)</span>
+<span class="go">&#39;species&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getParent</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">)</span>
+<span class="go">Node(9605)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getChildren</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">)</span>
+<span class="go">[Node(63221), Node(744458)]</span>
+</pre></div>
+</div>
+<p>You probably notices that some methodes return a Node.
+These are the basic objects containing all of the node information.
+Actually the Taxonomy object is just a dictionnary of Nodes.
+You can access a Node object directly by passing its taxid as a key
+to a Taxonomy object and retrieve the Node properties:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span> <span class="o">=</span> <span class="n">tax</span><span class="p">[</span><span class="s1">&#39;9606&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Homo sapiens&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">rank</span>
+<span class="go">&#39;species&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">parent</span>
+<span class="go">Node(9605)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Homo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">hs</span><span class="o">.</span><span class="n">children</span><span class="p">]</span>
+<span class="go">[&#39;Homo sapiens neanderthalensis&#39;, &quot;Homo sapiens subsp. &#39;Denisova&#39;&quot;]</span>
+</pre></div>
+</div>
+</section>
+<section id="ancestries">
+<h2>Ancestries<a class="headerlink" href="#ancestries" title="Permalink to this headline">¶</a></h2>
+</section>
 </section>
 
 
@@ -63,8 +137,14 @@
 
 <h3>Navigation</h3>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#loading-taxonomy-information">Loading taxonomy information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accessing-node-infos">Accessing node infos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ancestries">Ancestries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced usage</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../taxidTools.Taxonomy.html">Taxonomy module</a></li>
@@ -77,8 +157,8 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="install.html" title="previous chapter">&lt;no title&gt;</a></li>
-      <li>Next: <a href="advanced.html" title="next chapter">Advanced examples</a></li>
+      <li>Previous: <a href="install.html" title="previous chapter">Installation guide</a></li>
+      <li>Next: <a href="advanced.html" title="next chapter">Advanced usage</a></li>
   </ul></li>
 </ul>
 </div>

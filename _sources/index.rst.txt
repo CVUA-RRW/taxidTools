@@ -39,7 +39,7 @@ Get it installed and jump right in:
    
    Installation guide <usage/install>
    Quickstart <usage/quickstart>
-   Advanced examples <usage/advanced>
+   Advanced usage <usage/advanced>
 
 API Documentation
 -----------------
