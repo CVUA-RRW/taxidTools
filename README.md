@@ -1,4 +1,4 @@
-TaxidTools - A Python Toolkit for Taxonomy
+# TaxidTools - A Python Toolkit for Taxonomy
 
 [![Python package](https://github.com/CVUA-RRW/taxidTools/actions/workflows/python-package.yml/badge.svg?branch=main)](https://github.com/CVUA-RRW/taxidTools/actions/workflows/python-package.yml)
 ![PyPI - License](https://img.shields.io/pypi/l/Django?style=plastic)
@@ -30,6 +30,10 @@ python3 -m pip install taxidTools
 ```
 
 Clone or copy the github repository to your project for the developement version.
+
+## Usage 
+
+Check our [homepage](https://cvua-rrw.github.io/taxidTools/index.html) !
 
 ## Contributing
 
