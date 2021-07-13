@@ -15,7 +15,7 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Quickstart guide" href="usage/quickstart.html" />
+    <link rel="next" title="&lt;no title&gt;" href="usage/install.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -39,23 +39,27 @@
 <p><strong>taxidTools</strong> is a Python library to handle Taxonomy definitions.</p>
 <hr class="docutils" />
 <p><strong>Usage example</strong>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">some</span> <span class="n">code</span> <span class="n">example</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">taxidTools</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">taxidTools</span><span class="o">.</span><span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_taxdump</span><span class="p">(</span><span class="s2">&quot;nodes.dmp&quot;</span><span class="p">,</span> <span class="s2">&quot;rankedlineage.dmp&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getName</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">)</span>
+<span class="go">&#39;Homo sapiens&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lineage</span> <span class="o">=</span> <span class="n">tax</span><span class="o">.</span><span class="n">getAncestry</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lineage</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">lineage</span><span class="p">]</span>
+<span class="go">[&#39;Homo sapiens&#39;, &#39;Homo&#39;, &#39;Hominidae&#39;, &#39;Primates&#39;, &#39;Mammalia&#39;, &#39;Chordata&#39;, &#39;Metazoa&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">lca</span><span class="p">([</span><span class="s1">&#39;9606&#39;</span><span class="p">,</span> <span class="s1">&#39;10090&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Euarchontoglires&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">,</span> <span class="s1">&#39;10090&#39;</span><span class="p">)</span>
+<span class="go">18</span>
 </pre></div>
 </div>
-<p><strong>taxidTools</strong> provides classes and methods to easily handle complex taxonomies
-from different sources and perform common operations such as consensus determination,
-finding a last common ancestor or calculating node distances.</p>
-<section id="install">
-<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
-<p>Coming soon</p>
-</section>
+<p><strong>taxidTools</strong> allows you to easily handle complex taxonomies
+from different sources and perform common operations such as
+consensus determination, finding a last common ancestor or
+calculating node distances.</p>
 <section id="user-guide">
 <h2>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h2>
-<p>To do
-Description of the different object classes.
-What are they for.
-How to handle them.
-some examples of common operations.</p>
+<p>Get it installed and jump right in:</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="usage/quickstart.html">Quickstart</a></li>
@@ -68,10 +72,10 @@ some examples of common operations.</p>
 <p>Source code documentation.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="taxidTools.Taxonomy.html">Taxonomy API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="taxidTools.Lineage.html">Lineage API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="taxidTools.Node.html">Node API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="taxidTools.utils.html">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="taxidTools.Taxonomy.html">Taxonomy module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="taxidTools.Lineage.html">Lineage module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="taxidTools.Node.html">Node module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="taxidTools.utils.html">utils module</a></li>
 </ul>
 </div>
 </section>
@@ -106,17 +110,17 @@ some examples of common operations.</p>
 <li class="toctree-l1"><a class="reference internal" href="usage/advanced.html">Advanced examples</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="taxidTools.Taxonomy.html">Taxonomy API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="taxidTools.Lineage.html">Lineage API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="taxidTools.Node.html">Node API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="taxidTools.utils.html">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="taxidTools.Taxonomy.html">Taxonomy module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="taxidTools.Lineage.html">Lineage module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="taxidTools.Node.html">Node module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="taxidTools.utils.html">utils module</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="usage/quickstart.html" title="next chapter">Quickstart guide</a></li>
+      <li>Next: <a href="usage/install.html" title="next chapter">&lt;no title&gt;</a></li>
   </ul></li>
 </ul>
 </div>
@@ -124,7 +128,7 @@ some examples of common operations.</p>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
