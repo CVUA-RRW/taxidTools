@@ -38,12 +38,40 @@
 <p>This part presents the different possibilities to install
 taxidTools.
 To run properly make sure you are using Python 3.9 or above.</p>
-<section id="pip">
-<h2>pip<a class="headerlink" href="#pip" title="Permalink to this headline">¶</a></h2>
-<p>coming soon</p>
+<section id="using-pip">
+<h2>Using pip<a class="headerlink" href="#using-pip" title="Permalink to this headline">¶</a></h2>
+<p>Simply run in any terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python -m pip install taxidTools
+</pre></div>
+</div>
 </section>
-<section id="github">
-<h2>Github<a class="headerlink" href="#github" title="Permalink to this headline">¶</a></h2>
+<section id="using-conda">
+<h2>Using conda<a class="headerlink" href="#using-conda" title="Permalink to this headline">¶</a></h2>
+<p>If using conda from the command line, simply activate
+your environment and install taxidTools using pip:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda create -n myenv <span class="s1">&#39;python&gt;=3.9&#39;</span> 
+$ conda activate myenv
+$ python -m pip install taxidTools
+</pre></div>
+</div>
+<p>You can also create an environemnt definition file to
+use with workflow manager or to distribute your environment:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">myenv</span>
+<span class="l l-Scalar l-Scalar-Plain">dependencies</span>
+  <span class="l l-Scalar l-Scalar-Plain">- python&gt;=3.9</span>
+  <span class="l l-Scalar l-Scalar-Plain">- pip</span>
+  <span class="l l-Scalar l-Scalar-Plain">- pip</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">taxidTools</span>
+</pre></div>
+</div>
+<p>Save the above file as myenv.yml and create your environment
+the usual way:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda env create -f myenv.yml
+</pre></div>
+</div>
+</section>
+<section id="development-version">
+<h2>Development version<a class="headerlink" href="#development-version" title="Permalink to this headline">¶</a></h2>
 <p>To get the latest development version, clone the git repository:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/CVUA-RRW/taxidTools
 </pre></div>
@@ -83,8 +111,9 @@ $ python -m pip install .
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#pip">pip</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#github">Github</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-pip">Using pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-conda">Using conda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#development-version">Development version</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
