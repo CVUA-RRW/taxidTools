@@ -25,6 +25,10 @@ Optionally some taxonomy definiton files usch as the [Taxdump definition files](
 
 ## Installation
 
+```bash
+python3 -m pip install taxidTools
+```
+
 Clone or copy the github repository to your project for the developement version.
 
 ## Contributing
