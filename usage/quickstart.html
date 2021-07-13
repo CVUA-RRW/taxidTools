@@ -75,8 +75,8 @@ Some ranks are unique (e.g. species or genus) but some other appear
 at different heights in the Taxonomy (e.g. clade or the well named norank).</p></li>
 </ul>
 <p>Additionally each node has a single parent, the node directly above it in
-the Taxonomy and can have any number of children. The only parent-less node
-is refered to as root node and represent the top of the taxonomy.</p>
+the Taxonomy, and can have any number of children. The only parent-less node
+is refered to as root node and represents the top of the taxonomy.</p>
 <p>All these properties can be easily accessed, using the taxid number:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getName</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">)</span>
 <span class="go">&#39;Homo sapiens&#39;</span>
@@ -88,12 +88,12 @@ is refered to as root node and represent the top of the taxonomy.</p>
 <span class="go">[Node(63221), Node(744458)]</span>
 </pre></div>
 </div>
-<p>You probably notices that some methodes return a Node.
+<p>You probably notices that some methodes return a Node object.
 These are the basic objects containing all of the node information.
 Actually the Taxonomy object is just a dictionnary of Nodes.
 You can access a Node object directly by passing its taxid as a key
 to a Taxonomy object and retrieve the Node properties:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span> <span class="o">=</span> <span class="n">tax</span><span class="p">[</span><span class="s1">&#39;9606&#39;</span><span class="p">]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span> <span class="o">=</span> <span class="n">tax</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">name</span>
 <span class="go">&#39;Homo sapiens&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hs</span><span class="o">.</span><span class="n">rank</span>
@@ -109,6 +109,43 @@ to a Taxonomy object and retrieve the Node properties:</p>
 </section>
 <section id="ancestries">
 <h2>Ancestries<a class="headerlink" href="#ancestries" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to test directly the relationships betwen two nodes.
+Note that a Node is neither an ancestor or descendant of itself.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">isDescendantOf</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">,</span> <span class="s1">&#39;9605&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">isAncestorOf</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">,</span> <span class="s1">&#39;9605&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">isAncestorOf</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">,</span> <span class="s1">&#39;9606&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>It is also possible to retrieve the whole ancestry of a given node.
+Ancestries are stored in list-like Lineage objects, Nodes indices follow
+the taxonomy order.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span> <span class="o">=</span> <span class="n">tax</span><span class="o">.</span><span class="n">getAncestry</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">Node(9606)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">lin</span><span class="p">)</span>
+<span class="go">32</span>
+</pre></div>
+</div>
+<p>It is possible to filter a Lineage for specific ranks:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span><span class="o">.</span><span class="n">filter</span><span class="p">([</span><span class="s1">&#39;genus&#39;</span><span class="p">,</span> <span class="s1">&#39;family&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span>
+<span class="go">Lineage([Node(9605), Node(9604)])</span>
+</pre></div>
+</div>
+<p>This mutates the Lineage object, if you want to keep the object intact
+you should use list comprehensions to filter specific nodes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span> <span class="o">=</span> <span class="n">tax</span><span class="o">.</span><span class="n">getAncestry</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">lin</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">rank</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;genus&#39;</span><span class="p">,</span> <span class="s1">&#39;family&#39;</span><span class="p">]]</span>
+<span class="go">[Node(9605), Node(9604)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">lin</span><span class="p">)</span>
+<span class="go">32</span>
+</pre></div>
+</div>
+<p>Now that you know the basic functions of taxidTools, you are ready
+for the <a class="reference internal" href="advanced.html"><span class="doc std std-doc">advanced uses</span></a>.</p>
 </section>
 </section>
 

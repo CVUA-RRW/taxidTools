@@ -46,8 +46,8 @@ Some ranks are unique (e.g. species or genus) but some other appear
 at different heights in the Taxonomy (e.g. clade or the well named norank).
 
 Additionally each node has a single parent, the node directly above it in
-the Taxonomy and can have any number of children. The only parent-less node
-is refered to as root node and represent the top of the taxonomy.
+the Taxonomy, and can have any number of children. The only parent-less node
+is refered to as root node and represents the top of the taxonomy.
 
 All these properties can be easily accessed, using the taxid number:
 
@@ -62,14 +62,14 @@ Node(9605)
 [Node(63221), Node(744458)]
 ```
 
-You probably notices that some methodes return a Node. 
+You probably notices that some methodes return a Node object. 
 These are the basic objects containing all of the node information. 
 Actually the Taxonomy object is just a dictionnary of Nodes.
 You can access a Node object directly by passing its taxid as a key
 to a Taxonomy object and retrieve the Node properties:
 
 ```python
->>> hs = tax['9606']
+>>> hs = tax.get('9606')
 >>> hs.name
 'Homo sapiens'
 >>> hs.rank
@@ -84,5 +84,48 @@ Node(9605)
 
 ## Ancestries
 
+It is possible to test directly the relationships betwen two nodes.
+Note that a Node is neither an ancestor or descendant of itself.
 
+```python
+>>> tax.isDescendantOf('9606', '9605')
+True
+>>> tax.isAncestorOf('9606', '9605')
+False
+>>> tax.isAncestorOf('9606', '9606')
+False
+```
 
+It is also possible to retrieve the whole ancestry of a given node. 
+Ancestries are stored in list-like Lineage objects, Nodes indices follow 
+the taxonomy order.
+
+```python
+>>> lin = tax.getAncestry('9606')
+>>> lin[0]
+Node(9606)
+>>> len(lin)
+32
+```
+
+It is possible to filter a Lineage for specific ranks:
+
+```python
+>>> lin.filter(['genus', 'family'])
+>>> lin
+Lineage([Node(9605), Node(9604)])
+```
+
+This mutates the Lineage object, if you want to keep the object intact
+you should use list comprehensions to filter specific nodes:
+
+```python
+>>> lin = tax.getAncestry('9606')
+>>> [node for node in lin if node.rank in ['genus', 'family']]
+[Node(9605), Node(9604)]
+>>> len(lin)
+32
+```
+
+Now that you know the basic functions of taxidTools, you are ready 
+for the [advanced uses](advanced.md).
