@@ -28,7 +28,7 @@ use with workflow manager or to distribute your environment:
 
 ```yaml
 name: myenv
-dependencies
+dependencies:
   - python>=3.9
   - pip
   - pip:

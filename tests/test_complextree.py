@@ -87,14 +87,13 @@ class TestComplexTree(unittest.TestCase):
         self.assertEqual(self.txd.listDescendant(11), [])
     
     def test_subtree(self):
-        self.txd.reroot(1)
+        self.txd.prune(1)
         ids = [node.taxid for node in self.txd.values()]
-        self.assertSetEqual(set(ids), {"1", "11", "12", "121", "122"})
-        self.assertEqual(self.node1.parent, None)
+        self.assertSetEqual(set(ids), {"0", "1", "11", "12", "121", "122"})
         
-        self.txd.reroot(11)
+        self.txd.prune(11)
         ids = [node.taxid for node in self.txd.values()]
-        self.assertSetEqual(set(ids), {"11"})
+        self.assertSetEqual(set(ids), {"11", "1", "0"})
     
     def test_filter(self):
         node001 = taxidTools.Node('001', name = "node0011", rank = "rank3", parent = self.node0)

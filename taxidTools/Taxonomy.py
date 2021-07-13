@@ -493,18 +493,18 @@ class Taxonomy(UserDict):
         return all
     
     
-    def reroot(self, new_root: Union[str, int]) -> None:
+    def prune(self, taxid: Union[str, int]) -> None:
         """
-        reroot the Taxonomy to the given taxid
+        Prune the Taxonomy at the given taxid
         
-        Higher ranks taxids will be discarded and the new root node
-        will be unlinked from its parent Node.
-        This modifies the Taxonomy in-place.
-         
+        Nodes not in the lineage (upwards and downwards)
+        of the given taxid will be discarded.
+        The Ancestors of the given taxid will be kept!
+        
         Parameters
         ----------
-        new_root: 
-            taxid of the new root
+        taxid: 
+            taxid whose Lineage to keep
         
         Examples
         --------
@@ -514,22 +514,22 @@ class Taxonomy(UserDict):
         >>> node11 = Node(taxid = 11, name = "node11", rank = "rank2", parent = node1)
         >>> node12 = Node(taxid = 12, name = "node12", rank = "rank2", parent = node1)
         >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
-        >>> tax.reroot(1)
-        {Node(1), Node(11), Node(12)}
+        >>> tax.prune(1)
         
-        The new root is unliked from its parent Node
+        Ancestry is kept_
         
-        >>> node1.parent
-        >>>
+        >>> tax.getAncestry(11)
+        Lineage([Node(11), Node(1), Node(0)])
+        
+        But other branches are gone
+        
+        >>> tax.get('2')
+        KeyError: '2'
         """
-        new_root_node = self[str(new_root)]
-        
-        new_root_node.parent = None
-        
-        nodes = self.listDescendant(new_root)
+        nodes = self.getAncestry(taxid)
+        nodes.extend(self.listDescendant(taxid))
         
         self.data = {node.taxid: node for node in nodes}
-        self.addNode(new_root_node)
     
     def filterRanks(self, ranks: list[str] = linne()) -> None:
         """
@@ -575,58 +575,54 @@ class Taxonomy(UserDict):
         >>> tax
         {DummyNode(wmnar5QT), Node(001), Node(1), Node(11), Node(111)}
         """
-        # FIXME not working properly 
-        def _insert_nodes_recc(node: Node, index: int, ranks: list[str]) -> list[Node]:
+        
+        def _insert_nodes_recc(node: Node, ranks: list[str]) -> list[Node]:
             """
             reccursively relink all nodes under node
             to follow the order given by ranks (descending).
             index keeps track of the position in ranks.
             Returns the list of added nodes
             """
-            # Keep track of created dummyNodes to add to the taxonomy listing later
-            new_nodes = []
-            
-            if index == len(ranks):
+            # if no ranks left return an empty list
+            if not ranks:
                 return []
             
-            for child in node.children:
-                if child.rank != ranks[index]:
+            # Keep track of created dummyNodes to add to the taxonomy listing later
+            new_nodes = []
+            children = node.children
+            for child in children:
+                if child.rank != ranks[-1]:
                     # Create a dummy node and insert it
-                    dummy = DummyNode(rank = ranks[index])
+                    dummy = DummyNode(rank = ranks[-1])
                     dummy.insertNode(parent = node, child = child)
                     
                     # Keep listing of added nodes
                     new_nodes.append(dummy)
             
             # Go down one step with updated children list
-            for child in node.children:
-                new_nodes.extend(_insert_nodes_recc(child, index + 1, ranks))
+            for child in node.children: 
+                new_nodes.extend(_insert_nodes_recc(child, ranks[:-1])) # going down one rank
             
             return new_nodes
+        
         
         # Create a list of nodes that will be used to update self
         new_nodes = []
         
         # Remove unwanted nodes
         for node in self.values():
-            if node.rank not in ranks:
+            if node.rank in ranks:
+                new_nodes.append(node)
+            else:
                 try:
                     node._relink()
                 except: 
                     # relinking a parent-less node raises TypeError
-                    # The root will be kept what ever is asked to keep coherence
+                    # The root will be kept whatever is asked to keep coherence
                     new_nodes.append(node)
-            else:
-                new_nodes.append(node)
         
-        # Get list of ranks (descending)
-        parent = Lineage(new_nodes[0])[-1] # Assumes a unique root
-        
-        # Case where the root rank is given as input
-        if parent.rank == ranks[-1]:
-            ranks = ranks[:-1]
-        
-        new_nodes.extend(_insert_nodes_recc(parent, 0, ranks[::-1]))
+        root = self.root
+        new_nodes.extend(_insert_nodes_recc(root, ranks)) # Reversing ranks to have highest rank first
         
         # Update self
         self.data = {node.taxid: node for node in new_nodes}
@@ -643,6 +639,14 @@ class Taxonomy(UserDict):
         writer = json.dumps([node._to_dict() for node in self.values()], indent = 4)
         with open(path, 'w') as fi:
             fi.write(writer)
+    
+    @property
+    def root(self) -> Node:
+        """
+        Returns the root Node, assumes a single root shared by all Nodes
+        """
+        anynode = next(iter(self.values()))
+        return Lineage(anynode)[-1]
         
     def __repr__(self):
         return f"{set(self.values())}"
