@@ -11,29 +11,33 @@ taxidTools: A Python Toolkit for Taxonomy
 
 **Usage example**::
 
-    >>> some code example
+    >>> import taxidTools
+    >>> tax = taxidTools.Taxonomy.from_taxdump("nodes.dmp", "rankedlineage.dmp")
+    >>> tax.getName('9606')
+    'Homo sapiens'
+    >>> lineage = tax.getAncestry('9606')
+    >>> lineage.filter()
+    >>> [node.name for node in lineage]
+    ['Homo sapiens', 'Homo', 'Hominidae', 'Primates', 'Mammalia', 'Chordata', 'Metazoa']
+    >>> tax.lca(['9606', '10090']).name
+    'Euarchontoglires'
+    >>> tax.distance('9606', '10090')
+    18
 
-**taxidTools** provides classes and methods to easily handle complex taxonomies
-from different sources and perform common operations such as consensus determination,
-finding a last common ancestor or calculating node distances.
-
-Install
--------
-
-Coming soon
+**taxidTools** allows you to easily handle complex taxonomies
+from different sources and perform common operations such as 
+consensus determination, finding a last common ancestor or 
+calculating node distances. 
 
 User Guide
 ----------
 
-To do
-Description of the different object classes.
-What are they for.
-How to handle them.
-some examples of common operations.
+Get it installed and jump right in:
 
 .. toctree::
    :maxdepth: 2
    
+   Installation guide <usage/install>
    Quickstart <usage/quickstart>
    Advanced examples <usage/advanced>
 
@@ -45,7 +49,7 @@ Source code documentation.
 .. toctree::
    :maxdepth: 2
    
-   Taxonomy API <taxidTools.Taxonomy.rst>
-   Lineage API <taxidTools.Lineage>
-   Node API <taxidTools.Node>
-   utils <taxidTools.utils>
+   Taxonomy module <taxidTools.Taxonomy.rst>
+   Lineage module <taxidTools.Lineage>
+   Node module <taxidTools.Node>
+   utils module <taxidTools.utils>
