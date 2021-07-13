@@ -555,15 +555,15 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.reroot">
-<span class="sig-name descname"><span class="pre">reroot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_root</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.reroot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.reroot" title="Permalink to this definition">¶</a></dt>
-<dd><p>reroot the Taxonomy to the given taxid</p>
-<p>Higher ranks taxids will be discarded and the new root node
-will be unlinked from its parent Node.
-This modifies the Taxonomy in-place.</p>
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.prune">
+<span class="sig-name descname"><span class="pre">prune</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.prune"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.prune" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prune the Taxonomy at the given taxid</p>
+<p>Nodes not in the lineage (upwards and downwards)
+of the given taxid will be discarded.
+The Ancestors of the given taxid will be kept!</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>new_root</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – taxid of the new root</p>
+<dd class="field-odd"><p><strong>taxid</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – taxid whose Lineage to keep</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -573,18 +573,33 @@ This modifies the Taxonomy in-place.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">node11</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node11&quot;</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">node12</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node12&quot;</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">node0</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">,</span> <span class="n">node11</span><span class="p">,</span> <span class="n">node12</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">reroot</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">{Node(1), Node(11), Node(12)}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">prune</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The new root is unliked from its parent Node</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node1</span><span class="o">.</span><span class="n">parent</span>
-<span class="go">&gt;&gt;&gt;</span>
+<p>Ancestry is <a href="#id1"><span class="problematic" id="id2">kept_</span></a></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getAncestry</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="go">Lineage([Node(11), Node(1), Node(0)])</span>
+</pre></div>
+</div>
+<p>But other branches are gone</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">)</span>
+<span class="go">KeyError: &#39;2&#39;</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.root">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">root</span></span><em class="property"><span class="pre">:</span> <span class="pre">taxidTools.Node.Node</span></em><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the root Node, assumes a single root shared by all Nodes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>

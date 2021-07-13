@@ -526,18 +526,18 @@
         <span class="k">return</span> <span class="nb">all</span></div>
     
     
-<div class="viewcode-block" id="Taxonomy.reroot"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.reroot">[docs]</a>    <span class="k">def</span> <span class="nf">reroot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Taxonomy.prune"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.prune">[docs]</a>    <span class="k">def</span> <span class="nf">prune</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        reroot the Taxonomy to the given taxid</span>
+<span class="sd">        Prune the Taxonomy at the given taxid</span>
 <span class="sd">        </span>
-<span class="sd">        Higher ranks taxids will be discarded and the new root node</span>
-<span class="sd">        will be unlinked from its parent Node.</span>
-<span class="sd">        This modifies the Taxonomy in-place.</span>
-<span class="sd">         </span>
+<span class="sd">        Nodes not in the lineage (upwards and downwards)</span>
+<span class="sd">        of the given taxid will be discarded.</span>
+<span class="sd">        The Ancestors of the given taxid will be kept!</span>
+<span class="sd">        </span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        new_root: </span>
-<span class="sd">            taxid of the new root</span>
+<span class="sd">        taxid: </span>
+<span class="sd">            taxid whose Lineage to keep</span>
 <span class="sd">        </span>
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
@@ -547,22 +547,22 @@
 <span class="sd">        &gt;&gt;&gt; node11 = Node(taxid = 11, name = &quot;node11&quot;, rank = &quot;rank2&quot;, parent = node1)</span>
 <span class="sd">        &gt;&gt;&gt; node12 = Node(taxid = 12, name = &quot;node12&quot;, rank = &quot;rank2&quot;, parent = node1)</span>
 <span class="sd">        &gt;&gt;&gt; tax = Taxonomy.from_list([node0, node1, node2, node11, node12])</span>
-<span class="sd">        &gt;&gt;&gt; tax.reroot(1)</span>
-<span class="sd">        {Node(1), Node(11), Node(12)}</span>
+<span class="sd">        &gt;&gt;&gt; tax.prune(1)</span>
 <span class="sd">        </span>
-<span class="sd">        The new root is unliked from its parent Node</span>
+<span class="sd">        Ancestry is kept_</span>
 <span class="sd">        </span>
-<span class="sd">        &gt;&gt;&gt; node1.parent</span>
-<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; tax.getAncestry(11)</span>
+<span class="sd">        Lineage([Node(11), Node(1), Node(0)])</span>
+<span class="sd">        </span>
+<span class="sd">        But other branches are gone</span>
+<span class="sd">        </span>
+<span class="sd">        &gt;&gt;&gt; tax.get(&#39;2&#39;)</span>
+<span class="sd">        KeyError: &#39;2&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">new_root_node</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">new_root</span><span class="p">)]</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAncestry</span><span class="p">(</span><span class="n">taxid</span><span class="p">)</span>
+        <span class="n">nodes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">listDescendant</span><span class="p">(</span><span class="n">taxid</span><span class="p">))</span>
         
-        <span class="n">new_root_node</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
-        
-        <span class="n">nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">listDescendant</span><span class="p">(</span><span class="n">new_root</span><span class="p">)</span>
-        
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="o">.</span><span class="n">taxid</span><span class="p">:</span> <span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">new_root_node</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="o">.</span><span class="n">taxid</span><span class="p">:</span> <span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">}</span></div>
     
 <div class="viewcode-block" id="Taxonomy.filterRanks"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.filterRanks">[docs]</a>    <span class="k">def</span> <span class="nf">filterRanks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ranks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">linne</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -608,58 +608,54 @@
 <span class="sd">        &gt;&gt;&gt; tax</span>
 <span class="sd">        {DummyNode(wmnar5QT), Node(001), Node(1), Node(11), Node(111)}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># FIXME not working properly </span>
-        <span class="k">def</span> <span class="nf">_insert_nodes_recc</span><span class="p">(</span><span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ranks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]:</span>
+        
+        <span class="k">def</span> <span class="nf">_insert_nodes_recc</span><span class="p">(</span><span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">ranks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]:</span>
             <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            reccursively relink all nodes under node</span>
 <span class="sd">            to follow the order given by ranks (descending).</span>
 <span class="sd">            index keeps track of the position in ranks.</span>
 <span class="sd">            Returns the list of added nodes</span>
 <span class="sd">            &quot;&quot;&quot;</span>
-            <span class="c1"># Keep track of created dummyNodes to add to the taxonomy listing later</span>
-            <span class="n">new_nodes</span> <span class="o">=</span> <span class="p">[]</span>
-            
-            <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">ranks</span><span class="p">):</span>
+            <span class="c1"># if no ranks left return an empty list</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ranks</span><span class="p">:</span>
                 <span class="k">return</span> <span class="p">[]</span>
             
-            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">rank</span> <span class="o">!=</span> <span class="n">ranks</span><span class="p">[</span><span class="n">index</span><span class="p">]:</span>
+            <span class="c1"># Keep track of created dummyNodes to add to the taxonomy listing later</span>
+            <span class="n">new_nodes</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">children</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">rank</span> <span class="o">!=</span> <span class="n">ranks</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
                     <span class="c1"># Create a dummy node and insert it</span>
-                    <span class="n">dummy</span> <span class="o">=</span> <span class="n">DummyNode</span><span class="p">(</span><span class="n">rank</span> <span class="o">=</span> <span class="n">ranks</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+                    <span class="n">dummy</span> <span class="o">=</span> <span class="n">DummyNode</span><span class="p">(</span><span class="n">rank</span> <span class="o">=</span> <span class="n">ranks</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
                     <span class="n">dummy</span><span class="o">.</span><span class="n">insertNode</span><span class="p">(</span><span class="n">parent</span> <span class="o">=</span> <span class="n">node</span><span class="p">,</span> <span class="n">child</span> <span class="o">=</span> <span class="n">child</span><span class="p">)</span>
                     
                     <span class="c1"># Keep listing of added nodes</span>
                     <span class="n">new_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dummy</span><span class="p">)</span>
             
             <span class="c1"># Go down one step with updated children list</span>
-            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-                <span class="n">new_nodes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_insert_nodes_recc</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ranks</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span> 
+                <span class="n">new_nodes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_insert_nodes_recc</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">ranks</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span> <span class="c1"># going down one rank</span>
             
             <span class="k">return</span> <span class="n">new_nodes</span>
+        
         
         <span class="c1"># Create a list of nodes that will be used to update self</span>
         <span class="n">new_nodes</span> <span class="o">=</span> <span class="p">[]</span>
         
         <span class="c1"># Remove unwanted nodes</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">rank</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ranks</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">rank</span> <span class="ow">in</span> <span class="n">ranks</span><span class="p">:</span>
+                <span class="n">new_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">node</span><span class="o">.</span><span class="n">_relink</span><span class="p">()</span>
                 <span class="k">except</span><span class="p">:</span> 
                     <span class="c1"># relinking a parent-less node raises TypeError</span>
-                    <span class="c1"># The root will be kept what ever is asked to keep coherence</span>
+                    <span class="c1"># The root will be kept whatever is asked to keep coherence</span>
                     <span class="n">new_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">new_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         
-        <span class="c1"># Get list of ranks (descending)</span>
-        <span class="n">parent</span> <span class="o">=</span> <span class="n">Lineage</span><span class="p">(</span><span class="n">new_nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># Assumes a unique root</span>
-        
-        <span class="c1"># Case where the root rank is given as input</span>
-        <span class="k">if</span> <span class="n">parent</span><span class="o">.</span><span class="n">rank</span> <span class="o">==</span> <span class="n">ranks</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="n">ranks</span> <span class="o">=</span> <span class="n">ranks</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        
-        <span class="n">new_nodes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_insert_nodes_recc</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ranks</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span>
+        <span class="n">new_nodes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_insert_nodes_recc</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">ranks</span><span class="p">))</span> <span class="c1"># Reversing ranks to have highest rank first</span>
         
         <span class="c1"># Update self</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="o">.</span><span class="n">taxid</span><span class="p">:</span> <span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">new_nodes</span><span class="p">}</span></div>
@@ -676,6 +672,14 @@
         <span class="n">writer</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">([</span><span class="n">node</span><span class="o">.</span><span class="n">_to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">()],</span> <span class="n">indent</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
             <span class="n">fi</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span></div>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the root Node, assumes a single root shared by all Nodes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">anynode</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="n">Lineage</span><span class="p">(</span><span class="n">anynode</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span></div>

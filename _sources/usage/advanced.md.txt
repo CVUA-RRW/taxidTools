@@ -27,32 +27,55 @@ do a deep copy:
 >>> tax_copy = copy.deepcopy(tax)
 ```
 
-Alternatively you can save the Taxonomy in JSON format for a later use (see next section).
+Alternatively you can save the Taxonomy in JSON format for a later use (see next sections).
 
-## Create, save and load subtrees
+## Consensus determination 
+
+LCA and consensus
+
+## Distances
+
+Rank normalization for distances
+
+## Rerooting and filtering taxonomies
 
 If you don't care about part of the Taxonomy 
 you can extract a subtree and/or filter the Taxonomy to keep only specific 
 ranks.
 
 ```python
->>> tax.reroot('40674')
+>>> tax.prune('40674') # mammals class
 >>> tax.filterRanks(['species', 'genus', 'family', 'order', 'class', 'phylum', 'kingdom'])
 >>> tax.getAncestry('9606')
-# Fix method - currently broken
+Lineage([Node(9606), Node(9605), Node(9604), Node(9443), Node(40674), Node(7711), Node(33208), Node(1)])
 ```
 
-Note the presence of a special kind of Node is this Lineage.
-The DummyNode objects are place-holders for non-existing nodes. 
-Here it replaces the phylum and kingdom ranks, that were removed 
-by rerooting the tree at the Chardates (class) node.
+Note that the `Taxonomy.prune` method does not excatly cut the tree at the given node 
+but rather supresses all other branches and leaves the ancestry of this node.
+This is by design and allows to keep ancestries up to the root node.
 
-Dummy nodes will also be inserted between existing nodes if you request a
-rank that does not exist in a Lineage:
+Normalizing a Taxonomy using `Taxonomy.filterRanks` can be especially useful
+to calculate internode distances or comparing Lineages. When requesting a rank 
+which nodes are missing, these nodes will be replaced by a DummyNode.
+These special kind of nodes act as place-holders for non-existing nodes.
 
 ```python
-# TODO example
+>>> tax.filterRanks(['species', 'subgenus', 'genus', 'family', 'order', 'class', 'phylum', 'kingdom'])
+>>> tax.getAncestry('9606')
+Lineage([Node(9606), DummyNode(AAeFFWcs), Node(9605), Node(9604), Node(9443), Node(40674), 
+Node(7711), Node(33208), Node(1)])
 ```
+
+Note that the above methods **mutate** the nodes:
+
+```python
+>>> tax.getParent('9606')
+DummyNode(AAeFFWcs)
+>>> tax.getRank('AAeFFWcs')
+'subgenus'
+```
+
+## Reading and writing taxonomies
 
 As you probably already noticed, parsing the Taxonomy definition can 
 take a couple of minutes. If you plan on regularly using a subset of the Taxonomy, 
@@ -62,14 +85,6 @@ it can be beneficial to save a filtered version to a JSON file and to reload it 
 >>> tax.write("my_filtered_taxonomy.json")
 >>> new_tax = taxidTools.load("my_filtered_taxonomy.json")
 ```
-
-## Consensus determination 
-
-LCA and consensus
-
-## Distances
-
-Rank normalization for distances
 
 ## Working with non-NCBI taxonomies
 
@@ -90,8 +105,7 @@ to create a parsing function to:
 * Link parents and children
 * Create a Taxonomy
 
-
-Here a boilerplate code for such a function, assuming that each node 
+Here is a boilerplate code for such a function, assuming that each node 
 is defined on a single line:
 
 ```python
