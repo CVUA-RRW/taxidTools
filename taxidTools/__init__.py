@@ -1,5 +1,5 @@
 from .Node import Node, DummyNode
-from .Taxonomy import Taxonomy
+from .Taxonomy import Taxonomy, load
 from .Lineage import Lineage
 from .utils import linne
 from .__version__ import __version__, __title__, __description__

@@ -575,7 +575,7 @@ class Taxonomy(UserDict):
         >>> tax
         {DummyNode(wmnar5QT), Node(001), Node(1), Node(11), Node(111)}
         """
-        
+        # FIXME not working properly 
         def _insert_nodes_recc(node: Node, index: int, ranks: list[str]) -> list[Node]:
             """
             reccursively relink all nodes under node
@@ -647,6 +647,21 @@ class Taxonomy(UserDict):
     def __repr__(self):
         return f"{set(self.values())}"
 
+
+def load(path: str) -> Taxonomy:
+        """
+        Load a Taxonomy from a previously exported json file.
+        
+        Parameters
+        ----------
+        path:
+            Path of file to load
+        
+        See Also
+        --------
+        Taxonomy.write
+        """
+        return Taxonomy.from_json(path)
 
 def _parse_dump(filepath: str) -> Iterator:
     """
