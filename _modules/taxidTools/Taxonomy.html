@@ -104,6 +104,14 @@
 <span class="sd">    &gt;&gt;&gt; tax = Taxonomy.from_taxdump(&quot;nodes.dmp&#39;, &#39;rankedlineage.dmp&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># create name dict for backward lookup</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_namedict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_namedict</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
+    
 <div class="viewcode-block" id="Taxonomy.from_list"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.from_list">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_list</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">node_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Taxonomy</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -220,7 +228,27 @@
 <span class="sd">        &gt;&gt;&gt; tax = Taxonomy()</span>
 <span class="sd">        &gt;&gt;&gt; tax.addNode(Node(1))</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">taxid</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span></div>
+        <span class="bp">self</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">taxid</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_namedict</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">taxid</span></div>
+    
+<div class="viewcode-block" id="Taxonomy.getTaxid"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.getTaxid">[docs]</a>    <span class="k">def</span> <span class="nf">getTaxid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get taxid from name</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name:</span>
+<span class="sd">            Node name</span>
+<span class="sd">        </span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; node = Node(1, &quot;node&quot;, &quot;rank&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; tax = Taxonomy({&#39;1&#39;:node})</span>
+<span class="sd">        &gt;&gt;&gt; tax.getTaxid(&#39;node&#39;)</span>
+<span class="sd">        &#39;1&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_namedict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span></div>
     
 <div class="viewcode-block" id="Taxonomy.getName"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.getName">[docs]</a>    <span class="k">def</span> <span class="nf">getName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -404,20 +432,25 @@
 <span class="sd">        &gt;&gt;&gt; tax.consensus([11, 12, 2], 0.6)</span>
 <span class="sd">        Node(1)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#TODO deal with DummyNode</span>
         <span class="c1"># Consensus under 50% is ambiguous</span>
         <span class="k">if</span> <span class="n">min_consensus</span> <span class="o">&lt;=</span> <span class="mf">0.5</span> <span class="ow">or</span> <span class="n">min_consensus</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Minimal consensus should be above 0.5 and under 1&quot;</span><span class="p">)</span>
         
         <span class="c1"># Get lineages in REVERSED order </span>
         <span class="n">lineages</span> <span class="o">=</span> <span class="p">[</span><span class="n">Lineage</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">txd</span><span class="p">)],</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">txd</span> <span class="ow">in</span> <span class="n">taxid_list</span><span class="p">]</span> 
-        <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">taxid_list</span><span class="p">)</span>
-        <span class="n">max_iter</span> <span class="o">=</span> <span class="nb">min</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">lin</span><span class="p">)</span> <span class="k">for</span> <span class="n">lin</span> <span class="ow">in</span> <span class="n">lineages</span><span class="p">])</span>
         
+        <span class="c1">#Extend lineages so that they all are same size</span>
+        <span class="n">maxlen</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">lin</span><span class="p">)</span> <span class="k">for</span> <span class="n">lin</span> <span class="ow">in</span> <span class="n">lineages</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">lin</span> <span class="ow">in</span> <span class="n">lineages</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lin</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">maxlen</span><span class="p">:</span>
+                <span class="n">lin</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">DummyNode</span><span class="p">()]</span> <span class="o">*</span><span class="p">(</span><span class="n">maxlen</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">lin</span><span class="p">)))</span>
+        
+        <span class="c1"># Iterate over ranks descending to find last node above consensus level</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">taxid_list</span><span class="p">)</span>
         <span class="n">i</span><span class="o">=</span><span class="mi">0</span>
         <span class="n">last</span> <span class="o">=</span> <span class="kc">None</span>
         
-        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">max_iter</span><span class="p">:</span> 
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">maxlen</span><span class="p">:</span> 
             <span class="n">count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">([</span><span class="n">lin</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">lin</span> <span class="ow">in</span> <span class="n">lineages</span><span class="p">])</span>
             <span class="n">mostCommon</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
             
@@ -744,6 +777,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../taxidTools.Lineage.html">Lineage module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../taxidTools.Node.html">Node module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../taxidTools.utils.html">utils module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">Release History</a></li>
 </ul>
 
 <div class="relations">

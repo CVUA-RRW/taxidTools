@@ -62,6 +62,17 @@ Node(9605)
 [Node(63221), Node(744458)]
 ```
 
+It is also possible to etrieve the taxid number for a name. However be careful that
+this can lead to unexpected results if the names are not unique!
+
+```python
+>>> tax.getTaxid('Homo sapiens')
+'9606'
+>>> tax.addNode(Node(taxid = 0, name = 'Homo sapiens'))
+>>> tax.getTaxid('Homo sapiens')
+'0'
+```
+
 You probably notices that some methodes return a Node object. 
 These are the basic objects containing all of the node information. 
 Actually the Taxonomy object is just a dictionnary of Nodes.

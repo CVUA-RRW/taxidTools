@@ -88,6 +88,15 @@ is refered to as root node and represents the top of the taxonomy.</p>
 <span class="go">[Node(63221), Node(744458)]</span>
 </pre></div>
 </div>
+<p>It is also possible to etrieve the taxid number for a name. However be careful that
+this can lead to unexpected results if the names are not unique!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getTaxid</span><span class="p">(</span><span class="s1">&#39;Homo sapiens&#39;</span><span class="p">)</span>
+<span class="go">&#39;9606&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Homo sapiens&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getTaxid</span><span class="p">(</span><span class="s1">&#39;Homo sapiens&#39;</span><span class="p">)</span>
+<span class="go">&#39;0&#39;</span>
+</pre></div>
+</div>
 <p>You probably notices that some methodes return a Node object.
 These are the basic objects containing all of the node information.
 Actually the Taxonomy object is just a dictionnary of Nodes.
@@ -188,6 +197,9 @@ for the <a class="reference internal" href="advanced.html"><span class="doc std 
 <li class="toctree-l1"><a class="reference internal" href="../taxidTools.Lineage.html">Lineage module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../taxidTools.Node.html">Node module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../taxidTools.utils.html">utils module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">Release History</a></li>
 </ul>
 
 <div class="relations">

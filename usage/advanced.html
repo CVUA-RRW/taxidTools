@@ -63,14 +63,35 @@ do a deep copy:</p>
 </section>
 <section id="consensus-determination">
 <h2>Consensus determination<a class="headerlink" href="#consensus-determination" title="Permalink to this headline">¶</a></h2>
-<p>LCA and consensus</p>
+<p>Determining a consensus node from a bunch of taxid can be done as easily as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">lca</span><span class="p">([</span><span class="s1">&#39;9606&#39;</span><span class="p">,</span> <span class="s1">&#39;10090&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">name</span>  <span class="c1"># Mice and men</span>
+<span class="go">&#39;Euarchontoglires&#39;</span>
+</pre></div>
+</div>
+<p>However, sometimes you may want to determine a consensus node dependent on the
+frequencies of a bunch of taxids. You can set a minimal frequency threshold (between 0.5 and 1).
+As soon a a single node meets this threshold, it will be returned as a consensus. If this threshold is
+not met with the given input, then the parents of the input will be considered, and so on.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;9606&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">6</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;314146&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;4641&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">8</span>  <span class="c1"># Mice and men and bananas</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">consensus</span><span class="p">(</span><span class="n">tax_list</span><span class="p">,</span> <span class="mf">0.51</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Euarchontoglires&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">consensus</span><span class="p">(</span><span class="n">tax_list</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Eukaryota&#39;</span>
+</pre></div>
+</div>
 </section>
 <section id="distances">
 <h2>Distances<a class="headerlink" href="#distances" title="Permalink to this headline">¶</a></h2>
-<p>Rank normalization for distances</p>
+<p>Distance between two nodes is straightforward to calculate:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">,</span> <span class="s1">&#39;10090&#39;</span><span class="p">)</span>
+<span class="go">18</span>
+</pre></div>
+</div>
+<p>Note that if you want to compare distances it could be a good idea to normalize the taxonomy
+first in order to impose homogeneous ranks across lineages (see next section).</p>
 </section>
-<section id="rerooting-and-filtering-taxonomies">
-<h2>Rerooting and filtering taxonomies<a class="headerlink" href="#rerooting-and-filtering-taxonomies" title="Permalink to this headline">¶</a></h2>
+<section id="rerooting-filtering-and-normalizing-taxonomies">
+<h2>Rerooting, filtering and normalizing taxonomies<a class="headerlink" href="#rerooting-filtering-and-normalizing-taxonomies" title="Permalink to this headline">¶</a></h2>
 <p>If you don’t care about part of the Taxonomy
 you can extract a subtree and/or filter the Taxonomy to keep only specific
 ranks.</p>
@@ -195,7 +216,7 @@ specific examples.</p>
 <li class="toctree-l2"><a class="reference internal" href="#a-word-of-caution-on-mutable-types">A word of caution on mutable types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#consensus-determination">Consensus determination</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#distances">Distances</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#rerooting-and-filtering-taxonomies">Rerooting and filtering taxonomies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rerooting-filtering-and-normalizing-taxonomies">Rerooting, filtering and normalizing taxonomies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#reading-and-writing-taxonomies">Reading and writing taxonomies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#working-with-non-ncbi-taxonomies">Working with non-NCBI taxonomies</a></li>
 </ul>
@@ -206,6 +227,9 @@ specific examples.</p>
 <li class="toctree-l1"><a class="reference internal" href="../taxidTools.Lineage.html">Lineage module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../taxidTools.Node.html">Node module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../taxidTools.utils.html">utils module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">Release History</a></li>
 </ul>
 
 <div class="relations">

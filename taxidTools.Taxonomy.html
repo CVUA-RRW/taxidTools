@@ -38,7 +38,7 @@
 <p>Taxonomy object definition</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">taxidTools.Taxonomy.</span></span><span class="sig-name descname"><span class="pre">Taxonomy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">taxidTools.Taxonomy.</span></span><span class="sig-name descname"><span class="pre">Taxonomy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.UserDict</span></code></p>
 <p>Store Taxonomy nodes</p>
 <p>A Taxonomy is instanciated as a dictionnary and
@@ -426,6 +426,29 @@ rankedlineage.dmp files available from the NCBI servers.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.getTaxid">
+<span class="sig-name descname"><span class="pre">getTaxid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.getTaxid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.getTaxid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get taxid from name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Node name</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">({</span><span class="s1">&#39;1&#39;</span><span class="p">:</span><span class="n">node</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getTaxid</span><span class="p">(</span><span class="s1">&#39;node&#39;</span><span class="p">)</span>
+<span class="go">&#39;1&#39;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.Taxonomy.isAncestorOf">
 <span class="sig-name descname"><span class="pre">isAncestorOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.isAncestorOf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.Taxonomy.isAncestorOf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if taxid is an ancestor of child</p>
@@ -676,6 +699,9 @@ The Ancestors of the given taxid will be kept!</p>
 <li class="toctree-l1"><a class="reference internal" href="taxidTools.Lineage.html">Lineage module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="taxidTools.Node.html">Node module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="taxidTools.utils.html">utils module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Release History</a></li>
 </ul>
 
 <div class="relations">
