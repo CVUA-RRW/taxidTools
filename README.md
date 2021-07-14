@@ -3,6 +3,7 @@
 [![Python package](https://github.com/CVUA-RRW/taxidTools/actions/workflows/python-package.yml/badge.svg?branch=main)](https://github.com/CVUA-RRW/taxidTools/actions/workflows/python-package.yml)
 ![PyPI - License](https://img.shields.io/pypi/l/Django?style=plastic)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/CVUA-RRW/taxidTools)
+[![DOI](https://zenodo.org/badge/300595196.svg)](https://zenodo.org/badge/latestdoi/300595196)
 
 ## Overview
 
