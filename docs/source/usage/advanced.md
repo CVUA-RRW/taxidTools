@@ -31,13 +31,39 @@ Alternatively you can save the Taxonomy in JSON format for a later use (see next
 
 ## Consensus determination 
 
-LCA and consensus
+Determining a consensus node from a bunch of taxid can be done as easily as:
+
+```python
+>>> tax.lca(['9606', '10090']).name  # Mice and men
+'Euarchontoglires'
+```
+
+However, sometimes you may want to determine a consensus node dependent on the 
+frequencies of a bunch of taxids. You can set a minimal frequency threshold (between 0.5 and 1).
+As soon a a single node meets this threshold, it will be returned as a consensus. If this threshold is 
+not met with the given input, then the parents of the input will be considered, and so on.
+
+```python
+>>> tax_list = ['9606']*6 + ['314146']*3 + ['4641']*8  # Mice and men and bananas
+>>> tax.consensus(tax_list, 0.51).name
+'Euarchontoglires'
+>>> tax.consensus(tax_list, 1).name
+'Eukaryota'
+```
 
 ## Distances
 
-Rank normalization for distances
+Distance between two nodes is straightforward to calculate:
 
-## Rerooting and filtering taxonomies
+```python
+>>> tax.distance('9606', '10090')
+18
+```
+
+Note that if you want to compare distances it could be a good idea to normalize the taxonomy 
+first in order to impose homogeneous ranks across lineages (see next section).
+
+## Rerooting, filtering and normalizing taxonomies
 
 If you don't care about part of the Taxonomy 
 you can extract a subtree and/or filter the Taxonomy to keep only specific 

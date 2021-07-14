@@ -71,6 +71,14 @@ class Taxonomy(UserDict):
     >>> tax = Taxonomy.from_taxdump("nodes.dmp', 'rankedlineage.dmp')
     """
     
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        # create name dict for backward lookup
+        self._namedict = {}
+        for k, v in self.items():
+            if v.name:
+                self._namedict[v.name] = k
+    
     @classmethod
     def from_list(cls, node_list: list[Node]) -> Taxonomy:
         """
@@ -188,6 +196,26 @@ class Taxonomy(UserDict):
         >>> tax.addNode(Node(1))
         """
         self[node.taxid] = node
+        if node.name:
+            self._namedict[node.name] = node.taxid
+    
+    def getTaxid(self, name: str) -> str:
+        """
+        Get taxid from name
+        
+        Parameters
+        ----------
+        name:
+            Node name
+        
+        Examples
+        --------
+        >>> node = Node(1, "node", "rank")
+        >>> tax = Taxonomy({'1':node})
+        >>> tax.getTaxid('node')
+        '1'
+        """
+        return self._namedict[name]
     
     def getName(self, taxid: Union[str,int]) -> str:
         """
@@ -371,20 +399,25 @@ class Taxonomy(UserDict):
         >>> tax.consensus([11, 12, 2], 0.6)
         Node(1)
         """
-        #TODO deal with DummyNode
         # Consensus under 50% is ambiguous
         if min_consensus <= 0.5 or min_consensus > 1:
             raise ValueError("Minimal consensus should be above 0.5 and under 1")
         
         # Get lineages in REVERSED order 
         lineages = [Lineage(self[str(txd)], ascending = False) for txd in taxid_list] 
-        total = len(taxid_list)
-        max_iter = min([len(lin) for lin in lineages])
         
+        #Extend lineages so that they all are same size
+        maxlen = max([len(lin) for lin in lineages])
+        for lin in lineages:
+            if len(lin) < maxlen:
+                lin.extend([DummyNode()] *(maxlen - len(lin)))
+        
+        # Iterate over ranks descending to find last node above consensus level
+        total = len(taxid_list)
         i=0
         last = None
         
-        while i < max_iter: 
+        while i < maxlen: 
             count = Counter([lin[i] for lin in lineages])
             mostCommon = count.most_common(1)
             

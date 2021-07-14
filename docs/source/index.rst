@@ -53,3 +53,11 @@ Source code documentation.
    Lineage module <taxidTools.Lineage>
    Node module <taxidTools.Node>
    utils module <taxidTools.utils>
+
+Changes
+-------
+
+.. toctree::
+   :maxdepth: 2
+   
+   history
