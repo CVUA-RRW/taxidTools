@@ -1,4 +1,4 @@
 Release History
 ===============
 
-.. include:: ../../HISTORY.md
+.. mdinclude:: ../../HISTORY.md
