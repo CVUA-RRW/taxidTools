@@ -32,8 +32,32 @@
 
           <div class="body" role="main">
             
-  <section id="release-history">
+  <section class="tex2jax_ignore mathjax_ignore" id="release-history">
 <h1>Release History<a class="headerlink" href="#release-history" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2>2.1.0 (2021-07-14)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p><strong>Bug fix</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Taxonomy.filterRanks</span></code> now correctly handles rerooted trees</p></li>
+<li><p>Fixed and bug to <code class="docutils literal notranslate"><span class="pre">Taxonomy.consensus</span></code> where search would only be in range of the shortest lineage</p></li>
+</ul>
+<p><strong>Changes</strong></p>
+<ul class="simple">
+<li><p>Implementation of <code class="docutils literal notranslate"><span class="pre">Taxonomy.reroot</span></code> was changed to conserve the ancestry of the input taxid.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Taxonomy.reroot</span></code> was renamed to <code class="docutils literal notranslate"><span class="pre">Taxonomy.prune</span></code></p></li>
+</ul>
+<p><strong>Additions</strong></p>
+<ul class="simple">
+<li><p>Added taxid search by name <code class="docutils literal notranslate"><span class="pre">Taxonomy.getTaxid</span></code></p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>2.0.0 (2021-07-13)<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Released version 2. Implementation reworked from scraps.</p></li>
+<li><p>NOT backwards compatible</p></li>
+</ul>
+</section>
 </section>
 
 
@@ -72,7 +96,11 @@
 <li class="toctree-l1"><a class="reference internal" href="taxidTools.utils.html">utils module</a></li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Release History</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Release History</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2.1.0 (2021-07-14)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.0.0 (2021-07-13)</a></li>
+</ul>
+</li>
 </ul>
 
 <div class="relations">
