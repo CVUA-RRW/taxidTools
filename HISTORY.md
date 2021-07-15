@@ -1,6 +1,6 @@
 # Release History
 
-## Dev
+## 2.1.1 (2021-07-15)
 
 **Bug fix**
 
