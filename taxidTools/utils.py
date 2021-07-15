@@ -11,12 +11,12 @@ def linne() -> list:
     """
     Returns the linnean Taxonomy:
     
-    species
-    genus
-    family
-    order
-    class
-    phylum
+    species, 
+    genus, 
+    family, 
+    order, 
+    class, 
+    phylum, 
     kingdom
     """
     return ['species',
@@ -27,7 +27,9 @@ def linne() -> list:
             'phylum',
             'kingdom']
 
-def _rand_id(ncar = 8):
-    return ''.join([random.choice(string.ascii_letters
-        + string.digits) for n in range(ncar)])
-    
+
+def _rand_id(ncar: int = 8) -> str:
+    """Random hash"""
+    return ''.join([random.choice(
+                    string.ascii_letters + string.digits) 
+                    for n in range(ncar)])

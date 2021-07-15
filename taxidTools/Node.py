@@ -60,7 +60,7 @@ class Node(object):
     """
     
     def __init__(self, 
-                 taxid: Union[str,int], 
+                 taxid: Union[str, int], 
                  name: Optional[str] = None, 
                  rank: Optional[str] = None, 
                  parent: Optional[str] = None) -> None:
@@ -100,7 +100,7 @@ class Node(object):
     
     # Setter methods
     @taxid.setter
-    def taxid(self, taxid: Union[str,int]) -> None:
+    def taxid(self, taxid: Union[str, int]) -> None:
         self._taxid = str(taxid)
     
     @name.setter
@@ -114,7 +114,8 @@ class Node(object):
     @parent.setter
     def parent(self, parent: Node) -> None:
         """Set parent node and update children attribute of parent node"""
-        if parent and parent.taxid != self.taxid: # root node as circular reference to self..
+        # root node has circular reference to self.
+        if parent and parent.taxid != self.taxid: 
             assert isinstance(parent, Node)
             self._parent = parent
             self._updateParent()
@@ -126,7 +127,13 @@ class Node(object):
         """
         Node information
         """
-        return f"{self.__repr__()}\ntype: {self.__class__.__name__}\ntaxid: {self.taxid}\nname: {self.name}\nrank: {self.rank}\nparent: {self.parent}\nchildren: {self.children}\n"
+        return f"{self.__repr__()}\n" \
+               f"type: {self.__class__.__name__}\n" \
+               f"taxid: {self.taxid}\n" \
+               f"name: {self.name}\n" \
+               f"rank: {self.rank}\n" \
+               f"parent: {self.parent}\n" \
+               f"children: {self.children}\n"
     
     def isAncestorOf(self, node: Node) -> bool:
         """
@@ -212,6 +219,7 @@ class Node(object):
         del dic['_children']
         return dic
 
+
 class DummyNode(Node):
     """
     A placeholder for a non-existing Node.
@@ -221,7 +229,7 @@ class DummyNode(Node):
     """
     def __init__(self, *args, **kwargs) -> None:
         hash = _rand_id()
-        super().__init__(taxid = hash, *args, **kwargs)
+        super().__init__(taxid=hash, *args, **kwargs)
     
     @property
     def taxid(self) -> str:
@@ -250,7 +258,7 @@ class DummyNode(Node):
     
     # Setter methods
     @taxid.setter
-    def taxid(self, taxid: Union[str,int]) -> None:
+    def taxid(self, taxid: Union[str, int]) -> None:
         self._taxid = str(taxid)
     
     @name.setter
@@ -264,7 +272,8 @@ class DummyNode(Node):
     @parent.setter
     def parent(self, parent: Node) -> None:
         """Set parent node and update children attribute of parent node"""
-        if parent and parent.taxid != self.taxid: # root node as circular reference to self..
+        # root node has circular reference to self.
+        if parent and parent.taxid != self.taxid: 
             assert isinstance(parent, Node)
             self._parent = parent
             self._updateParent()

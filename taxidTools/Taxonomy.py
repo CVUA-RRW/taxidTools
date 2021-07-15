@@ -4,7 +4,7 @@ Taxonomy object definition
 
 
 from __future__ import annotations
-from typing import List, Union, Iterator, Optional
+from typing import Union, Iterator, Optional
 from collections import UserDict, Counter
 import json 
 from .Node import Node, DummyNode
@@ -57,7 +57,8 @@ class Taxonomy(UserDict):
     
     Instanciate from a list:
     
-    >>> tax = Taxonomy.from_list([root, branch1, branch2, leaf1, leaf2, leaf3, leaf4])
+    >>> tax = Taxonomy.from_list(
+        [root, branch1, branch2, leaf1, leaf2, leaf3, leaf4])
     
     Or iteratively:
     
@@ -100,7 +101,7 @@ class Taxonomy(UserDict):
             if not isinstance(node, Node):
                 raise ValueError("Elements of node_list must be of type Node")
         
-        as_dict = {node.taxid : node for node in node_list}
+        as_dict = {node.taxid: node for node in node_list}
         
         return cls(as_dict)
     
@@ -128,8 +129,8 @@ class Taxonomy(UserDict):
         
         # Creating nodes
         for line in _parse_dump(nodes):
-            txd[line[0]] = Node(taxid = line[0], rank = str(line[2]))
-            parent_dict[str(line[0])] = line[1] # storing parent id
+            txd[line[0]] = Node(taxid=line[0], rank=str(line[2]))
+            parent_dict[str(line[0])] = line[1]  # storing parent id
         
         # Add names form rankedlineage
         for line in _parse_dump(rankedlineage):
@@ -166,15 +167,15 @@ class Taxonomy(UserDict):
         for record in parser:
             class_call = eval(record['type'])
             txd[record['_taxid']] = class_call(record['_taxid'],
-                                            record['_name'],
-                                            record['_rank'])
+                                               record['_name'],
+                                               record['_rank'])
             parent_dict[record['_taxid']] = record['_parent']
         
         # Update parent info
         for k, v in parent_dict.items():
             try:
                 txd[k].parent = txd[v]
-            except:
+            except KeyError:
                 pass
         
         return cls(txd)
@@ -217,7 +218,7 @@ class Taxonomy(UserDict):
         """
         return self._namedict[name]
     
-    def getName(self, taxid: Union[str,int]) -> str:
+    def getName(self, taxid: Union[str, int]) -> str:
         """
         Get taxid name
         
@@ -235,7 +236,7 @@ class Taxonomy(UserDict):
         """
         return self[str(taxid)].name
     
-    def getRank(self, taxid: Union[str,int]) -> str:
+    def getRank(self, taxid: Union[str, int]) -> str:
         """
         Get taxid rank
         
@@ -253,7 +254,7 @@ class Taxonomy(UserDict):
         """
         return self[str(taxid)].rank
     
-    def getParent(self, taxid: Union[str,int]) -> Node:
+    def getParent(self, taxid: Union[str, int]) -> Node:
         """
         Retrieve parent Node
         
@@ -291,7 +292,7 @@ class Taxonomy(UserDict):
         """
         return self[str(taxid)].children
     
-    def getAncestry(self, taxid: Union[str,int]) -> Lineage:
+    def getAncestry(self, taxid: Union[str, int]) -> Lineage:
         """
         Retrieve the ancestry of the given taxid
         
@@ -310,7 +311,8 @@ class Taxonomy(UserDict):
         """
         return Lineage(self[str(taxid)])
     
-    def isAncestorOf(self, taxid: Union[str,int], child: Union[str,int]) -> bool:
+    def isAncestorOf(self, taxid: Union[str, int], 
+                     child: Union[str, int]) -> bool:
         """
         Test if taxid is an ancestor of child
         
@@ -337,7 +339,8 @@ class Taxonomy(UserDict):
         """
         return self[str(taxid)].isAncestorOf(self[str(child)])
     
-    def isDescendantOf(self, taxid: Union[str,int], parent: Union[str,int]) -> bool:
+    def isDescendantOf(self, taxid: Union[str, int], 
+                       parent: Union[str, int]) -> bool:
         """
         Test if taxid is an descendant of parent
         
@@ -364,9 +367,11 @@ class Taxonomy(UserDict):
         """
         return self[str(taxid)].isDescendantOf(self[str(parent)])
     
-    def consensus(self, taxid_list: list[Union[str, int]], min_consensus: float) -> Node:
+    def consensus(self, taxid_list: list[Union[str, int]], 
+                  min_consensus: float) -> Node:
         """
-        Find a taxonomic consensus for the given taxid with a minimal agreement level.
+        Find a taxonomic consensus for the given 
+        taxid with a minimal agreement level.
         
         Parameters
         ----------
@@ -374,11 +379,13 @@ class Taxonomy(UserDict):
             list of taxonomic identification numbers
         min_consensus: 
             minimal consensus level, between 0.5 and 1.
-            Note that a minimal consensus of 1 will return the same result as `lastCommonNode()`
+            Note that a minimal consensus of 1 will 
+            return the same result as `lastCommonNode()`
         
         Notes
         -----
-        If no consensus can be found (for example because the Taxonomy contains multiple trees),
+        If no consensus can be found (for example because 
+        the Taxonomy contains multiple trees),
         an `IndexError` will be raised.
         
         See Also
@@ -388,11 +395,16 @@ class Taxonomy(UserDict):
         
         Examples
         --------
-        >>> node0 = Node(taxid = 0, name = "root", rank = "root", parent = None)
-        >>> node1 = Node(taxid = 1, name = "node1", rank = "rank1", parent = node0)
-        >>> node2 = Node(taxid = 2, name = "node2", rank = "rank1", parent = node0)
-        >>> node11 = Node(taxid = 11, name = "node11", rank = "rank2", parent = node1)
-        >>> node12 = Node(taxid = 12, name = "node12", rank = "rank2", parent = node1)
+        >>> node0 = Node(taxid = 0, name = "root", 
+                         rank = "root", parent = None)
+        >>> node1 = Node(taxid = 1, name = "node1", 
+                         rank = "rank1", parent = node0)
+        >>> node2 = Node(taxid = 2, name = "node2", 
+                         rank = "rank1", parent = node0)
+        >>> node11 = Node(taxid = 11, name = "node11", 
+                          rank = "rank2", parent = node1)
+        >>> node12 = Node(taxid = 12, name = "node12", 
+                          rank = "rank2", parent = node1)
         >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
         >>> tax.consensus([11, 12, 2], 0.8)
         Node(0)
@@ -401,31 +413,33 @@ class Taxonomy(UserDict):
         """
         # Consensus under 50% is ambiguous
         if min_consensus <= 0.5 or min_consensus > 1:
-            raise ValueError("Minimal consensus should be above 0.5 and under 1")
+            raise ValueError(
+                "Minimal consensus should be above 0.5 and under 1")
         
         # Get lineages in REVERSED order 
-        lineages = [Lineage(self[str(txd)], ascending = False) for txd in taxid_list] 
+        lineages = [Lineage(self[str(txd)], ascending=False) 
+                    for txd in taxid_list] 
         
-        #Extend lineages so that they all are same size
+        # Extend lineages so that they all are same size
         maxlen = max([len(lin) for lin in lineages])
         for lin in lineages:
             if len(lin) < maxlen:
-                lin.extend([DummyNode()] *(maxlen - len(lin)))
+                lin.extend([DummyNode()] * (maxlen - len(lin)))
         
         # Iterate over ranks descending to find last node above consensus level
         total = len(taxid_list)
-        i=0
+        i = 0
         last = None
         
         while i < maxlen: 
             count = Counter([lin[i] for lin in lineages])
             mostCommon = count.most_common(1)
             
-            if mostCommon[0][1]/total >= min_consensus:
+            if mostCommon[0][1] / total >= min_consensus:
                 if not(isinstance(mostCommon[0][0], DummyNode)):
                     # save current succesful consensus, and check the next one
                     last = mostCommon[0][0]
-                i+=1
+                i += 1
             else:
                 break
         
@@ -446,18 +460,24 @@ class Taxonomy(UserDict):
         
         Examples
         --------
-        >>> node0 = Node(taxid = 0, name = "root", rank = "root", parent = None)
-        >>> node1 = Node(taxid = 1, name = "node1", rank = "rank1", parent = node0)
-        >>> node2 = Node(taxid = 2, name = "node2", rank = "rank1", parent = node0)
-        >>> node11 = Node(taxid = 11, name = "node11", rank = "rank2", parent = node1)
-        >>> node12 = Node(taxid = 12, name = "node12", rank = "rank2", parent = node1)
+        >>> node0 = Node(taxid = 0, name = "root", 
+                         rank = "root", parent = None)
+        >>> node1 = Node(taxid = 1, name = "node1", 
+                         rank = "rank1", parent = node0)
+        >>> node2 = Node(taxid = 2, name = "node2", 
+                         rank = "rank1", parent = node0)
+        >>> node11 = Node(taxid = 11, name = "node11", 
+                          rank = "rank2", parent = node1)
+        >>> node12 = Node(taxid = 12, name = "node12", 
+                          rank = "rank2", parent = node1)
         >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
         >>> tax.lca([11, 12, 2])
         Node(0)
         """
         return self.consensus(taxid_list, 1)
     
-    def distance(self, taxid1: Union[str,int], taxid2: Union[str,int]) -> int:
+    def distance(self, taxid1: Union[str, int], 
+                 taxid2: Union[str, int]) -> int:
         """
         Measures the distance between two nodes.
         
@@ -470,11 +490,16 @@ class Taxonomy(UserDict):
         
         Examples
         --------
-        >>> node0 = Node(taxid = 0, name = "root", rank = "root", parent = None)
-        >>> node1 = Node(taxid = 1, name = "node1", rank = "rank1", parent = node0)
-        >>> node2 = Node(taxid = 2, name = "node2", rank = "rank1", parent = node0)
-        >>> node11 = Node(taxid = 11, name = "node11", rank = "rank2", parent = node1)
-        >>> node12 = Node(taxid = 12, name = "node12", rank = "rank2", parent = node1)
+        >>> node0 = Node(taxid = 0, name = "root", 
+                         rank = "root", parent = None)
+        >>> node1 = Node(taxid = 1, name = "node1", 
+                         rank = "rank1", parent = node0)
+        >>> node2 = Node(taxid = 2, name = "node2", 
+                         rank = "rank1", parent = node0)
+        >>> node11 = Node(taxid = 11, name = "node11", 
+                          rank = "rank2", parent = node1)
+        >>> node12 = Node(taxid = 12, name = "node12", 
+                          rank = "rank2", parent = node1)
         >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
         >>> tax.distance(11, 2)
         3
@@ -489,7 +514,8 @@ class Taxonomy(UserDict):
         
         return d1 + d2 - 2 * dlca
     
-    def listDescendant(self, taxid: Union[str, int], ranks: Optional[list] = None) -> list[Node]:
+    def listDescendant(self, taxid: Union[str, int], 
+                       ranks: Optional[list] = None) -> list[Node]:
         """
         List all descendant of a node
         
@@ -502,11 +528,16 @@ class Taxonomy(UserDict):
         
         Examples
         --------
-        >>> node0 = Node(taxid = 0, name = "root", rank = "root", parent = None)
-        >>> node1 = Node(taxid = 1, name = "node1", rank = "rank1", parent = node0)
-        >>> node2 = Node(taxid = 2, name = "node2", rank = "rank1", parent = node0)
-        >>> node11 = Node(taxid = 11, name = "node11", rank = "rank2", parent = node1)
-        >>> node12 = Node(taxid = 12, name = "node12", rank = "rank2", parent = node1)
+        >>> node0 = Node(taxid = 0, name = "root", 
+                         rank = "root", parent = None)
+        >>> node1 = Node(taxid = 1, name = "node1", 
+                         rank = "rank1", parent = node0)
+        >>> node2 = Node(taxid = 2, name = "node2", 
+                         rank = "rank1", parent = node0)
+        >>> node11 = Node(taxid = 11, name = "node11", #
+                          rank = "rank2", parent = node1)
+        >>> node12 = Node(taxid = 12, name = "node12", 
+                          rank = "rank2", parent = node1)
         >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
         >>> tax.listDescendant(1)
         [Node(11), Node(12)]
@@ -525,7 +556,6 @@ class Taxonomy(UserDict):
         
         return all
     
-    
     def prune(self, taxid: Union[str, int]) -> None:
         """
         Prune the Taxonomy at the given taxid
@@ -541,11 +571,16 @@ class Taxonomy(UserDict):
         
         Examples
         --------
-        >>> node0 = Node(taxid = 0, name = "root", rank = "root", parent = None)
-        >>> node1 = Node(taxid = 1, name = "node1", rank = "rank1", parent = node0)
-        >>> node2 = Node(taxid = 2, name = "node2", rank = "rank1", parent = node0)
-        >>> node11 = Node(taxid = 11, name = "node11", rank = "rank2", parent = node1)
-        >>> node12 = Node(taxid = 12, name = "node12", rank = "rank2", parent = node1)
+        >>> node0 = Node(taxid = 0, name = "root", 
+                         rank = "root", parent = None)
+        >>> node1 = Node(taxid = 1, name = "node1", 
+                         rank = "rank1", parent = node0)
+        >>> node2 = Node(taxid = 2, name = "node2", 
+                         rank = "rank1", parent = node0)
+        >>> node11 = Node(taxid = 11, name = "node11", 
+                          rank = "rank2", parent = node1)
+        >>> node12 = Node(taxid = 12, name = "node12", 
+                          rank = "rank2", parent = node1)
         >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
         >>> tax.prune(1)
         
@@ -563,9 +598,10 @@ class Taxonomy(UserDict):
         nodes = self.getAncestry(taxid)
         
         # Unlinking other branches from upstream nodes
-        # No need to change parents of the other nodes, they will be removed from Taxonomy
+        # No need to change parents of the other nodes, 
+        # they will be removed from Taxonomy
         for i in range(1, len(nodes)):
-            nodes[i]._children = [nodes[i-1]]
+            nodes[i]._children = [nodes[i - 1]]
         
         # Adding all downstream nodes
         nodes.extend(self.listDescendant(taxid))
@@ -601,7 +637,8 @@ class Taxonomy(UserDict):
         >>> tax
         {Node(1), Node(11), DummyNode(tO841ymu), Node(111), Node(001)}
         
-        DummyNodes are created s placeholders for missing ranks in the taxonomy:
+        DummyNodes are created s placeholders 
+        for missing ranks in the taxonomy:
         
         >>> node001.parent
         DummyNode(tO841ymu)
@@ -629,24 +666,25 @@ class Taxonomy(UserDict):
             if not ranks:
                 return []
             
-            # Keep track of created dummyNodes to add to the taxonomy listing later
+            # Keep track of created dummyNodes to add 
+            # to the taxonomy listing later
             new_nodes = []
             children = node.children
             for child in children:
                 if child.rank != ranks[-1]:
                     # Create a dummy node and insert it
-                    dummy = DummyNode(rank = ranks[-1])
-                    dummy.insertNode(parent = node, child = child)
+                    dummy = DummyNode(rank=ranks[-1])
+                    dummy.insertNode(parent=node, child=child)
                     
                     # Keep listing of added nodes
                     new_nodes.append(dummy)
             
             # Go down one step with updated children list
             for child in node.children: 
-                new_nodes.extend(_insert_nodes_recc(child, ranks[:-1])) # going down one rank
+                # Going down one rank
+                new_nodes.extend(_insert_nodes_recc(child, ranks[:-1])) 
             
             return new_nodes
-        
         
         # Create a list of nodes that will be used to update self
         new_nodes = []
@@ -658,13 +696,13 @@ class Taxonomy(UserDict):
             else:
                 try:
                     node._relink()
-                except: 
+                except TypeError: 
                     # relinking a parent-less node raises TypeError
                     # The root will be kept whatever is asked to keep coherence
                     new_nodes.append(node)
         
         root = self.root
-        new_nodes.extend(_insert_nodes_recc(root, ranks)) # Reversing ranks to have highest rank first
+        new_nodes.extend(_insert_nodes_recc(root, ranks)) 
         
         # Update self
         self.data = {node.taxid: node for node in new_nodes}
@@ -678,7 +716,9 @@ class Taxonomy(UserDict):
         path:
             File path for the output
         """
-        writer = json.dumps([node._to_dict() for node in self.values()], indent = 4)
+        writer = json.dumps([node._to_dict() 
+                             for node in self.values()], 
+                            indent=4)
         with open(path, 'w') as fi:
             fi.write(writer)
     
@@ -695,19 +735,20 @@ class Taxonomy(UserDict):
 
 
 def load(path: str) -> Taxonomy:
-        """
-        Load a Taxonomy from a previously exported json file.
-        
-        Parameters
-        ----------
-        path:
-            Path of file to load
-        
-        See Also
-        --------
-        Taxonomy.write
-        """
-        return Taxonomy.from_json(path)
+    """
+    Load a Taxonomy from a previously exported json file.
+    
+    Parameters
+    ----------
+    path:
+        Path of file to load
+    
+    See Also
+    --------
+    Taxonomy.write
+    """
+    return Taxonomy.from_json(path)
+
 
 def _parse_dump(filepath: str) -> Iterator:
     """
@@ -717,4 +758,9 @@ def _parse_dump(filepath: str) -> Iterator:
         for line in dmp:
             yield [item.strip() for item in line.split("|")]
 
-_flatten = lambda t: [item for sublist in t for item in sublist]
+
+def _flatten(t: list) -> list:
+    """
+    Flatten nested list
+    """
+    return [item for sublist in t for item in sublist]

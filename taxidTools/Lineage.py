@@ -4,7 +4,6 @@ Lineage object definition
 
 
 from __future__ import annotations
-from typing import List
 from collections import UserList
 from .Node import Node, DummyNode
 from .utils import linne
@@ -58,7 +57,8 @@ class Lineage(UserList):
     
     def __init__(self, base_node: Node, ascending: bool = True) -> None:
         if not isinstance(base_node, Node):
-            raise ValueError("Lineage should be instanciated with a Node or list of Nodes")
+            raise ValueError(
+                "Lineage should be instanciated with a Node or list of Nodes")
         
         self._baseNode = base_node
         
@@ -91,9 +91,10 @@ class Lineage(UserList):
         
         Notes
         -----
-        The Nodes are not modified by this method! That means that Node.parent will
-        still point to the original parent Node, even if it was masked in the Lineage.
-        
+        The Nodes are not modified by this method! 
+        That means that Node.parent will
+        still point to the original parent Node, 
+        even if it was masked in the Lineage.
         
         Examples
         --------
@@ -118,7 +119,7 @@ class Lineage(UserList):
             try:
                 new.append(nodedict[rank])
             except KeyError:
-                new.append(DummyNode(rank = rank))
+                new.append(DummyNode(rank=rank))
         
         self.data = new
 

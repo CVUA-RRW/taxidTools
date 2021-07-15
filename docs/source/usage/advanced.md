@@ -101,6 +101,17 @@ DummyNode(AAeFFWcs)
 'subgenus'
 ```
 
+The formatted Linaean taxonomy ranks can be retrieved from the utility function `linne()`
+for use in diverse methods:
+
+```python
+>>> taxidTools.linne()
+['species', 'genus', 'family', 'order', 'class', 'phylum', 'kingdom']
+>>> tax.filterRanks(taxidTools.linne())
+>>> tax.getAncestry('9606')
+Lineage([Node(9606), Node(9605), Node(9604), Node(9443), Node(40674), Node(7711), Node(33208), Node(1)])
+```
+
 ## Reading and writing taxonomies
 
 As you probably already noticed, parsing the Taxonomy definition can 
