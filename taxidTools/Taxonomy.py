@@ -559,9 +559,18 @@ class Taxonomy(UserDict):
         >>> tax.get('2')
         KeyError: '2'
         """
+        # Getting upstream nodes
         nodes = self.getAncestry(taxid)
+        
+        # Unlinking other branches from upstream nodes
+        # No need to change parents of the other nodes, they will be removed from Taxonomy
+        for i in range(1, len(nodes)):
+            nodes[i]._children = [nodes[i-1]]
+        
+        # Adding all downstream nodes
         nodes.extend(self.listDescendant(taxid))
         
+        # Update taxonomy
         self.data = {node.taxid: node for node in nodes}
     
     def filterRanks(self, ranks: list[str] = linne()) -> None:

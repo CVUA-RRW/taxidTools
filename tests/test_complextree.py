@@ -90,6 +90,7 @@ class TestComplexTree(unittest.TestCase):
         self.txd.prune(1)
         ids = [node.taxid for node in self.txd.values()]
         self.assertSetEqual(set(ids), {"0", "1", "11", "12", "121", "122"})
+        self.assertEqual(self.node0.children, [self.node1])
         
         self.txd.prune(11)
         ids = [node.taxid for node in self.txd.values()]

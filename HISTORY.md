@@ -1,5 +1,11 @@
 # Release History
 
+## Dev
+
+**Bug fix**
+
+* Fixed unlinking of removed branches in `Taxonomy.prune`
+
 ## 2.1.0 (2021-07-14)
 
 **Bug fix**
