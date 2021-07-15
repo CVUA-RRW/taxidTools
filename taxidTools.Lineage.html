@@ -96,8 +96,10 @@ the output being longer than the input list of ranks.</p></li>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>The Nodes are not modified by this method! That means that Node.parent will
-still point to the original parent Node, even if it was masked in the Lineage.</p>
+<p>The Nodes are not modified by this method!
+That means that Node.parent will
+still point to the original parent Node,
+even if it was masked in the Lineage.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">child1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;child1&quot;</span><span class="p">,</span> <span class="s2">&quot;child_rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>

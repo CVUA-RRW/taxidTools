@@ -121,6 +121,15 @@ These special kind of nodes act as place-holders for non-existing nodes.</p>
 <span class="go">&#39;subgenus&#39;</span>
 </pre></div>
 </div>
+<p>The formatted Linaean taxonomy ranks can be retrieved from the utility function <code class="docutils literal notranslate"><span class="pre">linne()</span></code>
+for use in diverse methods:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">taxidTools</span><span class="o">.</span><span class="n">linne</span><span class="p">()</span>
+<span class="go">[&#39;species&#39;, &#39;genus&#39;, &#39;family&#39;, &#39;order&#39;, &#39;class&#39;, &#39;phylum&#39;, &#39;kingdom&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">filterRanks</span><span class="p">(</span><span class="n">taxidTools</span><span class="o">.</span><span class="n">linne</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getAncestry</span><span class="p">(</span><span class="s1">&#39;9606&#39;</span><span class="p">)</span>
+<span class="go">Lineage([Node(9606), Node(9605), Node(9604), Node(9443), Node(40674), Node(7711), Node(33208), Node(1)])</span>
+</pre></div>
+</div>
 </section>
 <section id="reading-and-writing-taxonomies">
 <h2>Reading and writing taxonomies<a class="headerlink" href="#reading-and-writing-taxonomies" title="Permalink to this headline">¶</a></h2>

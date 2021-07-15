@@ -40,16 +40,16 @@
 <span class="kn">import</span> <span class="nn">string</span>
 
 
-<div class="viewcode-block" id="linne"><a class="viewcode-back" href="../../taxidTools.utils.html#taxidTools.utils.linne">[docs]</a><span class="k">def</span> <span class="nf">linne</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<div class="viewcode-block" id="linne"><a class="viewcode-back" href="../../taxidTools.utils.html#taxidTools.linne">[docs]</a><span class="k">def</span> <span class="nf">linne</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the linnean Taxonomy:</span>
 <span class="sd">    </span>
-<span class="sd">    species</span>
-<span class="sd">    genus</span>
-<span class="sd">    family</span>
-<span class="sd">    order</span>
-<span class="sd">    class</span>
-<span class="sd">    phylum</span>
+<span class="sd">    species, </span>
+<span class="sd">    genus, </span>
+<span class="sd">    family, </span>
+<span class="sd">    order, </span>
+<span class="sd">    class, </span>
+<span class="sd">    phylum, </span>
 <span class="sd">    kingdom</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">,</span>
@@ -60,10 +60,12 @@
             <span class="s1">&#39;phylum&#39;</span><span class="p">,</span>
             <span class="s1">&#39;kingdom&#39;</span><span class="p">]</span></div>
 
-<span class="k">def</span> <span class="nf">_rand_id</span><span class="p">(</span><span class="n">ncar</span> <span class="o">=</span> <span class="mi">8</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span>
-        <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ncar</span><span class="p">)])</span>
-    
+
+<span class="k">def</span> <span class="nf">_rand_id</span><span class="p">(</span><span class="n">ncar</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Random hash&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+                    <span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span><span class="p">)</span> 
+                    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ncar</span><span class="p">)])</span>
 </pre></div>
 
           </div>

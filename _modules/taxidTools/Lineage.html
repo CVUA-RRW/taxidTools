@@ -37,13 +37,12 @@
 
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">UserList</span>
 <span class="kn">from</span> <span class="nn">.Node</span> <span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">DummyNode</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">linne</span>
 
 
-<div class="viewcode-block" id="Lineage"><a class="viewcode-back" href="../../taxidTools.Lineage.html#taxidTools.Lineage.Lineage">[docs]</a><span class="k">class</span> <span class="nc">Lineage</span><span class="p">(</span><span class="n">UserList</span><span class="p">):</span>
+<div class="viewcode-block" id="Lineage"><a class="viewcode-back" href="../../taxidTools.Lineage.html#taxidTools.Lineage">[docs]</a><span class="k">class</span> <span class="nc">Lineage</span><span class="p">(</span><span class="n">UserList</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Taxomic Lineage</span>
 <span class="sd">    </span>
@@ -91,7 +90,8 @@
     
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_node</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">ascending</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">base_node</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Lineage should be instanciated with a Node or list of Nodes&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Lineage should be instanciated with a Node or list of Nodes&quot;</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">_baseNode</span> <span class="o">=</span> <span class="n">base_node</span>
         
@@ -105,7 +105,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ascending</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
     
-<div class="viewcode-block" id="Lineage.filter"><a class="viewcode-back" href="../../taxidTools.Lineage.html#taxidTools.Lineage.Lineage.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ranks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">linne</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Lineage.filter"><a class="viewcode-back" href="../../taxidTools.Lineage.html#taxidTools.Lineage.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ranks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">linne</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filter a Lineage to a set of specified ranks.</span>
 <span class="sd">        </span>
@@ -124,9 +124,10 @@
 <span class="sd">        </span>
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
-<span class="sd">        The Nodes are not modified by this method! That means that Node.parent will</span>
-<span class="sd">        still point to the original parent Node, even if it was masked in the Lineage.</span>
-<span class="sd">        </span>
+<span class="sd">        The Nodes are not modified by this method! </span>
+<span class="sd">        That means that Node.parent will</span>
+<span class="sd">        still point to the original parent Node, </span>
+<span class="sd">        even if it was masked in the Lineage.</span>
 <span class="sd">        </span>
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
@@ -151,7 +152,7 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">new</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nodedict</span><span class="p">[</span><span class="n">rank</span><span class="p">])</span>
             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-                <span class="n">new</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DummyNode</span><span class="p">(</span><span class="n">rank</span> <span class="o">=</span> <span class="n">rank</span><span class="p">))</span>
+                <span class="n">new</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DummyNode</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="n">rank</span><span class="p">))</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">new</span></div>
 

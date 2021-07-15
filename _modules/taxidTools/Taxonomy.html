@@ -37,7 +37,7 @@
 
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Optional</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">UserDict</span><span class="p">,</span> <span class="n">Counter</span>
 <span class="kn">import</span> <span class="nn">json</span> 
 <span class="kn">from</span> <span class="nn">.Node</span> <span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">DummyNode</span>
@@ -45,7 +45,7 @@
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">linne</span>
 
 
-<div class="viewcode-block" id="Taxonomy"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy">[docs]</a><span class="k">class</span> <span class="nc">Taxonomy</span><span class="p">(</span><span class="n">UserDict</span><span class="p">):</span>
+<div class="viewcode-block" id="Taxonomy"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy">[docs]</a><span class="k">class</span> <span class="nc">Taxonomy</span><span class="p">(</span><span class="n">UserDict</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Store Taxonomy nodes</span>
 <span class="sd">    </span>
@@ -90,7 +90,8 @@
 <span class="sd">    </span>
 <span class="sd">    Instanciate from a list:</span>
 <span class="sd">    </span>
-<span class="sd">    &gt;&gt;&gt; tax = Taxonomy.from_list([root, branch1, branch2, leaf1, leaf2, leaf3, leaf4])</span>
+<span class="sd">    &gt;&gt;&gt; tax = Taxonomy.from_list(</span>
+<span class="sd">        [root, branch1, branch2, leaf1, leaf2, leaf3, leaf4])</span>
 <span class="sd">    </span>
 <span class="sd">    Or iteratively:</span>
 <span class="sd">    </span>
@@ -112,7 +113,7 @@
             <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_namedict</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
     
-<div class="viewcode-block" id="Taxonomy.from_list"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.from_list">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Taxonomy.from_list"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.from_list">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_list</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">node_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Taxonomy</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a Taxonomy object from a list of Nodes</span>
@@ -133,11 +134,11 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Elements of node_list must be of type Node&quot;</span><span class="p">)</span>
         
-        <span class="n">as_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="o">.</span><span class="n">taxid</span> <span class="p">:</span> <span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">node_list</span><span class="p">}</span>
+        <span class="n">as_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="o">.</span><span class="n">taxid</span><span class="p">:</span> <span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">node_list</span><span class="p">}</span>
         
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">as_dict</span><span class="p">)</span></div>
     
-<div class="viewcode-block" id="Taxonomy.from_taxdump"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.from_taxdump">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Taxonomy.from_taxdump"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.from_taxdump">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_taxdump</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">rankedlineage</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Taxonomy</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a Taxonomy object from the NBI Taxdump files</span>
@@ -161,8 +162,8 @@
         
         <span class="c1"># Creating nodes</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">_parse_dump</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
-            <span class="n">txd</span><span class="p">[</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rank</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
-            <span class="n">parent_dict</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># storing parent id</span>
+            <span class="n">txd</span><span class="p">[</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span><span class="o">=</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rank</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+            <span class="n">parent_dict</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># storing parent id</span>
         
         <span class="c1"># Add names form rankedlineage</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">_parse_dump</span><span class="p">(</span><span class="n">rankedlineage</span><span class="p">):</span>
@@ -174,7 +175,7 @@
         
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">txd</span><span class="p">)</span></div>
     
-<div class="viewcode-block" id="Taxonomy.from_json"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.from_json">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Taxonomy.from_json"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.from_json">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Taxonomy</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load a Taxonomy from a previously exported json file.</span>
@@ -199,20 +200,20 @@
         <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">parser</span><span class="p">:</span>
             <span class="n">class_call</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span>
             <span class="n">txd</span><span class="p">[</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;_taxid&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">class_call</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;_taxid&#39;</span><span class="p">],</span>
-                                            <span class="n">record</span><span class="p">[</span><span class="s1">&#39;_name&#39;</span><span class="p">],</span>
-                                            <span class="n">record</span><span class="p">[</span><span class="s1">&#39;_rank&#39;</span><span class="p">])</span>
+                                               <span class="n">record</span><span class="p">[</span><span class="s1">&#39;_name&#39;</span><span class="p">],</span>
+                                               <span class="n">record</span><span class="p">[</span><span class="s1">&#39;_rank&#39;</span><span class="p">])</span>
             <span class="n">parent_dict</span><span class="p">[</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;_taxid&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s1">&#39;_parent&#39;</span><span class="p">]</span>
         
         <span class="c1"># Update parent info</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">parent_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">txd</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">txd</span><span class="p">[</span><span class="n">v</span><span class="p">]</span>
-            <span class="k">except</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                 <span class="k">pass</span>
         
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">txd</span><span class="p">)</span></div>
     
-<div class="viewcode-block" id="Taxonomy.addNode"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.addNode">[docs]</a>    <span class="k">def</span> <span class="nf">addNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Taxonomy.addNode"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.addNode">[docs]</a>    <span class="k">def</span> <span class="nf">addNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a Node to an existing Taxonomy object.</span>
 <span class="sd">        </span>
@@ -232,7 +233,7 @@
         <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_namedict</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">taxid</span></div>
     
-<div class="viewcode-block" id="Taxonomy.getTaxid"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.getTaxid">[docs]</a>    <span class="k">def</span> <span class="nf">getTaxid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="Taxonomy.getTaxid"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.getTaxid">[docs]</a>    <span class="k">def</span> <span class="nf">getTaxid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get taxid from name</span>
 <span class="sd">        </span>
@@ -250,7 +251,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_namedict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span></div>
     
-<div class="viewcode-block" id="Taxonomy.getName"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.getName">[docs]</a>    <span class="k">def</span> <span class="nf">getName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="Taxonomy.getName"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.getName">[docs]</a>    <span class="k">def</span> <span class="nf">getName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get taxid name</span>
 <span class="sd">        </span>
@@ -268,7 +269,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">taxid</span><span class="p">)]</span><span class="o">.</span><span class="n">name</span></div>
     
-<div class="viewcode-block" id="Taxonomy.getRank"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.getRank">[docs]</a>    <span class="k">def</span> <span class="nf">getRank</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="Taxonomy.getRank"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.getRank">[docs]</a>    <span class="k">def</span> <span class="nf">getRank</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get taxid rank</span>
 <span class="sd">        </span>
@@ -286,7 +287,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">taxid</span><span class="p">)]</span><span class="o">.</span><span class="n">rank</span></div>
     
-<div class="viewcode-block" id="Taxonomy.getParent"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.getParent">[docs]</a>    <span class="k">def</span> <span class="nf">getParent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span>
+<div class="viewcode-block" id="Taxonomy.getParent"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.getParent">[docs]</a>    <span class="k">def</span> <span class="nf">getParent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve parent Node</span>
 <span class="sd">        </span>
@@ -305,7 +306,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">taxid</span><span class="p">)]</span><span class="o">.</span><span class="n">parent</span></div>
     
-<div class="viewcode-block" id="Taxonomy.getChildren"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.getChildren">[docs]</a>    <span class="k">def</span> <span class="nf">getChildren</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]:</span>
+<div class="viewcode-block" id="Taxonomy.getChildren"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.getChildren">[docs]</a>    <span class="k">def</span> <span class="nf">getChildren</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve the children Nodes</span>
 <span class="sd">        </span>
@@ -324,7 +325,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">taxid</span><span class="p">)]</span><span class="o">.</span><span class="n">children</span></div>
     
-<div class="viewcode-block" id="Taxonomy.getAncestry"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.getAncestry">[docs]</a>    <span class="k">def</span> <span class="nf">getAncestry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Lineage</span><span class="p">:</span>
+<div class="viewcode-block" id="Taxonomy.getAncestry"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.getAncestry">[docs]</a>    <span class="k">def</span> <span class="nf">getAncestry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Lineage</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve the ancestry of the given taxid</span>
 <span class="sd">        </span>
@@ -343,7 +344,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Lineage</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">taxid</span><span class="p">)])</span></div>
     
-<div class="viewcode-block" id="Taxonomy.isAncestorOf"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.isAncestorOf">[docs]</a>    <span class="k">def</span> <span class="nf">isAncestorOf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">int</span><span class="p">],</span> <span class="n">child</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="Taxonomy.isAncestorOf"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.isAncestorOf">[docs]</a>    <span class="k">def</span> <span class="nf">isAncestorOf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> 
+                     <span class="n">child</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test if taxid is an ancestor of child</span>
 <span class="sd">        </span>
@@ -370,7 +372,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">taxid</span><span class="p">)]</span><span class="o">.</span><span class="n">isAncestorOf</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">child</span><span class="p">)])</span></div>
     
-<div class="viewcode-block" id="Taxonomy.isDescendantOf"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.isDescendantOf">[docs]</a>    <span class="k">def</span> <span class="nf">isDescendantOf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">int</span><span class="p">],</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="Taxonomy.isDescendantOf"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.isDescendantOf">[docs]</a>    <span class="k">def</span> <span class="nf">isDescendantOf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> 
+                       <span class="n">parent</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test if taxid is an descendant of parent</span>
 <span class="sd">        </span>
@@ -397,9 +400,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">taxid</span><span class="p">)]</span><span class="o">.</span><span class="n">isDescendantOf</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">parent</span><span class="p">)])</span></div>
     
-<div class="viewcode-block" id="Taxonomy.consensus"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.consensus">[docs]</a>    <span class="k">def</span> <span class="nf">consensus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">min_consensus</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span>
+<div class="viewcode-block" id="Taxonomy.consensus"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.consensus">[docs]</a>    <span class="k">def</span> <span class="nf">consensus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> 
+                  <span class="n">min_consensus</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Find a taxonomic consensus for the given taxid with a minimal agreement level.</span>
+<span class="sd">        Find a taxonomic consensus for the given </span>
+<span class="sd">        taxid with a minimal agreement level.</span>
 <span class="sd">        </span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -407,11 +412,13 @@
 <span class="sd">            list of taxonomic identification numbers</span>
 <span class="sd">        min_consensus: </span>
 <span class="sd">            minimal consensus level, between 0.5 and 1.</span>
-<span class="sd">            Note that a minimal consensus of 1 will return the same result as `lastCommonNode()`</span>
+<span class="sd">            Note that a minimal consensus of 1 will </span>
+<span class="sd">            return the same result as `lastCommonNode()`</span>
 <span class="sd">        </span>
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
-<span class="sd">        If no consensus can be found (for example because the Taxonomy contains multiple trees),</span>
+<span class="sd">        If no consensus can be found (for example because </span>
+<span class="sd">        the Taxonomy contains multiple trees),</span>
 <span class="sd">        an `IndexError` will be raised.</span>
 <span class="sd">        </span>
 <span class="sd">        See Also</span>
@@ -421,11 +428,16 @@
 <span class="sd">        </span>
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; node0 = Node(taxid = 0, name = &quot;root&quot;, rank = &quot;root&quot;, parent = None)</span>
-<span class="sd">        &gt;&gt;&gt; node1 = Node(taxid = 1, name = &quot;node1&quot;, rank = &quot;rank1&quot;, parent = node0)</span>
-<span class="sd">        &gt;&gt;&gt; node2 = Node(taxid = 2, name = &quot;node2&quot;, rank = &quot;rank1&quot;, parent = node0)</span>
-<span class="sd">        &gt;&gt;&gt; node11 = Node(taxid = 11, name = &quot;node11&quot;, rank = &quot;rank2&quot;, parent = node1)</span>
-<span class="sd">        &gt;&gt;&gt; node12 = Node(taxid = 12, name = &quot;node12&quot;, rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="sd">        &gt;&gt;&gt; node0 = Node(taxid = 0, name = &quot;root&quot;, </span>
+<span class="sd">                         rank = &quot;root&quot;, parent = None)</span>
+<span class="sd">        &gt;&gt;&gt; node1 = Node(taxid = 1, name = &quot;node1&quot;, </span>
+<span class="sd">                         rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="sd">        &gt;&gt;&gt; node2 = Node(taxid = 2, name = &quot;node2&quot;, </span>
+<span class="sd">                         rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="sd">        &gt;&gt;&gt; node11 = Node(taxid = 11, name = &quot;node11&quot;, </span>
+<span class="sd">                          rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="sd">        &gt;&gt;&gt; node12 = Node(taxid = 12, name = &quot;node12&quot;, </span>
+<span class="sd">                          rank = &quot;rank2&quot;, parent = node1)</span>
 <span class="sd">        &gt;&gt;&gt; tax = Taxonomy.from_list([node0, node1, node2, node11, node12])</span>
 <span class="sd">        &gt;&gt;&gt; tax.consensus([11, 12, 2], 0.8)</span>
 <span class="sd">        Node(0)</span>
@@ -434,37 +446,39 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Consensus under 50% is ambiguous</span>
         <span class="k">if</span> <span class="n">min_consensus</span> <span class="o">&lt;=</span> <span class="mf">0.5</span> <span class="ow">or</span> <span class="n">min_consensus</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Minimal consensus should be above 0.5 and under 1&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Minimal consensus should be above 0.5 and under 1&quot;</span><span class="p">)</span>
         
         <span class="c1"># Get lineages in REVERSED order </span>
-        <span class="n">lineages</span> <span class="o">=</span> <span class="p">[</span><span class="n">Lineage</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">txd</span><span class="p">)],</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">txd</span> <span class="ow">in</span> <span class="n">taxid_list</span><span class="p">]</span> 
+        <span class="n">lineages</span> <span class="o">=</span> <span class="p">[</span><span class="n">Lineage</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">txd</span><span class="p">)],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> 
+                    <span class="k">for</span> <span class="n">txd</span> <span class="ow">in</span> <span class="n">taxid_list</span><span class="p">]</span> 
         
-        <span class="c1">#Extend lineages so that they all are same size</span>
+        <span class="c1"># Extend lineages so that they all are same size</span>
         <span class="n">maxlen</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">lin</span><span class="p">)</span> <span class="k">for</span> <span class="n">lin</span> <span class="ow">in</span> <span class="n">lineages</span><span class="p">])</span>
         <span class="k">for</span> <span class="n">lin</span> <span class="ow">in</span> <span class="n">lineages</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lin</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">maxlen</span><span class="p">:</span>
-                <span class="n">lin</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">DummyNode</span><span class="p">()]</span> <span class="o">*</span><span class="p">(</span><span class="n">maxlen</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">lin</span><span class="p">)))</span>
+                <span class="n">lin</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">DummyNode</span><span class="p">()]</span> <span class="o">*</span> <span class="p">(</span><span class="n">maxlen</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">lin</span><span class="p">)))</span>
         
         <span class="c1"># Iterate over ranks descending to find last node above consensus level</span>
         <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">taxid_list</span><span class="p">)</span>
-        <span class="n">i</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">last</span> <span class="o">=</span> <span class="kc">None</span>
         
         <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">maxlen</span><span class="p">:</span> 
             <span class="n">count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">([</span><span class="n">lin</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">lin</span> <span class="ow">in</span> <span class="n">lineages</span><span class="p">])</span>
             <span class="n">mostCommon</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
             
-            <span class="k">if</span> <span class="n">mostCommon</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">total</span> <span class="o">&gt;=</span> <span class="n">min_consensus</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mostCommon</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">total</span> <span class="o">&gt;=</span> <span class="n">min_consensus</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">mostCommon</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">DummyNode</span><span class="p">)):</span>
                     <span class="c1"># save current succesful consensus, and check the next one</span>
                     <span class="n">last</span> <span class="o">=</span> <span class="n">mostCommon</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-                <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">break</span>
         
         <span class="k">return</span> <span class="n">last</span></div>
     
-<div class="viewcode-block" id="Taxonomy.lca"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.lca">[docs]</a>    <span class="k">def</span> <span class="nf">lca</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span>
+<div class="viewcode-block" id="Taxonomy.lca"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.lca">[docs]</a>    <span class="k">def</span> <span class="nf">lca</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get lowest common node of a bunch of taxids</span>
 <span class="sd">        </span>
@@ -479,18 +493,24 @@
 <span class="sd">        </span>
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; node0 = Node(taxid = 0, name = &quot;root&quot;, rank = &quot;root&quot;, parent = None)</span>
-<span class="sd">        &gt;&gt;&gt; node1 = Node(taxid = 1, name = &quot;node1&quot;, rank = &quot;rank1&quot;, parent = node0)</span>
-<span class="sd">        &gt;&gt;&gt; node2 = Node(taxid = 2, name = &quot;node2&quot;, rank = &quot;rank1&quot;, parent = node0)</span>
-<span class="sd">        &gt;&gt;&gt; node11 = Node(taxid = 11, name = &quot;node11&quot;, rank = &quot;rank2&quot;, parent = node1)</span>
-<span class="sd">        &gt;&gt;&gt; node12 = Node(taxid = 12, name = &quot;node12&quot;, rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="sd">        &gt;&gt;&gt; node0 = Node(taxid = 0, name = &quot;root&quot;, </span>
+<span class="sd">                         rank = &quot;root&quot;, parent = None)</span>
+<span class="sd">        &gt;&gt;&gt; node1 = Node(taxid = 1, name = &quot;node1&quot;, </span>
+<span class="sd">                         rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="sd">        &gt;&gt;&gt; node2 = Node(taxid = 2, name = &quot;node2&quot;, </span>
+<span class="sd">                         rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="sd">        &gt;&gt;&gt; node11 = Node(taxid = 11, name = &quot;node11&quot;, </span>
+<span class="sd">                          rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="sd">        &gt;&gt;&gt; node12 = Node(taxid = 12, name = &quot;node12&quot;, </span>
+<span class="sd">                          rank = &quot;rank2&quot;, parent = node1)</span>
 <span class="sd">        &gt;&gt;&gt; tax = Taxonomy.from_list([node0, node1, node2, node11, node12])</span>
 <span class="sd">        &gt;&gt;&gt; tax.lca([11, 12, 2])</span>
 <span class="sd">        Node(0)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">consensus</span><span class="p">(</span><span class="n">taxid_list</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
     
-<div class="viewcode-block" id="Taxonomy.distance"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.distance">[docs]</a>    <span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid1</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">int</span><span class="p">],</span> <span class="n">taxid2</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="Taxonomy.distance"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.distance">[docs]</a>    <span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid1</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> 
+                 <span class="n">taxid2</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Measures the distance between two nodes.</span>
 <span class="sd">        </span>
@@ -503,11 +523,16 @@
 <span class="sd">        </span>
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; node0 = Node(taxid = 0, name = &quot;root&quot;, rank = &quot;root&quot;, parent = None)</span>
-<span class="sd">        &gt;&gt;&gt; node1 = Node(taxid = 1, name = &quot;node1&quot;, rank = &quot;rank1&quot;, parent = node0)</span>
-<span class="sd">        &gt;&gt;&gt; node2 = Node(taxid = 2, name = &quot;node2&quot;, rank = &quot;rank1&quot;, parent = node0)</span>
-<span class="sd">        &gt;&gt;&gt; node11 = Node(taxid = 11, name = &quot;node11&quot;, rank = &quot;rank2&quot;, parent = node1)</span>
-<span class="sd">        &gt;&gt;&gt; node12 = Node(taxid = 12, name = &quot;node12&quot;, rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="sd">        &gt;&gt;&gt; node0 = Node(taxid = 0, name = &quot;root&quot;, </span>
+<span class="sd">                         rank = &quot;root&quot;, parent = None)</span>
+<span class="sd">        &gt;&gt;&gt; node1 = Node(taxid = 1, name = &quot;node1&quot;, </span>
+<span class="sd">                         rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="sd">        &gt;&gt;&gt; node2 = Node(taxid = 2, name = &quot;node2&quot;, </span>
+<span class="sd">                         rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="sd">        &gt;&gt;&gt; node11 = Node(taxid = 11, name = &quot;node11&quot;, </span>
+<span class="sd">                          rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="sd">        &gt;&gt;&gt; node12 = Node(taxid = 12, name = &quot;node12&quot;, </span>
+<span class="sd">                          rank = &quot;rank2&quot;, parent = node1)</span>
 <span class="sd">        &gt;&gt;&gt; tax = Taxonomy.from_list([node0, node1, node2, node11, node12])</span>
 <span class="sd">        &gt;&gt;&gt; tax.distance(11, 2)</span>
 <span class="sd">        3</span>
@@ -522,7 +547,8 @@
         
         <span class="k">return</span> <span class="n">d1</span> <span class="o">+</span> <span class="n">d2</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">dlca</span></div>
     
-<div class="viewcode-block" id="Taxonomy.listDescendant"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.listDescendant">[docs]</a>    <span class="k">def</span> <span class="nf">listDescendant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">ranks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]:</span>
+<div class="viewcode-block" id="Taxonomy.listDescendant"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.listDescendant">[docs]</a>    <span class="k">def</span> <span class="nf">listDescendant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> 
+                       <span class="n">ranks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        List all descendant of a node</span>
 <span class="sd">        </span>
@@ -535,11 +561,16 @@
 <span class="sd">        </span>
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; node0 = Node(taxid = 0, name = &quot;root&quot;, rank = &quot;root&quot;, parent = None)</span>
-<span class="sd">        &gt;&gt;&gt; node1 = Node(taxid = 1, name = &quot;node1&quot;, rank = &quot;rank1&quot;, parent = node0)</span>
-<span class="sd">        &gt;&gt;&gt; node2 = Node(taxid = 2, name = &quot;node2&quot;, rank = &quot;rank1&quot;, parent = node0)</span>
-<span class="sd">        &gt;&gt;&gt; node11 = Node(taxid = 11, name = &quot;node11&quot;, rank = &quot;rank2&quot;, parent = node1)</span>
-<span class="sd">        &gt;&gt;&gt; node12 = Node(taxid = 12, name = &quot;node12&quot;, rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="sd">        &gt;&gt;&gt; node0 = Node(taxid = 0, name = &quot;root&quot;, </span>
+<span class="sd">                         rank = &quot;root&quot;, parent = None)</span>
+<span class="sd">        &gt;&gt;&gt; node1 = Node(taxid = 1, name = &quot;node1&quot;, </span>
+<span class="sd">                         rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="sd">        &gt;&gt;&gt; node2 = Node(taxid = 2, name = &quot;node2&quot;, </span>
+<span class="sd">                         rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="sd">        &gt;&gt;&gt; node11 = Node(taxid = 11, name = &quot;node11&quot;, #</span>
+<span class="sd">                          rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="sd">        &gt;&gt;&gt; node12 = Node(taxid = 12, name = &quot;node12&quot;, </span>
+<span class="sd">                          rank = &quot;rank2&quot;, parent = node1)</span>
 <span class="sd">        &gt;&gt;&gt; tax = Taxonomy.from_list([node0, node1, node2, node11, node12])</span>
 <span class="sd">        &gt;&gt;&gt; tax.listDescendant(1)</span>
 <span class="sd">        [Node(11), Node(12)]</span>
@@ -558,8 +589,7 @@
         
         <span class="k">return</span> <span class="nb">all</span></div>
     
-    
-<div class="viewcode-block" id="Taxonomy.prune"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.prune">[docs]</a>    <span class="k">def</span> <span class="nf">prune</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Taxonomy.prune"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.prune">[docs]</a>    <span class="k">def</span> <span class="nf">prune</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">taxid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Prune the Taxonomy at the given taxid</span>
 <span class="sd">        </span>
@@ -574,11 +604,16 @@
 <span class="sd">        </span>
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; node0 = Node(taxid = 0, name = &quot;root&quot;, rank = &quot;root&quot;, parent = None)</span>
-<span class="sd">        &gt;&gt;&gt; node1 = Node(taxid = 1, name = &quot;node1&quot;, rank = &quot;rank1&quot;, parent = node0)</span>
-<span class="sd">        &gt;&gt;&gt; node2 = Node(taxid = 2, name = &quot;node2&quot;, rank = &quot;rank1&quot;, parent = node0)</span>
-<span class="sd">        &gt;&gt;&gt; node11 = Node(taxid = 11, name = &quot;node11&quot;, rank = &quot;rank2&quot;, parent = node1)</span>
-<span class="sd">        &gt;&gt;&gt; node12 = Node(taxid = 12, name = &quot;node12&quot;, rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="sd">        &gt;&gt;&gt; node0 = Node(taxid = 0, name = &quot;root&quot;, </span>
+<span class="sd">                         rank = &quot;root&quot;, parent = None)</span>
+<span class="sd">        &gt;&gt;&gt; node1 = Node(taxid = 1, name = &quot;node1&quot;, </span>
+<span class="sd">                         rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="sd">        &gt;&gt;&gt; node2 = Node(taxid = 2, name = &quot;node2&quot;, </span>
+<span class="sd">                         rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="sd">        &gt;&gt;&gt; node11 = Node(taxid = 11, name = &quot;node11&quot;, </span>
+<span class="sd">                          rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="sd">        &gt;&gt;&gt; node12 = Node(taxid = 12, name = &quot;node12&quot;, </span>
+<span class="sd">                          rank = &quot;rank2&quot;, parent = node1)</span>
 <span class="sd">        &gt;&gt;&gt; tax = Taxonomy.from_list([node0, node1, node2, node11, node12])</span>
 <span class="sd">        &gt;&gt;&gt; tax.prune(1)</span>
 <span class="sd">        </span>
@@ -596,9 +631,10 @@
         <span class="n">nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAncestry</span><span class="p">(</span><span class="n">taxid</span><span class="p">)</span>
         
         <span class="c1"># Unlinking other branches from upstream nodes</span>
-        <span class="c1"># No need to change parents of the other nodes, they will be removed from Taxonomy</span>
+        <span class="c1"># No need to change parents of the other nodes, </span>
+        <span class="c1"># they will be removed from Taxonomy</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
-            <span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_children</span> <span class="o">=</span> <span class="p">[</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_children</span> <span class="o">=</span> <span class="p">[</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]]</span>
         
         <span class="c1"># Adding all downstream nodes</span>
         <span class="n">nodes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">listDescendant</span><span class="p">(</span><span class="n">taxid</span><span class="p">))</span>
@@ -606,7 +642,7 @@
         <span class="c1"># Update taxonomy</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="o">.</span><span class="n">taxid</span><span class="p">:</span> <span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">}</span></div>
     
-<div class="viewcode-block" id="Taxonomy.filterRanks"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.filterRanks">[docs]</a>    <span class="k">def</span> <span class="nf">filterRanks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ranks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">linne</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Taxonomy.filterRanks"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.filterRanks">[docs]</a>    <span class="k">def</span> <span class="nf">filterRanks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ranks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">linne</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filter a Taxonomy to keep only the ranks provided as arguments.</span>
 <span class="sd">        </span>
@@ -634,7 +670,8 @@
 <span class="sd">        &gt;&gt;&gt; tax</span>
 <span class="sd">        {Node(1), Node(11), DummyNode(tO841ymu), Node(111), Node(001)}</span>
 <span class="sd">        </span>
-<span class="sd">        DummyNodes are created s placeholders for missing ranks in the taxonomy:</span>
+<span class="sd">        DummyNodes are created s placeholders </span>
+<span class="sd">        for missing ranks in the taxonomy:</span>
 <span class="sd">        </span>
 <span class="sd">        &gt;&gt;&gt; node001.parent</span>
 <span class="sd">        DummyNode(tO841ymu)</span>
@@ -662,24 +699,25 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">ranks</span><span class="p">:</span>
                 <span class="k">return</span> <span class="p">[]</span>
             
-            <span class="c1"># Keep track of created dummyNodes to add to the taxonomy listing later</span>
+            <span class="c1"># Keep track of created dummyNodes to add </span>
+            <span class="c1"># to the taxonomy listing later</span>
             <span class="n">new_nodes</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">children</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span>
             <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">rank</span> <span class="o">!=</span> <span class="n">ranks</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
                     <span class="c1"># Create a dummy node and insert it</span>
-                    <span class="n">dummy</span> <span class="o">=</span> <span class="n">DummyNode</span><span class="p">(</span><span class="n">rank</span> <span class="o">=</span> <span class="n">ranks</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-                    <span class="n">dummy</span><span class="o">.</span><span class="n">insertNode</span><span class="p">(</span><span class="n">parent</span> <span class="o">=</span> <span class="n">node</span><span class="p">,</span> <span class="n">child</span> <span class="o">=</span> <span class="n">child</span><span class="p">)</span>
+                    <span class="n">dummy</span> <span class="o">=</span> <span class="n">DummyNode</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="n">ranks</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="n">dummy</span><span class="o">.</span><span class="n">insertNode</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">child</span><span class="o">=</span><span class="n">child</span><span class="p">)</span>
                     
                     <span class="c1"># Keep listing of added nodes</span>
                     <span class="n">new_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dummy</span><span class="p">)</span>
             
             <span class="c1"># Go down one step with updated children list</span>
             <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span> 
-                <span class="n">new_nodes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_insert_nodes_recc</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">ranks</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span> <span class="c1"># going down one rank</span>
+                <span class="c1"># Going down one rank</span>
+                <span class="n">new_nodes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_insert_nodes_recc</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">ranks</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span> 
             
             <span class="k">return</span> <span class="n">new_nodes</span>
-        
         
         <span class="c1"># Create a list of nodes that will be used to update self</span>
         <span class="n">new_nodes</span> <span class="o">=</span> <span class="p">[]</span>
@@ -691,18 +729,18 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">node</span><span class="o">.</span><span class="n">_relink</span><span class="p">()</span>
-                <span class="k">except</span><span class="p">:</span> 
+                <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span> 
                     <span class="c1"># relinking a parent-less node raises TypeError</span>
                     <span class="c1"># The root will be kept whatever is asked to keep coherence</span>
                     <span class="n">new_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         
         <span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span>
-        <span class="n">new_nodes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_insert_nodes_recc</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">ranks</span><span class="p">))</span> <span class="c1"># Reversing ranks to have highest rank first</span>
+        <span class="n">new_nodes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_insert_nodes_recc</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">ranks</span><span class="p">))</span> 
         
         <span class="c1"># Update self</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="o">.</span><span class="n">taxid</span><span class="p">:</span> <span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">new_nodes</span><span class="p">}</span></div>
     
-<div class="viewcode-block" id="Taxonomy.write"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Taxonomy.write"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Write taxonomy to a JSON file.</span>
 <span class="sd">        </span>
@@ -711,7 +749,9 @@
 <span class="sd">        path:</span>
 <span class="sd">            File path for the output</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">writer</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">([</span><span class="n">node</span><span class="o">.</span><span class="n">_to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">()],</span> <span class="n">indent</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">([</span><span class="n">node</span><span class="o">.</span><span class="n">_to_dict</span><span class="p">()</span> 
+                             <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">()],</span> 
+                            <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
             <span class="n">fi</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span></div>
     
@@ -727,20 +767,21 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
-<div class="viewcode-block" id="load"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.Taxonomy.load">[docs]</a><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Taxonomy</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Load a Taxonomy from a previously exported json file.</span>
-<span class="sd">        </span>
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        path:</span>
-<span class="sd">            Path of file to load</span>
-<span class="sd">        </span>
-<span class="sd">        See Also</span>
-<span class="sd">        --------</span>
-<span class="sd">        Taxonomy.write</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+<div class="viewcode-block" id="load"><a class="viewcode-back" href="../../taxidTools.Taxonomy.html#taxidTools.load">[docs]</a><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Taxonomy</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load a Taxonomy from a previously exported json file.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path:</span>
+<span class="sd">        Path of file to load</span>
+<span class="sd">    </span>
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    Taxonomy.write</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+
 
 <span class="k">def</span> <span class="nf">_parse_dump</span><span class="p">(</span><span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -750,7 +791,12 @@
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">dmp</span><span class="p">:</span>
             <span class="k">yield</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">)]</span>
 
-<span class="n">_flatten</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">t</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">_flatten</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Flatten nested list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">t</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span>
 </pre></div>
 
           </div>

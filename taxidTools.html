@@ -46,6 +46,1012 @@
 </section>
 <section id="module-taxidTools">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-taxidTools" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="taxidTools.DummyNode">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">taxidTools.</span></span><span class="sig-name descname"><span class="pre">DummyNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Node.html#DummyNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.DummyNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">taxidTools.Node.Node</span></code></a></p>
+<p>A placeholder for a non-existing Node.</p>
+<p>Will be assigned a random hash id in place of a taxid
+upon creation.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="taxidTools.DummyNode.children">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">children</span></span><em class="property"><span class="pre">:</span> <span class="pre">list</span></em><a class="headerlink" href="#taxidTools.DummyNode.children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Children nodes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.DummyNode.insertNode">
+<span class="sig-name descname"><span class="pre">insertNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Node.html#DummyNode.insertNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.DummyNode.insertNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert the dummy node between parent and child</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="taxidTools.DummyNode.name">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#taxidTools.DummyNode.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the taxonomic node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="taxidTools.DummyNode.parent">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#taxidTools.DummyNode.parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parent node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="taxidTools.DummyNode.rank">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">rank</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#taxidTools.DummyNode.rank" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rank of the taxonomic node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="taxidTools.DummyNode.taxid">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">taxid</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#taxidTools.DummyNode.taxid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Taxonomic identification number</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="taxidTools.Lineage">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">taxidTools.</span></span><span class="sig-name descname"><span class="pre">Lineage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ascending</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Lineage.html#Lineage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Lineage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.UserList</span></code></p>
+<p>Taxomic Lineage</p>
+<p>Defines a linear and ordered succession of Nodes.
+A Lineage is created by providing a single Node that
+will be used as a base to retrieve higher Nodes.
+Ranks are ascending by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_node</strong> (<a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>) – The base node, from which the ancestry should be retrieved</p></li>
+<li><p><strong>ascending</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Should the Lineage by sorted by ascending ranks?</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>A Lineage does not have to be continuous. Nodes can have parents that
+are not included in the Lineage, as long as Nodes in a Lineage form a
+linear path.</p>
+<p>Lineage methods will never modify the Node objects it contains</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">child1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;child1&quot;</span><span class="p">,</span> <span class="s2">&quot;child_rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">child2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;child2&quot;</span><span class="p">,</span> <span class="s2">&quot;sub_child_rank&quot;</span><span class="p">,</span> <span class="n">child1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Lineage</span><span class="p">(</span><span class="n">child2</span><span class="p">)</span>
+<span class="go">Lineage([Node(3), Node(2), Node(1)])</span>
+</pre></div>
+</div>
+<p>Lineage elements are the Node objects themselves</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Lineage</span><span class="p">(</span><span class="n">child2</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">Node object:</span>
+<span class="go">        Taxid: 1</span>
+<span class="go">        Name: root</span>
+<span class="go">        Rank: root</span>
+<span class="go">        Parent: None</span>
+</pre></div>
+</div>
+<p>A Lineage can also be descending
+&gt;&gt;&gt; Lineage(child2, ascending = False)
+Lineage([Node(1), Node(2), Node(3)])</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Lineage.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ranks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['species',</span> <span class="pre">'genus',</span> <span class="pre">'family',</span> <span class="pre">'order',</span> <span class="pre">'class',</span> <span class="pre">'phylum',</span> <span class="pre">'kingdom']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Lineage.html#Lineage.filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Lineage.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter a Lineage to a set of specified ranks.</p>
+<p>Modifies a Lineage in-place.
+Lineage order will not be conserved and dummy nodes will
+be added as placeholders for missing ranks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ranks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – List of ranks to filter. It is assumed to be sorted
+in the same order as Lineage.</p></li>
+<li><p><strong>no_check</strong> – Do not check the length of the ouput. This can result in
+the output being longer than the input list of ranks.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The Nodes are not modified by this method!
+That means that Node.parent will
+still point to the original parent Node,
+even if it was masked in the Lineage.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">child1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;child1&quot;</span><span class="p">,</span> <span class="s2">&quot;child_rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">child2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;child2&quot;</span><span class="p">,</span> <span class="s2">&quot;sub_child_rank&quot;</span><span class="p">,</span> <span class="n">child1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span> <span class="o">=</span> <span class="n">Lineage</span><span class="p">(</span><span class="n">child2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span><span class="o">.</span><span class="n">filter</span><span class="p">([</span><span class="s2">&quot;sub_child_rank&quot;</span><span class="p">,</span> <span class="s2">&quot;norank&quot;</span><span class="p">,</span> <span class="s2">&quot;child_rank&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span>
+<span class="go">Lineage([Node(3), &#39;dummy&#39;, Node(2)])</span>
+</pre></div>
+</div>
+<p>Order is not conserved!</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span> <span class="o">=</span> <span class="n">Lineage</span><span class="p">(</span><span class="n">child2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lin</span><span class="o">.</span><span class="n">filter</span><span class="p">([</span><span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;sub_child_rank&quot;</span><span class="p">])</span>
+<span class="go">Lineage([Node(1), Node(3)])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="taxidTools.Node">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">taxidTools.</span></span><span class="sig-name descname"><span class="pre">Node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Node.html#Node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Taxonomic Node</p>
+<p>Create a Node object contining taxonomic information
+as well as a link to parent and children nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>taxid</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Taxonomic identification number</p></li>
+<li><p><strong>name</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Node name</p></li>
+<li><p><strong>rank</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Node rank</p></li>
+<li><p><strong>parent</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – The parent Node object</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The <cite>children</cite> property will be dynamically populated when children Nodes
+declare a Node as parent.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">child</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;child&quot;</span><span class="p">,</span> <span class="s2">&quot;child_rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">child</span><span class="o">.</span><span class="n">taxid</span>
+<span class="go">&#39;2&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">child</span><span class="o">.</span><span class="n">rank</span>
+<span class="go">&#39;child_rank&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">child</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;child&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">child</span><span class="o">.</span><span class="n">parent</span>
+<span class="go">Node object:</span>
+<span class="go">        Taxid: 1</span>
+<span class="go">        Name: root</span>
+<span class="go">        Rank: root</span>
+<span class="go">        Parent: None</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span><span class="o">.</span><span class="n">children</span>
+<span class="go">[Node object:</span>
+<span class="go">        Taxid: 2</span>
+<span class="go">        Name: child</span>
+<span class="go">        Rank: child_rank</span>
+<span class="go">        Parent: 1]</span>
+</pre></div>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="taxidTools.Node.children">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">children</span></span><em class="property"><span class="pre">:</span> <span class="pre">list</span></em><a class="headerlink" href="#taxidTools.Node.children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Children nodes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Node.isAncestorOf">
+<span class="sig-name descname"><span class="pre">isAncestorOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Node.html#Node.isAncestorOf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Node.isAncestorOf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the object is an ancestor of another Node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node</strong> (<a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>) – Putative descendant node</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span><span class="o">.</span><span class="n">isAncestorOf</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="go">root.isAncestorOf(node)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Node.isDescendantOf">
+<span class="sig-name descname"><span class="pre">isDescendantOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Node.html#Node.isDescendantOf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Node.isDescendantOf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the object is an ancestor of another Node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node</strong> (<a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>) – Putative ancestor node</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span><span class="o">.</span><span class="n">isDescendantOf</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="go">root.isDescendantOf(node)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="taxidTools.Node.name">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#taxidTools.Node.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the taxonomic node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="taxidTools.Node.node_info">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">node_info</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#taxidTools.Node.node_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Node information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="taxidTools.Node.parent">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#taxidTools.Node.parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parent node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="taxidTools.Node.rank">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">rank</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#taxidTools.Node.rank" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rank of the taxonomic node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="taxidTools.Node.taxid">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">taxid</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#taxidTools.Node.taxid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Taxonomic identification number</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">taxidTools.</span></span><span class="sig-name descname"><span class="pre">Taxonomy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.UserDict</span></code></p>
+<p>Store Taxonomy nodes</p>
+<p>A Taxonomy is instanciated as a dictionnary and
+each Node can be accessed by its taxid.
+A Taoxonomy object can be instanciated directly from a dictionnary,
+iteratively with the method <cite>Taxonomy.addNode</cite> method or from a
+list of taxdump files..</p>
+<p class="rubric">Notes</p>
+<p>Taxonomy objects are mutable and some methods will modify the
+underlying Node objects.
+Do a deep copy if you wish to keep the original object.</p>
+<p>A Taxonomy always assumes a unique root node.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#taxidTools.Taxonomy.from_taxdump" title="taxidTools.Taxonomy.from_taxdump"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Taxonomy.from_taxdump</span></code></a></dt><dd><p>load a Taxonomy object from taxdump files</p>
+</dd>
+<dt><a class="reference internal" href="#taxidTools.Taxonomy.from_list" title="taxidTools.Taxonomy.from_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Taxonomy.from_list</span></code></a></dt><dd><p>load a Taxonomy object from a list of Node</p>
+</dd>
+<dt><a class="reference internal" href="#taxidTools.Taxonomy.from_json" title="taxidTools.Taxonomy.from_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Taxonomy.from_json</span></code></a></dt><dd><p>load a Taxonomy from a previously exported json file</p>
+</dd>
+<dt><a class="reference internal" href="#taxidTools.Taxonomy.addNode" title="taxidTools.Taxonomy.addNode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Taxonomy.addNode</span></code></a></dt><dd><p>add a Node to a Taxonomy</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">branch1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="s2">&quot;node11&quot;</span><span class="p">,</span> <span class="s2">&quot;middle&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">branch2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;node12&quot;</span><span class="p">,</span> <span class="s2">&quot;middel&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">leaf1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="s2">&quot;node111&quot;</span><span class="p">,</span> <span class="s2">&quot;leaf&quot;</span><span class="p">,</span> <span class="n">branch1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">leaf2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">112</span><span class="p">,</span> <span class="s2">&quot;node112&quot;</span><span class="p">,</span> <span class="s2">&quot;leaf&quot;</span><span class="p">,</span> <span class="n">branch1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">leaf3</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="s2">&quot;node121&quot;</span><span class="p">,</span> <span class="s2">&quot;leaf&quot;</span><span class="p">,</span> <span class="n">branch2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">leaf4</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="s2">&quot;node13&quot;</span><span class="p">,</span> <span class="s2">&quot;leaf&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">({</span><span class="s2">&quot;1&quot;</span> <span class="p">:</span> <span class="n">root</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mi">11</span><span class="p">:</span> <span class="n">branch1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mi">12</span><span class="p">:</span> <span class="n">branch2</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mi">111</span><span class="p">:</span> <span class="n">leaf1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mi">112</span><span class="p">:</span> <span class="n">leaf2</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mi">121</span><span class="p">:</span> <span class="n">leaf3</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mi">13</span><span class="p">:</span> <span class="n">leaf4</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>Instanciate from a list:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span>
+<span class="go">    [root, branch1, branch2, leaf1, leaf2, leaf3, leaf4])</span>
+</pre></div>
+</div>
+<p>Or iteratively:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="p">[</span><span class="n">root</span><span class="p">,</span> <span class="n">branch1</span><span class="p">,</span> <span class="n">branch2</span><span class="p">,</span> <span class="n">leaf1</span><span class="p">,</span> <span class="n">leaf2</span><span class="p">,</span> <span class="n">leaf3</span><span class="p">,</span> <span class="n">leaf4</span><span class="p">]:</span>
+<span class="gp">... </span>    <span class="n">tax</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>Or from the taxdump files:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_taxdump</span><span class="p">(</span><span class="s2">&quot;nodes.dmp&#39;, &#39;rankedlineage.dmp&#39;)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.addNode">
+<span class="sig-name descname"><span class="pre">addNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.addNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.addNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a Node to an existing Taxonomy object.</p>
+<p>The Node taxid will be used a key to access element.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node</strong> (<a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>) – A Node to add to the Taxonomy</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.consensus">
+<span class="sig-name descname"><span class="pre">consensus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_consensus</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.consensus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.consensus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find a taxonomic consensus for the given
+taxid with a minimal agreement level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>taxid_list</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]]) – list of taxonomic identification numbers</p></li>
+<li><p><strong>min_consensus</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – minimal consensus level, between 0.5 and 1.
+Note that a minimal consensus of 1 will
+return the same result as <cite>lastCommonNode()</cite></p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>If no consensus can be found (for example because
+the Taxonomy contains multiple trees),
+an <cite>IndexError</cite> will be raised.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#taxidTools.Taxonomy.lca" title="taxidTools.Taxonomy.lca"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Taxonomy.lca</span></code></a></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node0</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
+<span class="go">                 rank = &quot;root&quot;, parent = None)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node1&quot;</span><span class="p">,</span>
+<span class="go">                 rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node2&quot;</span><span class="p">,</span>
+<span class="go">                 rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node11</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node11&quot;</span><span class="p">,</span>
+<span class="go">                  rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node12</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node12&quot;</span><span class="p">,</span>
+<span class="go">                  rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">node0</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">,</span> <span class="n">node11</span><span class="p">,</span> <span class="n">node12</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">consensus</span><span class="p">([</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mf">0.8</span><span class="p">)</span>
+<span class="go">Node(0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">consensus</span><span class="p">([</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mf">0.6</span><span class="p">)</span>
+<span class="go">Node(1)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taxid2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Measures the distance between two nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>taxid1</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Taxonomic identification number</p></li>
+<li><p><strong>taxid2</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Taxonomic identification number</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node0</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
+<span class="go">                 rank = &quot;root&quot;, parent = None)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node1&quot;</span><span class="p">,</span>
+<span class="go">                 rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node2&quot;</span><span class="p">,</span>
+<span class="go">                 rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node11</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node11&quot;</span><span class="p">,</span>
+<span class="go">                  rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node12</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node12&quot;</span><span class="p">,</span>
+<span class="go">                  rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">node0</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">,</span> <span class="n">node11</span><span class="p">,</span> <span class="n">node12</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.filterRanks">
+<span class="sig-name descname"><span class="pre">filterRanks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ranks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['species',</span> <span class="pre">'genus',</span> <span class="pre">'family',</span> <span class="pre">'order',</span> <span class="pre">'class',</span> <span class="pre">'phylum',</span> <span class="pre">'kingdom']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.filterRanks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.filterRanks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter a Taxonomy to keep only the ranks provided as arguments.</p>
+<p>Modifies Taxonomy in-place to keep only the Nodes at the requested
+ranks. Nodes will be modified to conserve linkage in the Taxonomy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ranks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – List of ranks to keep. Must be sorted by ascending ranks.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>In order to enforce ankering of the Taxonomy, the root node will
+always be kept</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node11</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank1&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node111</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node11</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node001</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s1">&#39;001&#39;</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">node1</span><span class="p">,</span> <span class="n">node11</span><span class="p">,</span> <span class="n">node111</span><span class="p">,</span> <span class="n">node001</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">filterRanks</span><span class="p">([</span><span class="s1">&#39;rank2&#39;</span><span class="p">,</span> <span class="s1">&#39;rank1&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span>
+<span class="go">{Node(1), Node(11), DummyNode(tO841ymu), Node(111), Node(001)}</span>
+</pre></div>
+</div>
+<p>DummyNodes are created s placeholders
+for missing ranks in the taxonomy:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node001</span><span class="o">.</span><span class="n">parent</span>
+<span class="go">DummyNode(tO841ymu)</span>
+</pre></div>
+</div>
+<p>Note that the root will be kept regardless of the input:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node11</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank1&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node111</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node11</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node001</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s1">&#39;001&#39;</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;rank2&quot;</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">node1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">node1</span><span class="p">,</span> <span class="n">node11</span><span class="p">,</span> <span class="n">node111</span><span class="p">,</span> <span class="n">node001</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">filterRanks</span><span class="p">([</span><span class="s1">&#39;rank2&#39;</span><span class="p">,</span> <span class="s1">&#39;rank1&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span>
+<span class="go">{DummyNode(wmnar5QT), Node(001), Node(1), Node(11), Node(111)}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.from_json">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.from_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a Taxonomy from a previously exported json file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Path of file to load</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#taxidTools.Taxonomy.write" title="taxidTools.Taxonomy.write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Taxonomy.write</span></code></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy" title="taxidTools.Taxonomy.Taxonomy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Taxonomy</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.from_list">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.from_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.from_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Taxonomy object from a list of Nodes</p>
+<p>Convert a list of Nodes into a valid Taxonomy object
+where each Node can be accessed using its taxid as key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node_list</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>]) – List of Node objects</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">txd</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">)])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy" title="taxidTools.Taxonomy.Taxonomy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Taxonomy</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.from_taxdump">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_taxdump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rankedlineage</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.from_taxdump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.from_taxdump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Taxonomy object from the NBI Taxdump files</p>
+<p>Load the taxonomic infromation form the nodes.dmp and
+rankedlineage.dmp files available from the NCBI servers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nodes</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Path to the nodes.dmp file</p></li>
+<li><p><strong>rankedlineage</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Path to the rankedlineage.dmp file</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_taxdump</span><span class="p">(</span><span class="s2">&quot;nodes.dmp&#39;, &#39;rankedlineage.dmp&#39;)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy" title="taxidTools.Taxonomy.Taxonomy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Taxonomy</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.getAncestry">
+<span class="sig-name descname"><span class="pre">getAncestry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.getAncestry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.getAncestry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the ancestry of the given taxid</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>taxid</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Taxonomic identification number</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">({</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">root</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="n">node</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getAncestry</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">Lineage([Node(2), Node(1)])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="taxidTools.Lineage.html#taxidTools.Lineage.Lineage" title="taxidTools.Lineage.Lineage"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lineage</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.getChildren">
+<span class="sig-name descname"><span class="pre">getChildren</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.getChildren"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.getChildren" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the children Nodes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>taxid</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Taxonomic identification number</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">({</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">root</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="n">node</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getChildren</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[Node(2)]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.getName">
+<span class="sig-name descname"><span class="pre">getName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.getName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.getName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get taxid name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>taxid</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Taxonomic identification number</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">({</span><span class="s1">&#39;1&#39;</span><span class="p">:</span><span class="n">node</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getName</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">&#39;node&#39;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.getParent">
+<span class="sig-name descname"><span class="pre">getParent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.getParent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.getParent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve parent Node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>taxid</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Taxonomic identification number</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">({</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">root</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="n">node</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getParent</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">Node(1)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.getRank">
+<span class="sig-name descname"><span class="pre">getRank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.getRank"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.getRank" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get taxid rank</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>taxid</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Taxonomic identification number</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">({</span><span class="s1">&#39;1&#39;</span><span class="p">:</span><span class="n">node</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getRank</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">&#39;rank&#39;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.getTaxid">
+<span class="sig-name descname"><span class="pre">getTaxid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.getTaxid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.getTaxid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get taxid from name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Node name</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">({</span><span class="s1">&#39;1&#39;</span><span class="p">:</span><span class="n">node</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getTaxid</span><span class="p">(</span><span class="s1">&#39;node&#39;</span><span class="p">)</span>
+<span class="go">&#39;1&#39;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.isAncestorOf">
+<span class="sig-name descname"><span class="pre">isAncestorOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.isAncestorOf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.isAncestorOf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if taxid is an ancestor of child</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>taxid</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Taxonomic identification number</p></li>
+<li><p><strong>child</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Taxonomic identification number</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#taxidTools.Taxonomy.isDescendantOf" title="taxidTools.Taxonomy.isDescendantOf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Taxonomy.isDescendantOf</span></code></a></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">({</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">root</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="n">node</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">isAncestorOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">isAncestorOf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.isDescendantOf">
+<span class="sig-name descname"><span class="pre">isDescendantOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.isDescendantOf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.isDescendantOf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if taxid is an descendant of parent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>taxid</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Taxonomic identification number</p></li>
+<li><p><strong>parent</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Taxonomic identification number</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#taxidTools.Taxonomy.isAncestorOf" title="taxidTools.Taxonomy.isAncestorOf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Taxonomy.isAncestorOf</span></code></a></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">({</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">root</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="n">node</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">isDescendantOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">isDescendantOf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.lca">
+<span class="sig-name descname"><span class="pre">lca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.lca"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.lca" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get lowest common node of a bunch of taxids</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>taxid_list</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]]) – list of taxonomic identification numbers</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#taxidTools.Taxonomy.consensus" title="taxidTools.Taxonomy.consensus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Taxonomy.consensus</span></code></a></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node0</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
+<span class="go">                 rank = &quot;root&quot;, parent = None)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node1&quot;</span><span class="p">,</span>
+<span class="go">                 rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node2&quot;</span><span class="p">,</span>
+<span class="go">                 rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node11</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node11&quot;</span><span class="p">,</span>
+<span class="go">                  rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node12</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node12&quot;</span><span class="p">,</span>
+<span class="go">                  rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">node0</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">,</span> <span class="n">node11</span><span class="p">,</span> <span class="n">node12</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">lca</span><span class="p">([</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">Node(0)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.listDescendant">
+<span class="sig-name descname"><span class="pre">listDescendant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.listDescendant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.listDescendant" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all descendant of a node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>taxid</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Taxonomic identification number</p></li>
+<li><p><strong>ranks</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>]) – list of ranks for which to return nodes</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node0</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
+<span class="go">                 rank = &quot;root&quot;, parent = None)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node1&quot;</span><span class="p">,</span>
+<span class="go">                 rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node2&quot;</span><span class="p">,</span>
+<span class="go">                 rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node11</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node11&quot;</span><span class="p">,</span> <span class="c1">#</span>
+<span class="go">                  rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node12</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node12&quot;</span><span class="p">,</span>
+<span class="go">                  rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">node0</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">,</span> <span class="n">node11</span><span class="p">,</span> <span class="n">node12</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">listDescendant</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[Node(11), Node(12)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">listDescendant</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.prune">
+<span class="sig-name descname"><span class="pre">prune</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.prune"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.prune" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prune the Taxonomy at the given taxid</p>
+<p>Nodes not in the lineage (upwards and downwards)
+of the given taxid will be discarded.
+The Ancestors of the given taxid will be kept!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>taxid</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – taxid whose Lineage to keep</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">node0</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
+<span class="go">                 rank = &quot;root&quot;, parent = None)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node1&quot;</span><span class="p">,</span>
+<span class="go">                 rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node2&quot;</span><span class="p">,</span>
+<span class="go">                 rank = &quot;rank1&quot;, parent = node0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node11</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node11&quot;</span><span class="p">,</span>
+<span class="go">                  rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node12</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">taxid</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node12&quot;</span><span class="p">,</span>
+<span class="go">                  rank = &quot;rank2&quot;, parent = node1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="o">.</span><span class="n">from_list</span><span class="p">([</span><span class="n">node0</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">,</span> <span class="n">node11</span><span class="p">,</span> <span class="n">node12</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">prune</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Ancestry is <a href="#id1"><span class="problematic" id="id2">kept_</span></a></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">getAncestry</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="go">Lineage([Node(11), Node(1), Node(0)])</span>
+</pre></div>
+</div>
+<p>But other branches are gone</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">)</span>
+<span class="go">KeyError: &#39;2&#39;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.root">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">root</span></span><em class="property"><span class="pre">:</span> <span class="pre">taxidTools.Node.Node</span></em><a class="headerlink" href="#taxidTools.Taxonomy.root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the root Node, assumes a single root shared by all Nodes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="taxidTools.Taxonomy.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#Taxonomy.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Taxonomy.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write taxonomy to a JSON file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – File path for the output</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="taxidTools.linne">
+<span class="sig-prename descclassname"><span class="pre">taxidTools.</span></span><span class="sig-name descname"><span class="pre">linne</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/utils.html#linne"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.linne" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the linnean Taxonomy:</p>
+<p>species,
+genus,
+family,
+order,
+class,
+phylum,
+kingdom</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="taxidTools.load">
+<span class="sig-prename descclassname"><span class="pre">taxidTools.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Taxonomy.html#load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a Taxonomy from a previously exported json file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Path of file to load</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#taxidTools.Taxonomy.write" title="taxidTools.Taxonomy.write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Taxonomy.write</span></code></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="taxidTools.Taxonomy.html#taxidTools.Taxonomy.Taxonomy" title="taxidTools.Taxonomy.Taxonomy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Taxonomy</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
