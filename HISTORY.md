@@ -6,6 +6,9 @@
 
 * Fixed unlinking of removed branches in `Taxonomy.prune`
 
+**Other**
+* Linting code, still ignoring W293 and W291 =)
+
 ## 2.1.0 (2021-07-14)
 
 **Bug fix**
