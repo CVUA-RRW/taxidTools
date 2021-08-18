@@ -212,7 +212,7 @@ class Node(object):
         """
         Create a dict of self with information to recreate the object.
         """
-        dic = self.__dict__
+        dic = dict(self.__dict__)
         if self.parent:
             dic['_parent'] = dic['_parent'].taxid
         dic['type'] = self.__class__.__name__
@@ -229,7 +229,10 @@ class DummyNode(Node):
     """
     def __init__(self, *args, **kwargs) -> None:
         hash = _rand_id()
-        super().__init__(taxid=hash, *args, **kwargs)
+        try:
+            super().__init__(taxid=hash, *args, **kwargs)
+        except TypeError:  # if providing a taxid
+            super().__init__(*args, **kwargs)
     
     @property
     def taxid(self) -> str:

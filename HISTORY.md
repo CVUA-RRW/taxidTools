@@ -1,5 +1,12 @@
 # Release History
 
+## 2.1.2 (2021-08-18)
+
+**Bug Fix**
+
+* Fix a bug resulting in the deletion of the children attribute of Nodes after writing to a JSON file.
+* Fix an issue with the creation of DummyNdoes from JSON files
+
 ## 2.1.1 (2021-07-15)
 
 **Bug fix**
