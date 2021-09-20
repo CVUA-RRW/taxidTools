@@ -48,7 +48,7 @@
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-taxidTools" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="taxidTools.DummyNode">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">taxidTools.</span></span><span class="sig-name descname"><span class="pre">DummyNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Node.html#DummyNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.DummyNode" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">taxidTools.</span></span><span class="sig-name descname"><span class="pre">DummyNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Node.html#DummyNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.DummyNode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">taxidTools.Node.Node</span></code></a></p>
 <p>A placeholder for a non-existing Node.</p>
 <p>Will be assigned a random hash id in place of a taxid
@@ -79,6 +79,17 @@ upon creation.</p>
 <dt class="sig sig-object py" id="taxidTools.DummyNode.name">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#taxidTools.DummyNode.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Name of the taxonomic node</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="taxidTools.DummyNode.node_info">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">node_info</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#taxidTools.DummyNode.node_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Node information</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
@@ -213,7 +224,7 @@ even if it was masked in the Lineage.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="taxidTools.Node">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">taxidTools.</span></span><span class="sig-name descname"><span class="pre">Node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Node.html#Node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Node" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">taxidTools.Node._BaseNode</span></code></p>
 <p>Taxonomic Node</p>
 <p>Create a Node object contining taxonomic information
 as well as a link to parent and children nodes.</p>
@@ -266,56 +277,6 @@ declare a Node as parent.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="taxidTools.Node.isAncestorOf">
-<span class="sig-name descname"><span class="pre">isAncestorOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Node.html#Node.isAncestorOf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Node.isAncestorOf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test if the object is an ancestor of another Node.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>node</strong> (<a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>) – Putative descendant node</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span><span class="o">.</span><span class="n">isAncestorOf</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-<span class="go">False</span>
-<span class="go">root.isAncestorOf(node)</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="taxidTools.Node.isDescendantOf">
-<span class="sig-name descname"><span class="pre">isDescendantOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/taxidTools/Node.html#Node.isDescendantOf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#taxidTools.Node.isDescendantOf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test if the object is an ancestor of another Node.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>node</strong> (<a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>) – Putative ancestor node</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;rank&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span><span class="o">.</span><span class="n">isDescendantOf</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="go">root.isDescendantOf(node)</span>
-<span class="go">False</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -989,7 +950,7 @@ The Ancestors of the given taxid will be kept!</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="taxidTools.Taxonomy.root">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">root</span></span><em class="property"><span class="pre">:</span> <span class="pre">taxidTools.Node.Node</span></em><a class="headerlink" href="#taxidTools.Taxonomy.root" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">root</span></span><em class="property"><span class="pre">:</span> <a class="reference internal" href="taxidTools.Node.html#taxidTools.Node.Node" title="taxidTools.Node.Node"><span class="pre">taxidTools.Node.Node</span></a></em><a class="headerlink" href="#taxidTools.Taxonomy.root" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the root Node, assumes a single root shared by all Nodes</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
