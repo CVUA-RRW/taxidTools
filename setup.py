@@ -20,7 +20,7 @@ setup(
     author=about['__author__'],
     author_email=about['__author_email__'],
     description=about['__description__'],
-    long_desription=long_description,
+    long_description=long_description,
     long_description_content_type="text/markdown",
     url=about['__url__'],
     license=about['__licence__'],
