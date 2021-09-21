@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>taxidTools.Taxonomy &#8212; taxidTools 2.2.1 documentation</title>
+    <title>taxidTools.Taxonomy &#8212; taxidTools 2.2.2 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
@@ -199,7 +199,6 @@
         <span class="c1"># Create nodes from records</span>
         <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">parser</span><span class="p">:</span>
             <span class="n">class_call</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">class_call</span><span class="p">)</span>
             <span class="n">txd</span><span class="p">[</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;_taxid&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">class_call</span><span class="p">(</span><span class="n">taxid</span><span class="o">=</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;_taxid&#39;</span><span class="p">],</span>
                                                <span class="n">name</span><span class="o">=</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;_name&#39;</span><span class="p">],</span>
                                                <span class="n">rank</span><span class="o">=</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;_rank&#39;</span><span class="p">])</span>
