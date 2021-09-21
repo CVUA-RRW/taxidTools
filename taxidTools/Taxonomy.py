@@ -624,7 +624,7 @@ class Taxonomy(UserDict):
         Notes
         -----
         In order to enforce ankering of the Taxonomy, the root node will
-        always be kept
+        always be kept.
         
         Examples
         --------
@@ -654,41 +654,10 @@ class Taxonomy(UserDict):
         >>> tax
         {DummyNode(wmnar5QT), Node(001), Node(1), Node(11), Node(111)}
         """
-        
-        def _insert_nodes_recc(node: Node, ranks: list[str]) -> list[Node]:
-            """
-            reccursively relink all nodes under node
-            to follow the order given by ranks (descending).
-            index keeps track of the position in ranks.
-            Returns the list of added nodes
-            """
-            # if no ranks left return an empty list
-            if not ranks:
-                return []
-            
-            # Keep track of created dummyNodes to add 
-            # to the taxonomy listing later
-            new_nodes = []
-            children = node.children
-            for child in children:
-                if child.rank != ranks[-1]:
-                    # Create a dummy node and insert it
-                    dummy = DummyNode(rank=ranks[-1])
-                    dummy.insertNode(parent=node, child=child)
-                    
-                    # Keep listing of added nodes
-                    new_nodes.append(dummy)
-            
-            # Go down one step with updated children list
-            for child in node.children: 
-                # Going down one rank
-                new_nodes.extend(_insert_nodes_recc(child, ranks[:-1])) 
-            
-            return new_nodes
-        
         # Create a list of nodes that will be used to update self
         new_nodes = []
         
+        # First step, reduce tree
         # Remove unwanted nodes
         for node in self.values():
             if node.rank in ranks:
@@ -701,8 +670,12 @@ class Taxonomy(UserDict):
                     # The root will be kept whatever is asked to keep coherence
                     new_nodes.append(node)
         
+        # Second step, expand tree
+        # Reccursively add DummyNode to fill gaps
         root = self.root
-        new_nodes.extend(_insert_nodes_recc(root, ranks)) 
+        if ranks[-1] == self.root:
+            ranks = ranks[:-1]
+        new_nodes.extend(_insert_nodes_recc(root, ranks))
         
         # Update self
         self.data = {node.taxid: node for node in new_nodes}
@@ -764,3 +737,63 @@ def _flatten(t: list) -> list:
     Flatten nested list
     """
     return [item for sublist in t for item in sublist]
+
+
+def _insert_nodes_recc(node: Node, ranks: list[str]) -> list[Node]:
+    """
+    Insert Dummy Nodes to fill gaps in ranks
+    
+    Reccursively relinks all nodes under node
+    to follow the order given by ranks.
+    
+    Notes:
+    ------
+    Assumes that the Taxonomy has bee purged of non wanted 
+    ranks.
+    
+    Parameter:
+    ----------
+    node: 
+        The starting (top) node, should be the root 
+        when calling the function from the top level:
+    ranks:
+        Ascending list of ranks desired in the output.
+        Should not include the root rank!
+    
+    Returns:
+    --------
+    list of added nodes
+    """
+    # if no ranks left return an empty list
+    if not ranks:
+        return []
+    
+    # Keep track of created dummyNodes 
+    new_nodes = _insert_dummies(node, ranks[-1])
+    
+    for child in node.children:
+        new_nodes.extend(_insert_nodes_recc(child, ranks[:-1]))
+    
+    return new_nodes
+
+def _insert_dummies(node, next_rank):
+    dummies = []
+    if node.children and next_rank:
+        rerank = []
+        # First check all children and keep track of 
+        # those that must be reranked
+        for child in node.children:
+            if child.rank != next_rank:
+                rerank.append(child)
+        # Then create dummies and insert between parent and child
+        # Note: both steps uncoupled to avoid creating children
+        # while iterating on children attribute.
+        for child in rerank:
+            dummy = DummyNode(rank=next_rank)
+            dummy.insertNode(parent=node, child=child)
+            dummies.append(dummy)
+    elif next_rank:
+        # Leaf node but still ranks left
+        dummy = DummyNode(rank=next_rank, parent=node)
+        dummies.append(dummy)
+    return dummies

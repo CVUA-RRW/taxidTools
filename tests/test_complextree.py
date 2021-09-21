@@ -1,10 +1,12 @@
 import unittest
 import taxidTools
+from taxidTools.Taxonomy import _insert_nodes_recc, _insert_dummies
 
 class TestComplexTree(unittest.TestCase):
     # Test Tree
     #
     # 0(-/ --/ -- 001) for testing filterRanks
+    # |(-3) for testing filterRanks
     # |- 1
     # |  |- 11
     # |  |- 12
@@ -41,8 +43,28 @@ class TestComplexTree(unittest.TestCase):
             }
         
         self.txd = taxidTools.Taxonomy(nodes)
-        
     
+    def test_insertdummy(self):
+        dummy = taxidTools.DummyNode(name= 'dummy', rank = 'rank2.5')
+        dummy.insertNode(self.node2, self.node21)
+        
+        self.assertEqual(self.node21.parent, dummy)
+        self.assertEqual(dummy.parent, self.node2)
+        self.assertEqual(dummy.children, [self.node21])
+        self.assertCountEqual(self.node2.children, [dummy, self.node22, self.node23])
+        self.assertEqual(taxidTools.Lineage(self.node21), [self.node21, dummy, self.node2, self.node0])
+        self.assertCountEqual(taxidTools.Lineage(self.node22), [self.node22, self.node2, self.node0])
+     
+    def test_relink(self):
+        self.node2._relink()
+        self.assertEqual(self.node21.parent, self.node0)
+        self.assertEqual(self.node22.parent, self.node0)
+        self.assertEqual(self.node23.parent, self.node0)
+        self.assertCountEqual(self.node0.children, [self.node1, self.node21, self.node22, self.node23])
+        self.assertCountEqual(taxidTools.Lineage(self.node22), [self.node22,self.node0])
+        self.assertCountEqual(taxidTools.Lineage(self.node21), [self.node21,self.node0])
+        self.assertCountEqual(taxidTools.Lineage(self.node23), [self.node23,self.node0])
+     
     def test_consens(self):
         self.assertEqual(self.txd.consensus(["11", "12", "21", "22", "23"], 1).taxid,
                          "0")
@@ -100,7 +122,20 @@ class TestComplexTree(unittest.TestCase):
         node001 = taxidTools.Node('001', name = "node0011", rank = "rank3", parent = self.node0)
         self.txd.addNode(node001)
         self.txd.filterRanks(ranks=['rank3', 'rank1'])
-        self.assertEqual(len(self.txd), 7)
+        self.assertEqual(len(self.txd), 8)
         # test relinking
         self.assertEqual(self.node121.parent, self.node1)
         self.assertTrue(isinstance(node001.parent, taxidTools.DummyNode))
+    
+    def test_insert_dummies(self):
+        new = _insert_dummies(self.node1, 'newrank')
+        self.assertEqual(len(new), 2)
+        for node in self.node1.children:
+            self.assertIsInstance(node, taxidTools.DummyNode)
+        
+    def test_insert_nodes_recc(self):
+        node001 = taxidTools.Node('001', name = "node0011", rank = "rank3", parent = self.node0)
+        node3 = taxidTools.Node('3', name = "node3", rank = "rank1", parent = self.node0)
+        self.txd.addNode(node3)
+        new_nodes = _insert_nodes_recc(self.node0, ['rank3', 'rank2', 'rank1.5', 'rank1'])
+        self.assertEqual(len(new_nodes), 15)

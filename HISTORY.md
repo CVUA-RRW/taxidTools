@@ -1,7 +1,14 @@
 # Release History
 
+## 2.2.0(2021-09-21)
+
+**Bug Fix**
+
+* Fixed broken implementation of `Taxonomy.filterRanks`
+
 **Implementation changes**
-* Node and Dummy Node classes now ihnerit from the new _BaseNode classe. No impact on methods and properties.
+
+* `Node` and `Dummy Node` classes now ihnerit from the new _BaseNode classe. No impact on methods and properties.
 
 ## 2.1.2 (2021-08-18)
 
