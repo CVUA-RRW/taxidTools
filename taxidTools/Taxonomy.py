@@ -166,7 +166,6 @@ class Taxonomy(UserDict):
         # Create nodes from records
         for record in parser:
             class_call = eval(record['type'])
-            print(class_call)
             txd[record['_taxid']] = class_call(taxid=record['_taxid'],
                                                name=record['_name'],
                                                rank=record['_rank'])
