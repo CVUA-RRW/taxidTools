@@ -125,7 +125,7 @@ class TestComplexTree(unittest.TestCase):
         self.assertEqual(len(self.txd), 8)
         # test relinking
         self.assertEqual(self.node121.parent, self.node1)
-        self.assertTrue(isinstance(node001.parent, taxidTools.DummyNode))
+        self.assertIsInstance(node001.parent, taxidTools.DummyNode)
     
     def test_insert_dummies(self):
         new = _insert_dummies(self.node1, 'newrank')

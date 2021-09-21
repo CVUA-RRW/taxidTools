@@ -88,7 +88,7 @@ class _BaseNode:
         """Set parent node and update children attribute of parent node"""
         # root node has circular reference to self.
         if parent and parent.taxid != self.taxid: 
-            assert isinstance(parent, Node)
+            assert isinstance(parent, _BaseNode)
             self._parent = parent
             self._updateParent()
         else:
@@ -292,7 +292,7 @@ class Node(_BaseNode):
         super(Node, self.__class__).parent.fset(self, parent)
 
 
-class DummyNode(Node):
+class DummyNode(_BaseNode):
     """
     A placeholder for a non-existing Node.
     
@@ -300,11 +300,13 @@ class DummyNode(Node):
     upon creation.
     """
     def __init__(self, 
+                 taxid: Optional[str] = None,
                  name: Optional[str] = None, 
                  rank: Optional[str] = None, 
                  parent: Optional[str] = None) -> None:
-        hash = _rand_id() # generating random taxid 
-        super().__init__(hash, name, rank, parent)
+        if not taxid:
+            taxid = _rand_id() # generating random taxid 
+        super().__init__(taxid, name, rank, parent)
     
     def insertNode(self, parent: Node, child: Node) -> None:
         """
@@ -350,22 +352,22 @@ class DummyNode(Node):
     # Setter methods
     @taxid.setter
     def taxid(self, taxid: Union[str, int]) -> None:
-        super(Node, self.__class__).taxid.fset(self, taxid)
+        super(DummyNode, self.__class__).taxid.fset(self, taxid)
     
     @name.setter
     def name(self, name: str) -> None:
-        super(Node, self.__class__).name.fset(self, name)
+        super(DummyNode, self.__class__).name.fset(self, name)
     
     @rank.setter
     def rank(self, rank: str) -> None:
-        super(Node, self.__class__).rank.fset(self, rank)
+        super(DummyNode, self.__class__).rank.fset(self, rank)
     
     @children.setter
     def children(self, children: list) -> None:
-        super(Node, self.__class__).children.fset(self, children)
+        super(DummyNode, self.__class__).children.fset(self, children)
     
     @parent.setter
     def parent(self, parent: Node) -> None:
         """Set parent node and update children attribute of parent node"""
-        super(Node, self.__class__).parent.fset(self, parent)
+        super(DummyNode, self.__class__).parent.fset(self, parent)
 

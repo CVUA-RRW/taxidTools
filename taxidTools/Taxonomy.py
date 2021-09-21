@@ -7,7 +7,7 @@ from __future__ import annotations
 from typing import Union, Iterator, Optional
 from collections import UserDict, Counter
 import json 
-from .Node import Node, DummyNode
+from .Node import Node, DummyNode, _BaseNode
 from .Lineage import Lineage
 from .utils import linne
 
@@ -81,7 +81,7 @@ class Taxonomy(UserDict):
                 self._namedict[v.name] = k
     
     @classmethod
-    def from_list(cls, node_list: list[Node]) -> Taxonomy:
+    def from_list(cls, node_list: list[_BaseNode]) -> Taxonomy:
         """
         Create a Taxonomy object from a list of Nodes
         
@@ -98,7 +98,7 @@ class Taxonomy(UserDict):
         >>> txd = Taxonomy.from_list([Node(1), Node(2)])
         """
         for node in node_list:
-            if not isinstance(node, Node):
+            if not isinstance(node, _BaseNode):
                 raise ValueError("Elements of node_list must be of type Node")
         
         as_dict = {node.taxid: node for node in node_list}
@@ -166,9 +166,10 @@ class Taxonomy(UserDict):
         # Create nodes from records
         for record in parser:
             class_call = eval(record['type'])
-            txd[record['_taxid']] = class_call(record['_taxid'],
-                                               record['_name'],
-                                               record['_rank'])
+            print(class_call)
+            txd[record['_taxid']] = class_call(taxid=record['_taxid'],
+                                               name=record['_name'],
+                                               rank=record['_rank'])
             parent_dict[record['_taxid']] = record['_parent']
         
         # Update parent info
@@ -775,6 +776,7 @@ def _insert_nodes_recc(node: Node, ranks: list[str]) -> list[Node]:
         new_nodes.extend(_insert_nodes_recc(child, ranks[:-1]))
     
     return new_nodes
+
 
 def _insert_dummies(node, next_rank):
     dummies = []

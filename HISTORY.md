@@ -1,5 +1,11 @@
 # Release History
 
+## 2.2.1 (2021-09-21)
+
+**Bug Fix**
+
+* Fixed some bugged references to Node class
+
 ## 2.2.0(2021-09-21)
 
 **Bug Fix**

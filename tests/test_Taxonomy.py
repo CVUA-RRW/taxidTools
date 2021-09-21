@@ -45,6 +45,12 @@ class TestTaxdump(unittest.TestCase):
         ancestry = taxidTools.Lineage(self.reload["9903"])
         self.assertEqual(len(ancestry), 29)
         self.assertEqual(ancestry[-1].taxid, "1")
+        
+        self.txd.filterRanks(['genus', 'none'])
+        self.txd.write("test2.json")
+        test2 = taxidTools.load("test2.json")
+        ancestry = taxidTools.Lineage(test2["9903"])
+        self.assertIsInstance(ancestry[1], taxidTools.DummyNode)
     
     def test_getters(self):
         self.assertEqual(self.txd.getName(1), "child")
