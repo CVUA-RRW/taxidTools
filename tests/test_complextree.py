@@ -50,8 +50,8 @@ class TestComplexTree(unittest.TestCase):
         
         self.assertEqual(self.node21.parent, dummy)
         self.assertEqual(dummy.parent, self.node2)
-        self.assertEqual(dummy.children, [self.node21])
-        self.assertCountEqual(self.node2.children, [dummy, self.node22, self.node23])
+        self.assertEqual(dummy.children, {self.node21})
+        self.assertCountEqual(self.node2.children, {dummy, self.node22, self.node23})
         self.assertEqual(taxidTools.Lineage(self.node21), [self.node21, dummy, self.node2, self.node0])
         self.assertCountEqual(taxidTools.Lineage(self.node22), [self.node22, self.node2, self.node0])
      
@@ -60,7 +60,7 @@ class TestComplexTree(unittest.TestCase):
         self.assertEqual(self.node21.parent, self.node0)
         self.assertEqual(self.node22.parent, self.node0)
         self.assertEqual(self.node23.parent, self.node0)
-        self.assertCountEqual(self.node0.children, [self.node1, self.node21, self.node22, self.node23])
+        self.assertCountEqual(self.node0.children, {self.node1, self.node21, self.node22, self.node23})
         self.assertCountEqual(taxidTools.Lineage(self.node22), [self.node22,self.node0])
         self.assertCountEqual(taxidTools.Lineage(self.node21), [self.node21,self.node0])
         self.assertCountEqual(taxidTools.Lineage(self.node23), [self.node23,self.node0])
@@ -106,13 +106,13 @@ class TestComplexTree(unittest.TestCase):
     def test_listDescendant(self):
         self.assertSetEqual(set(self.txd.listDescendant(1)),
                             set([self.node11, self.node12, self.node121, self.node122]))
-        self.assertEqual(self.txd.listDescendant(11), [])
+        self.assertEqual(self.txd.listDescendant(11), set())
     
     def test_subtree(self):
         self.txd.prune(1)
         ids = [node.taxid for node in self.txd.values()]
         self.assertSetEqual(set(ids), {"0", "1", "11", "12", "121", "122"})
-        self.assertEqual(self.node0.children, [self.node1])
+        self.assertEqual(self.node0.children, {self.node1})
         
         self.txd.prune(11)
         ids = [node.taxid for node in self.txd.values()]

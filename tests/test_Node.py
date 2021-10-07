@@ -28,7 +28,7 @@ class TestNode(unittest.TestCase):
         self.assertEqual(self.node.parent.taxid, "789")
     
     def test_children(self):
-        self.assertEqual(self.node.children, [self.midnode])
+        self.assertEqual(self.node.children, {self.midnode})
     
     def test_ancestry(self):
         self.assertEqual(self.lownode.isDescendantOf(self.node), True)
@@ -40,15 +40,15 @@ class TestNode(unittest.TestCase):
         dummy = taxidTools.DummyNode()
         dummy.insertNode(parent = self.midnode, child = self.lownode)
         self.assertEqual(dummy.parent, self.midnode)
-        self.assertEqual(dummy.children, [self.lownode])
-        self.assertEqual(self.midnode.children, [dummy])
+        self.assertEqual(dummy.children, {self.lownode})
+        self.assertEqual(self.midnode.children, {dummy})
         self.assertEqual(self.lownode.parent, dummy)
         
     def test_relink(self):
         self.midnode._relink()
         self.assertEqual(self.lownode.parent, self.node)
         self.assertEqual(len(self.node.children), 1)
-        self.assertEqual(self.node.children[0], self.lownode)
+        self.assertIn(self.lownode, self.node.children)
         
 if __name__ == "__main__":
     unittest.main()

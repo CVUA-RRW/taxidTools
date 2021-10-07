@@ -515,7 +515,7 @@ class Taxonomy(UserDict):
         return d1 + d2 - 2 * dlca
     
     def listDescendant(self, taxid: Union[str, int], 
-                       ranks: Optional[list] = None) -> list[Node]:
+                       ranks: Optional[list] = None) -> set[Node]:
         """
         List all descendant of a node
         
@@ -550,7 +550,7 @@ class Taxonomy(UserDict):
         all = current
         
         while next:
-            all.extend(next)
+            all.update(next)
             current = next
             next = _flatten([child.children for child in current])
         
@@ -601,7 +601,7 @@ class Taxonomy(UserDict):
         # No need to change parents of the other nodes, 
         # they will be removed from Taxonomy
         for i in range(1, len(nodes)):
-            nodes[i]._children = [nodes[i - 1]]
+            nodes[i].children = [nodes[i - 1]]
         
         # Adding all downstream nodes
         nodes.extend(self.listDescendant(taxid))
@@ -665,7 +665,7 @@ class Taxonomy(UserDict):
             else:
                 try:
                     node._relink()
-                except TypeError: 
+                except TypeError:
                     # relinking a parent-less node raises TypeError
                     # The root will be kept whatever is asked to keep coherence
                     new_nodes.append(node)

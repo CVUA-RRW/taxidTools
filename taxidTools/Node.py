@@ -5,6 +5,7 @@ Should be used internally only.
 
 
 from __future__ import annotations
+import os
 from typing import Union, Optional
 from .utils import _rand_id
 
@@ -19,7 +20,7 @@ class _BaseNode:
                  name: Optional[str] = None, 
                  rank: Optional[str] = None, 
                  parent: Optional[str] = None) -> None:
-        self._children = []
+        self._children = set()
         self._name = name
         self._rank = rank
         self._parent = parent
@@ -49,7 +50,7 @@ class _BaseNode:
         return self._parent
     
     @property
-    def children(self) -> list:
+    def children(self) -> set:
         """Children nodes"""
         return self._children
     
@@ -58,13 +59,13 @@ class _BaseNode:
         """
         Node information
         """
-        return f"{self.__repr__()}\n" \
-               f"type: {self.__class__.__name__}\n" \
-               f"taxid: {self.taxid}\n" \
-               f"name: {self.name}\n" \
-               f"rank: {self.rank}\n" \
-               f"parent: {self.parent}\n" \
-               f"children: {self.children}\n"
+        return f"{self.__repr__()}{os.linesep}" \
+               f"type: {self.__class__.__name__}{os.linesep}" \
+               f"taxid: {self.taxid}{os.linesep}" \
+               f"name: {self.name}{os.linesep}" \
+               f"rank: {self.rank}{os.linesep}" \
+               f"parent: {self.parent}{os.linesep}" \
+               f"children: {self.children}{os.linesep}"
     
     # Setter methods
     @taxid.setter
@@ -73,15 +74,15 @@ class _BaseNode:
     
     @name.setter
     def name(self, name: str) -> None:
-        self._name = name
+        self._name = str(name)
     
     @rank.setter
     def rank(self, rank: str) -> None:
-        self._rank = rank
+        self._rank = str(rank)
     
     @children.setter
-    def children(self, children: list) -> None:
-        self._children = children
+    def children(self, children: set) -> None:
+        self._children = set(children)
     
     @parent.setter
     def parent(self, parent: Node) -> None:
@@ -150,7 +151,7 @@ class _BaseNode:
         """
         if self.parent:
             if self not in self.parent.children:
-                self.parent.children.append(self)
+                self.parent.children.add(self)
     
     def _relink(self) -> None:
         """
