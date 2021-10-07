@@ -159,11 +159,14 @@ class _BaseNode:
         """
         if not self.parent:
             raise TypeError("Cannot relink a root Node")
-            
+        
+        parent = self.parent
+        
         for child in self.children:
-            child.parent = self.parent
+            child.parent = parent
             # Will auto update the parent node
-        self.parent.children.remove(self)
+        
+        parent.children.discard(self)
     
     def _to_dict(self):
         """
