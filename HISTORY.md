@@ -1,5 +1,15 @@
 # Release History
 
+## 2.2.3 (2021-10-08)
+
+**Bug Fix**
+
+* Fixed an error in the listDescendant method that affected the prune and filterRanks methods.
+
+**Performance**
+
+* Node.children attribute is now a set, considerably speeding up file loading.
+
 ## 2.2.2 (2021-09-21)
 
 **Bug Fix**
