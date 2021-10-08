@@ -6,6 +6,7 @@ Taxonomy object definition
 from __future__ import annotations
 from typing import Union, Iterator, Optional
 from collections import UserDict, Counter
+from copy import copy
 import json 
 from .Node import Node, DummyNode, _BaseNode
 from .Lineage import Lineage
@@ -544,7 +545,8 @@ class Taxonomy(UserDict):
         >>> tax.listDescendant(2)
         []
         """
-        current = self[str(taxid)].children
+        current = copy(self[str(taxid)].children) 
+            # dont't want to update the original set!
         next = _flatten([child.children for child in current])
         
         all = current

@@ -150,8 +150,7 @@ class _BaseNode:
         Add self to parent's children list
         """
         if self.parent:
-            if self not in self.parent.children:
-                self.parent.children.add(self)
+            self.parent.children.add(self)
     
     def _relink(self) -> None:
         """
@@ -160,13 +159,13 @@ class _BaseNode:
         if not self.parent:
             raise TypeError("Cannot relink a root Node")
         
-        parent = self.parent
+        children = self.children
         
-        for child in self.children:
-            child.parent = parent
+        for child in children:
+            child.parent = self.parent
             # Will auto update the parent node
         
-        parent.children.discard(self)
+        self.parent.children.discard(self)
     
     def _to_dict(self):
         """
