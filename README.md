@@ -1,8 +1,10 @@
 # TaxidTools - A Python Toolkit for Taxonomy
 
 [![Python package](https://github.com/CVUA-RRW/taxidTools/actions/workflows/python-package.yml/badge.svg?branch=main)](https://github.com/CVUA-RRW/taxidTools/actions/workflows/python-package.yml)
-![PyPI - License](https://img.shields.io/pypi/l/Django?style=plastic)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/CVUA-RRW/taxidTools)
+[![PyPI - License](https://img.shields.io/pypi/l/Django?style=flat)
+[![Conda Version](https://img.shields.io/conda/vn/conda-forge/taxidtools.svg)](https://anaconda.org/conda-forge/taxidtools)
+[![Pypi Version](https://img.shields.io/pypi/v/taxidTools?style=flat)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/CVUA-RRW/taxidTools)
 [![DOI](https://zenodo.org/badge/300595196.svg)](https://zenodo.org/badge/latestdoi/300595196)
 
 ## Overview
@@ -26,8 +28,12 @@ Optionally some taxonomy definiton files usch as the [Taxdump definition files](
 
 ## Installation
 
+Install from pip or conda :
+
 ```bash
 python3 -m pip install taxidTools
+
+conda install -c conda-forge taxidtools
 ```
 
 Clone or copy the github repository to your project for the developement version.

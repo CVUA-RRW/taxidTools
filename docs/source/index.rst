@@ -1,12 +1,19 @@
 taxidTools: A Python Toolkit for Taxonomy
 =========================================
 
-.. image:: https://img.shields.io/github/v/release/CVUA-RRW/taxidTools/   :alt: GitHub release (latest by date)
+.. image:: https://img.shields.io/pypi/l/Django?style=plastic
+   :alt: License
 
-.. image:: https://img.shields.io/pypi/l/Django?style=plastic   :alt: License
+.. image:: https://img.shields.io/pypi/v/taxidTools
+   :alt: PyPI
+
+.. image:: https://img.shields.io/conda/vn/conda-forge/taxidtools.svg)
+   :target: https://anaconda.org/conda-forge/taxidtools
+   :alt: conda-forge
 
 .. image:: https://zenodo.org/badge/300595196.svg
    :target: https://zenodo.org/badge/latestdoi/300595196
+
 
 **taxidTools** is a Python library to handle Taxonomy definitions.
 
