@@ -11,8 +11,9 @@ taxidTools: A Python Toolkit for Taxonomy
    :target: https://anaconda.org/conda-forge/taxidtools
    :alt: conda-forge
 
-.. image:: https://zenodo.org/badge/300595196.svg
-   :target: https://zenodo.org/badge/latestdoi/300595196
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.5556006.svg
+   :target: https://doi.org/10.5281/zenodo.5556006
+   :alt: DOI
 
 
 **taxidTools** is a Python library to handle Taxonomy definitions.
@@ -67,9 +68,7 @@ Source code documentation.
 Cite us
 -------
 
-If you are using taxidTools for your reasearch use the following citation:
-
-Grégoire Denay. (2021, July 14). CVUA-RRW/taxidTools: v2.1.0 (Version 2.1.0). Zenodo. http://doi.org/10.5281/zenodo.5101431
+If you are using taxidTools for your reasearch, cite the latest version from `Zenodo <https://doi.org/10.5281/zenodo.5556006)>`_.
 
 Changes
 -------
