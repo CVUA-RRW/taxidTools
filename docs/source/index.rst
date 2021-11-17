@@ -1,13 +1,13 @@
 taxidTools: A Python Toolkit for Taxonomy
 =========================================
 
-.. image:: https://img.shields.io/pypi/l/Django?style=plastic
+.. image:: https://img.shields.io/pypi/l/Django?style=flat
    :alt: License
 
 .. image:: https://img.shields.io/pypi/v/taxidTools
    :alt: PyPI
 
-.. image:: https://img.shields.io/conda/vn/conda-forge/taxidtools.svg)
+.. image:: https://img.shields.io/conda/vn/conda-forge/taxidtools.svg
    :target: https://anaconda.org/conda-forge/taxidtools
    :alt: conda-forge
 
