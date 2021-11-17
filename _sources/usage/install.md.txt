@@ -14,32 +14,10 @@ $ python -m pip install taxidTools
 
 ## Using conda
 
-If using conda from the command line, simply activate 
-your environment and install taxidTools using pip:
+You can install taxidTools in the current env by running:
 
 ```bash
-$ conda create -n myenv 'python>=3.9' 
-$ conda activate myenv
-$ python -m pip install taxidTools
-```
-
-You can also create an environemnt definition file to 
-use with workflow manager or to distribute your environment:
-
-```yaml
-name: myenv
-dependencies:
-  - python>=3.9
-  - pip
-  - pip:
-    - taxidTools
-```
-
-Save the above file as myenv.yml and create your environment 
-the usual way:
-
-```bash
-$ conda env create -f myenv.yml
+$ conda install -c conda-forge taxidtools
 ```
 
 ## Development version
