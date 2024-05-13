@@ -753,6 +753,7 @@ def load_ncbi(nodes: str, rankedlineage: str) -> Taxonomy:
     Taxonomy.from_taxdump
     load
     """
+    return Taxonomy.from_taxdump(nodes, rankedlineage)
 
 
 def _parse_dump(filepath: str) -> Iterator:
