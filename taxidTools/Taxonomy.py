@@ -11,6 +11,7 @@ import json
 from .Node import Node, DummyNode, _BaseNode
 from .Lineage import Lineage
 from .utils import linne
+from .exceptions import InvalidNodeError
 
 
 class Taxonomy(UserDict):
@@ -80,6 +81,12 @@ class Taxonomy(UserDict):
         for k, v in self.items():
             if v.name:
                 self._namedict[v.name] = k
+    
+    def __getitem__(self, key: str) -> Node:
+        try:
+            return super().__getitem__(key)
+        except KeyError:
+            raise InvalidNodeError(f"There is no Node with taxid '{key}' in this Taxonomy")
     
     @classmethod
     def from_list(cls, node_list: list[_BaseNode]) -> Taxonomy:
@@ -721,8 +728,32 @@ def load(path: str) -> Taxonomy:
     See Also
     --------
     Taxonomy.write
+    load_ncbi
     """
     return Taxonomy.from_json(path)
+
+
+def load_ncbi(nodes: str, rankedlineage: str) -> Taxonomy:
+    """
+    Load a Taxonomy from the NCBI`s taxdump files
+
+    Parameters
+    ----------
+    nodes: 
+        Path to the nodes.dmp file
+    rankedlineage: 
+        Path to the rankedlineage.dmp file
+    
+    Examples
+    --------
+    >>> tax = load_ncbi("nodes.dmp', 'rankedlineage.dmp')
+
+    See Also
+    --------
+    Taxonomy.from_taxdump
+    load
+    """
+    return Taxonomy.from_taxdump(nodes, rankedlineage)
 
 
 def _parse_dump(filepath: str) -> Iterator:

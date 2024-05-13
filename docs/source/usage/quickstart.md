@@ -21,9 +21,10 @@ Start by importing taxidTools:
 Then load the taxdump files that you saved and unpacked locally:
 
 ```python
->>> tax = taxidTools.Taxonomy.from_taxdump(
+>>> tax = taxidTools.load_ncbi(
         "path/to/nodes.dmp", 
-        "path/to/rankedlineage.dmp")
+        "path/to/rankedlineage.dmp"
+)
 ```
 
 Parsing the whole files can take a moment! 

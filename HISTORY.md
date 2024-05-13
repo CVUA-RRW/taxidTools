@@ -1,5 +1,12 @@
 # Release History
 
+## 2.3.0 (2024-05-13)
+
+**New features**
+
+* Attempting to access an invalid Node with the Taxonomy __getitem__ method (`Taxonomy["node_id"]`) now returns a specifc `InvalidNodeError`
+* Added the `load_ncbi` function as a shorthand for the constructor `Taxonomy.from_taxdump`.
+
 ## 2.2.3 (2021-10-08)
 
 **Bug Fix**

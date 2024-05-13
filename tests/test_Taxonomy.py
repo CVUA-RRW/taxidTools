@@ -36,6 +36,10 @@ class TestTaxdump(unittest.TestCase):
         ancestry = taxidTools.Lineage(self.txd["9903"])
         self.assertEqual(len(ancestry), 29)
         self.assertEqual(ancestry[-1].taxid, "1")
+
+    def test_load_ncbi(self):
+        self.txd = taxidTools.load_ncbi(nodes, rankedlineage)
+        self.assertEqual(self.txd["9913"].parent.taxid, "9903")
     
     def test_IO_json(self):
         self.txd = taxidTools.Taxonomy.from_taxdump(nodes, rankedlineage)
@@ -72,3 +76,6 @@ class TestTaxdump(unittest.TestCase):
         self.assertFalse(self.txd.isDescendantOf(0,1))
         self.assertFalse(self.txd.isDescendantOf(1,1))
     
+    def test_InvalidNodeError(self):
+        with self.assertRaises(taxidTools.InvalidNodeError):
+            _ = self.txd["notataxid"]
