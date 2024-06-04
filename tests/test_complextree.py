@@ -107,6 +107,8 @@ class TestComplexTree(unittest.TestCase):
         self.assertSetEqual(set(self.txd.listDescendant(1)),
                             set([self.node11, self.node12, self.node121, self.node122]))
         self.assertEqual(self.txd.listDescendant(11), set())
+        self.assertEqual(set(self.txd.listDescendant(1, ranks=['rank3'])),
+                        set([self.node121, self.node122]))
     
     def test_subtree(self):
         self.txd.prune(1)

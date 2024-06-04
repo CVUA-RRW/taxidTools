@@ -1,5 +1,9 @@
 # Release History
 
+## Dev
+
+* `Taxonomy.listDescendant` now does filter output based on the ranks parameter
+
 ## 2.3.1 (2024-06-04)
 
 **Distribution**

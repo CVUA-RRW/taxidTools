@@ -523,7 +523,7 @@ class Taxonomy(UserDict):
         return d1 + d2 - 2 * dlca
     
     def listDescendant(self, taxid: Union[str, int], 
-                       ranks: Optional[list] = None) -> set[Node]:
+                       ranks: Optional[list] = None) -> list[Node]:
         """
         List all descendant of a node
         
@@ -563,6 +563,8 @@ class Taxonomy(UserDict):
             current = next
             next = _flatten([child.children for child in current])
         
+        if ranks:
+            return [e for e in all if e.rank in ranks]
         return all
     
     def prune(self, taxid: Union[str, int]) -> None:
