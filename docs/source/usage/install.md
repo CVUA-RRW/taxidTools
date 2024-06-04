@@ -20,6 +20,14 @@ You can install taxidTools in the current env by running:
 $ conda install -c conda-forge taxidtools
 ```
 
+## Docker
+
+taxidTools is available from DockerHub:
+
+```bash
+docker pull gregdenay/taxidtools
+```
+
 ## Development version
 
 To get the latest development version, clone the git repository:
@@ -35,3 +43,5 @@ your own Python package or install it using pip:
 $ cd taxidTools
 $ python -m pip install .
 ```
+
+Or use the Docker image:

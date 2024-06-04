@@ -1,5 +1,17 @@
 # Release History
 
+## 2.3.1 (2024-06-04)
+
+**Distribution**
+
+* It is now possible to install taxidTools from DockerHub:
+
+```
+docker pull gregdenay/taxidtools
+```
+
+* `conda-forge` release should now auomatically find the last release from Github/Pypi
+
 ## 2.3.0 (2024-05-13)
 
 **New features**
