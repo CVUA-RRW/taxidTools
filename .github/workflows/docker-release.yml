@@ -21,11 +21,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build new docker image
-        run: docker build --no-cache . -t USER/PIPELINE:latest
+        run: docker build --no-cache . -t CVUA-RRW/taxidtools:latest
 
       - name: Push Docker image to DockerHub (release)
         run: |
           echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-          docker push USER/PIPELINE:latest
-          docker tag USER/PIPELINE:latest USER/PIPELINE:${{ github.event.release.tag_name }}
-          docker push USER/PIPELINE:${{ github.event.release.tag_name }}
+          docker push CVUA-RRW/taxidtools:latest
+          docker tag CVUA-RRW/taxidtools:latest CVUA-RRW/taxidtools:${{ github.event.release.tag_name }}
+          docker push CVUA-RRW/taxidtools:${{ github.event.release.tag_name }}
