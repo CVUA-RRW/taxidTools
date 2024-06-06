@@ -110,24 +110,34 @@ class TestComplexTree(unittest.TestCase):
         self.assertEqual(set(self.txd.listDescendant(1, ranks=['rank3'])),
                         set([self.node121, self.node122]))
     
-    def test_subtree(self):
+    def test_prune(self):
         self.txd.prune(1)
         ids = [node.taxid for node in self.txd.values()]
         self.assertSetEqual(set(ids), {"0", "1", "11", "12", "121", "122"})
         self.assertEqual(self.node0.children, {self.node1})
+
+        self.new = self.txd.prune(121, inplace=False)
+        ids = [node.taxid for node in self.new.values()]
+        self.assertSetEqual(set(ids), {"0", "1", "12", "121"})
+        ids = [node.taxid for node in self.txd.values()]
+        self.assertSetEqual(set(ids), {"0", "1", "11", "12", "121", "122"})
         
         self.txd.prune(11)
         ids = [node.taxid for node in self.txd.values()]
         self.assertSetEqual(set(ids), {"11", "1", "0"})
     
     def test_filter(self):
-        node001 = taxidTools.Node('001', name = "node0011", rank = "rank3", parent = self.node0)
+        node001 = taxidTools.Node('001', name = "node001", rank = "rank3", parent = self.node0)
         self.txd.addNode(node001)
         self.txd.filterRanks(ranks=['rank3', 'rank1'])
         self.assertEqual(len(self.txd), 8)
         # test relinking
         self.assertEqual(self.node121.parent, self.node1)
         self.assertIsInstance(node001.parent, taxidTools.DummyNode)
+
+        self.new = self.txd.filterRanks(ranks=["root"], inplace=False)
+        self.assertEqual(len(self.txd), 8)
+        self.assertEqual(len(self.new), 1)  # Fails FIXME
     
     def test_insert_dummies(self):
         new = _insert_dummies(self.node1, 'newrank')

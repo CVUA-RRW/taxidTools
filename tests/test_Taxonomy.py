@@ -83,6 +83,13 @@ class TestTaxdump(unittest.TestCase):
         self.assertFalse(self.txd.isDescendantOf(0,1))
         self.assertFalse(self.txd.isDescendantOf(1,1))
     
+    def test_copy(self):
+        self.new = self.txd.copy()
+        self.txd.data = {}
+        with self.assertRaises(taxidTools.InvalidNodeError):
+            _ = self.txd[0]
+        self.assertIsNotNone(self.new.get('0', None))
+    
     def test_InvalidNodeError(self):
         with self.assertRaises(taxidTools.InvalidNodeError):
             _ = self.txd["notataxid"]

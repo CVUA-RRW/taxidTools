@@ -194,7 +194,7 @@ class Taxonomy(UserDict):
 
         Equivalent to running copy.deepcopy()
         """
-        return copy.deepcopy(self)
+        return deepcopy(self)
     
     def addNode(self, node: Node) -> None:
         """
@@ -731,7 +731,7 @@ class Taxonomy(UserDict):
         else:
             new = self.copy()
             new.data = {node.taxid: node for node in new_nodes}
-        return new
+            return new
 
     def write(self, path: str) -> None:
         """
