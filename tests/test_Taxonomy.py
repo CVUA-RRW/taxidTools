@@ -1,5 +1,8 @@
 import os
 import unittest
+from tempfile import TemporaryDirectory
+
+
 import taxidTools
 
 
@@ -11,9 +14,13 @@ rankedlineage = os.path.join(current_path, "data", "minirankedlineage.dmp")
 class TestTaxdump(unittest.TestCase):
     
     def setUp(self):
+        self.workdir = TemporaryDirectory()
         self.parent = taxidTools.Node(taxid = 0, name = "root", rank = "root", parent = None)
         self.child = taxidTools.Node(taxid = 1, name = "child", rank = "child", parent = self.parent)
         self.txd = taxidTools.Taxonomy({'0': self.parent, '1': self.child})
+    
+    def tearDown(self):
+        self.workdir.cleanup()
     
     def test_factory_dict(self):
         self.txd = taxidTools.Taxonomy({'0': self.parent, '1': self.child})
@@ -43,16 +50,16 @@ class TestTaxdump(unittest.TestCase):
     
     def test_IO_json(self):
         self.txd = taxidTools.Taxonomy.from_taxdump(nodes, rankedlineage)
-        self.txd.write("test.json")
-        self.reload = taxidTools.Taxonomy.from_json("test.json")
+        self.txd.write(os.path.join(self.workdir.name, "test.json"))
+        self.reload = taxidTools.Taxonomy.from_json(os.path.join(self.workdir.name, "test.json"))
         
         ancestry = taxidTools.Lineage(self.reload["9903"])
         self.assertEqual(len(ancestry), 29)
         self.assertEqual(ancestry[-1].taxid, "1")
         
         self.txd.filterRanks(['genus', 'none'])
-        self.txd.write("test2.json")
-        test2 = taxidTools.load("test2.json")
+        self.txd.write(os.path.join(self.workdir.name, "test2.json"))
+        test2 = taxidTools.load(os.path.join(self.workdir.name, "test2.json"))
         ancestry = taxidTools.Lineage(test2["9903"])
         self.assertIsInstance(ancestry[1], taxidTools.DummyNode)
     

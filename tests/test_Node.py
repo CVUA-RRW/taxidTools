@@ -49,6 +49,3 @@ class TestNode(unittest.TestCase):
         self.assertEqual(self.lownode.parent, self.node)
         self.assertEqual(len(self.node.children), 1)
         self.assertIn(self.lownode, self.node.children)
-        
-if __name__ == "__main__":
-    unittest.main()
