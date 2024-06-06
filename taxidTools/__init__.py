@@ -8,7 +8,7 @@ from .__version__ import __author__, __author_email__, __licence__
 from .__version__ import __url__
 
 __all__ = ['Node', 'DummyNode',
-           'Taxonomy', 'load', 'load_ncbi'
+           'Taxonomy', 'load', 'load_ncbi',
            'Lineage',
            'linne',
            'TaxonomyError', 'InvalidNodeError',

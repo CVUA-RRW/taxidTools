@@ -575,7 +575,7 @@ class Taxonomy(UserDict):
             return [e for e in all if e.rank in ranks]
         return all
     
-    def prune(self, taxid: Union[str, int]) -> None:
+    def prune(self, taxid: Union[str, int], inplace: bool = True) -> None:
         """
         Prune the Taxonomy at the given taxid
         
@@ -587,6 +587,9 @@ class Taxonomy(UserDict):
         ----------
         taxid: 
             taxid whose Lineage to keep
+        inplace:
+            perfrom the operation inplace and mutate the underlying objects
+            or return a mutated copy of the instance, keep the original unchanged
         
         Examples
         --------
@@ -603,7 +606,7 @@ class Taxonomy(UserDict):
         >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
         >>> tax.prune(1)
         
-        Ancestry is kept_
+        Ancestry is kept
         
         >>> tax.getAncestry(11)
         Lineage([Node(11), Node(1), Node(0)])
@@ -612,6 +615,14 @@ class Taxonomy(UserDict):
         
         >>> tax.get('2')
         KeyError: '2'
+
+        We can keep a copy of the:
+
+        >>> new = tax.prune(11, inplace=False)
+        >>> new.get('12')
+        KeyError: '12'
+        >>> tax.getAncestry('12')
+        Lineage([Node(12), Node(1), Node(0)])
         """
         # Getting upstream nodes
         nodes = self.getAncestry(taxid)
@@ -626,9 +637,15 @@ class Taxonomy(UserDict):
         nodes.extend(self.listDescendant(taxid))
         
         # Update taxonomy
-        self.data = {node.taxid: node for node in nodes}
+        if inplace:
+            self.data = {node.taxid: node for node in nodes}
+            # return None
+        else:
+            new = self.copy()
+            new.data = {node.taxid: node for node in nodes}
+            return new
     
-    def filterRanks(self, ranks: list[str] = linne()) -> None:
+    def filterRanks(self, ranks: list[str] = linne(), inplace = True) -> None:
         """
         Filter a Taxonomy to keep only the ranks provided as arguments.
         
@@ -639,6 +656,9 @@ class Taxonomy(UserDict):
         ----------
         ranks:
             List of ranks to keep. Must be sorted by ascending ranks.
+        inplace:
+            perfrom the operation inplace and mutate the underlying objects
+            or return a mutated copy of the instance, keep the original unchanged
         
         Notes
         -----
@@ -656,7 +676,7 @@ class Taxonomy(UserDict):
         >>> tax
         {Node(1), Node(11), DummyNode(tO841ymu), Node(111), Node(001)}
         
-        DummyNodes are created s placeholders 
+        DummyNodes are created as placeholders 
         for missing ranks in the taxonomy:
         
         >>> node001.parent
@@ -670,6 +690,14 @@ class Taxonomy(UserDict):
         >>> node001 = Node('001', rank = "rank2", parent = node1)
         >>> tax = Taxonomy.from_list([node1, node11, node111, node001])
         >>> tax.filterRanks(['rank2', 'rank1'])
+        >>> tax
+        {DummyNode(wmnar5QT), Node(001), Node(1), Node(11), Node(111)}
+
+        It is also possible to keep the original instance intact and return a filtered copy:
+
+        >>> new = tax.filterRanks(['rank1'], inplace=False)
+        >>> new
+        {DummyNode(wmnar5QT), Node(1), Node(11)}
         >>> tax
         {DummyNode(wmnar5QT), Node(001), Node(1), Node(11), Node(111)}
         """
@@ -695,10 +723,16 @@ class Taxonomy(UserDict):
         if ranks[-1] == self.root:
             ranks = ranks[:-1]
         new_nodes.extend(_insert_nodes_recc(root, ranks))
-        
+
         # Update self
-        self.data = {node.taxid: node for node in new_nodes}
-    
+        if inplace:
+            self.data = {node.taxid: node for node in new_nodes}
+            # return None
+        else:
+            new = self.copy()
+            new.data = {node.taxid: node for node in new_nodes}
+        return new
+
     def write(self, path: str) -> None:
         """
         Write taxonomy to a JSON file.
