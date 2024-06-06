@@ -6,7 +6,7 @@ Taxonomy object definition
 from __future__ import annotations
 from typing import Union, Iterator, Optional
 from collections import UserDict, Counter
-from copy import copy
+from copy import copy, deepcopy
 import json 
 from .Node import Node, DummyNode, _BaseNode
 from .Lineage import Lineage
@@ -28,7 +28,7 @@ class Taxonomy(UserDict):
     -----
     Taxonomy objects are mutable and some methods will modify the 
     underlying Node objects.
-    Do a deep copy if you wish to keep the original object.
+    Do a deep copy or use the Taxonomy.copy() method if you wish to keep the original object.
     
     A Taxonomy always assumes a unique root node.
     
@@ -187,6 +187,14 @@ class Taxonomy(UserDict):
                 pass
         
         return cls(txd)
+    
+    def copy(self) -> Taxonomy:
+        """
+        Create a deepcopy of the current Taxonomy instance.
+
+        Equivalent to running copy.deepcopy()
+        """
+        return copy.deepcopy(self)
     
     def addNode(self, node: Node) -> None:
         """
