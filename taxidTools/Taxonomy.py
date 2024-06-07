@@ -7,10 +7,10 @@ from __future__ import annotations
 from typing import Union, Iterator, Optional
 from collections import UserDict, Counter
 from copy import copy, deepcopy
-import json 
+import json
 from .Node import Node, DummyNode, _BaseNode
 from .Lineage import Lineage
-from .utils import linne
+from .utils import linne, deprecation
 from .exceptions import InvalidNodeError
 
 
@@ -120,7 +120,11 @@ class Taxonomy(UserDict):
     def from_taxdump(cls, nodes: str, rankedlineage: str) -> Taxonomy:
         """
         Create a Taxonomy object from the NBI Taxdump files
-        
+
+        .. deprecated:: 2.4.0
+            `Taxonomy.from_taxdump` will be removed in 3.0.0, it is replaced by
+            `read_taxdump`, a module level constructor.
+
         Load the taxonomic infromation form the nodes.dmp and
         rankedlineage.dmp files available from the NCBI servers.
         
@@ -135,6 +139,8 @@ class Taxonomy(UserDict):
         --------
         >>> tax = Taxonomy.from_taxdump("nodes.dmp', 'rankedlineage.dmp')
         """
+        deprecation('Taxonomy.from_taxdump()', 'read_taxdump()')
+
         txd = {}
         parent_dict = {}
         
@@ -157,7 +163,11 @@ class Taxonomy(UserDict):
     def from_json(cls, path: str) -> Taxonomy:
         """
         Load a Taxonomy from a previously exported json file.
-        
+
+        .. deprecated:: 2.4.0
+            `Taxonomy.from_json` will be removed in 3.0.0, it is replaced by
+            `read_json`, a module level constructor.
+
         Parameters
         ----------
         path:
@@ -167,6 +177,8 @@ class Taxonomy(UserDict):
         --------
         Taxonomy.write
         """
+        deprecation('Taxonomy.from_json()', 'read_json()')
+
         # parse json
         with open(path, 'r') as fi:
             parser = json.loads(fi.read())
@@ -191,6 +203,15 @@ class Taxonomy(UserDict):
         
         return cls(txd)
 
+    def copy(self) -> Taxonomy:
+        """
+        Create a deepcopy of the current Taxonomy instance.
+
+        Equivalent to running copy.deepcopy()
+        """
+        new = deepcopy(self.data)
+        return Taxonomy(new)
+
     @property
     def root(self) -> Node:
         """
@@ -199,14 +220,6 @@ class Taxonomy(UserDict):
         anynode = next(iter(self.values()))
         return Lineage(anynode)[-1]
 
-    def copy(self) -> Taxonomy:
-        """
-        Create a deepcopy of the current Taxonomy instance.
-
-        Equivalent to running copy.deepcopy()
-        """
-        return deepcopy(self)
-    
     def addNode(self, node: Node) -> None:
         """
         Add a Node to an existing Taxonomy object.
@@ -767,7 +780,11 @@ class Taxonomy(UserDict):
 def load(path: str) -> Taxonomy:
     """
     Load a Taxonomy from a previously exported json file.
-    
+
+    .. deprecated:: 2.4.0
+        `load` will be removed in 3.0.0, it is replaced by
+        `read_json`, a module level constructor.
+
     Parameters
     ----------
     path:
@@ -778,12 +795,17 @@ def load(path: str) -> Taxonomy:
     Taxonomy.write
     load_ncbi
     """
+    deprecation('load()', 'read_json()')
     return Taxonomy.from_json(path)
 
 
 def load_ncbi(nodes: str, rankedlineage: str) -> Taxonomy:
     """
     Load a Taxonomy from the NCBI`s taxdump files
+
+    .. deprecated:: 2.4.0
+        `load_ncbi` will be removed in 3.0.0, it is replaced by
+        `read_ncbi`, a better-named module level constructor.
 
     Parameters
     ----------
@@ -801,16 +823,8 @@ def load_ncbi(nodes: str, rankedlineage: str) -> Taxonomy:
     Taxonomy.from_taxdump
     load
     """
+    deprecation('load_ncbi()', 'read_taxdump()')
     return Taxonomy.from_taxdump(nodes, rankedlineage)
-
-
-def _parse_dump(filepath: str) -> Iterator:
-    """
-    Dump file line iterator, returns a yields of fields
-    """
-    with open(filepath, 'r') as dmp:
-        for line in dmp:
-            yield [item.strip() for item in line.split("|")]
 
 
 def _flatten(t: list) -> list:
@@ -846,7 +860,7 @@ def _insert_nodes_recc(node: Node, ranks: list[str]) -> list[Node]:
     --------
     list of added nodes
     """
-    if 'root' in ranks:
+    if 'root' in ranks:  #Move this to filter to properly check against root naming
         raise ValueError("'root' should not be included when filtering ranks. Use the Taxonomy.root property instead.")
 
     # if no ranks left return an empty list
@@ -883,3 +897,13 @@ def _insert_dummies(node, next_rank):
         dummy = DummyNode(rank=next_rank, parent=node)
         dummies.append(dummy)
     return dummies
+
+
+# Class methods using this here are pending deprecation, remove form this module in 3.0.0
+def _parse_dump(filepath: str) -> Iterator:
+    """
+    Dump file line iterator, returns a yields of fields
+    """
+    with open(filepath, 'r') as dmp:
+        for line in dmp:
+            yield [item.strip() for item in line.split("|")]

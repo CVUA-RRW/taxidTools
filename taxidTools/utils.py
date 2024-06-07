@@ -1,8 +1,9 @@
 """
-Misc. functions
+Misc. utility functions
 """
 
 
+import warnings
 import random
 import string
 
@@ -33,3 +34,10 @@ def _rand_id(ncar: int = 8) -> str:
     return ''.join([random.choice(
                     string.ascii_letters + string.digits) 
                     for n in range(ncar)])
+
+
+def deprecation(depr, replace):
+    warnings.warn(
+        f"'{depr}' is pending deprecation, use the '{replace}' instead",
+        DeprecationWarning, stacklevel=2
+    )

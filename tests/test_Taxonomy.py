@@ -37,21 +37,17 @@ class TestTaxdump(unittest.TestCase):
         self.assertEqual(len(self.txd.keys()), 2)
         
     def test_factory_taxdump(self):
-        self.txd = taxidTools.Taxonomy.from_taxdump(nodes, rankedlineage)
+        self.txd = taxidTools.read_taxdump(nodes, rankedlineage)
         self.assertEqual(self.txd["9913"].parent.taxid, "9903")
         
         ancestry = taxidTools.Lineage(self.txd["9903"])
         self.assertEqual(len(ancestry), 29)
         self.assertEqual(ancestry[-1].taxid, "1")
-
-    def test_load_ncbi(self):
-        self.txd = taxidTools.load_ncbi(nodes, rankedlineage)
-        self.assertEqual(self.txd["9913"].parent.taxid, "9903")
     
     def test_IO_json(self):
-        self.txd = taxidTools.Taxonomy.from_taxdump(nodes, rankedlineage)
+        self.txd = taxidTools.read_taxdump(nodes, rankedlineage)
         self.txd.write(os.path.join(self.workdir.name, "test.json"))
-        self.reload = taxidTools.Taxonomy.from_json(os.path.join(self.workdir.name, "test.json"))
+        self.reload = taxidTools.read_json(os.path.join(self.workdir.name, "test.json"))
         
         ancestry = taxidTools.Lineage(self.reload["9903"])
         self.assertEqual(len(ancestry), 29)
@@ -59,7 +55,7 @@ class TestTaxdump(unittest.TestCase):
         
         self.txd.filterRanks(['genus', 'none'])
         self.txd.write(os.path.join(self.workdir.name, "test2.json"))
-        test2 = taxidTools.load(os.path.join(self.workdir.name, "test2.json"))
+        test2 = taxidTools.read_json(os.path.join(self.workdir.name, "test2.json"))
         ancestry = taxidTools.Lineage(test2["9903"])
         self.assertIsInstance(ancestry[1], taxidTools.DummyNode)
     

@@ -41,9 +41,9 @@ class TestComplexTree(unittest.TestCase):
             "121" : self.node121,
             "122" : self.node122
             }
-        
+
         self.txd = taxidTools.Taxonomy(nodes)
-    
+
     def test_insertdummy(self):
         dummy = taxidTools.DummyNode(name= 'dummy', rank = 'rank2.5')
         dummy.insertNode(self.node2, self.node21)
