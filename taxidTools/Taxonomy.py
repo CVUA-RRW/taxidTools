@@ -87,7 +87,10 @@ class Taxonomy(UserDict):
             return super().__getitem__(key)
         except KeyError:
             raise InvalidNodeError(f"There is no Node with taxid '{key}' in this Taxonomy")
-    
+
+    def __repr__(self):
+        return f"{set(self.values())}"
+
     @classmethod
     def from_list(cls, node_list: list[_BaseNode]) -> Taxonomy:
         """
@@ -187,7 +190,15 @@ class Taxonomy(UserDict):
                 pass
         
         return cls(txd)
-    
+
+    @property
+    def root(self) -> Node:
+        """
+        Returns the root Node, assumes a single root shared by all Nodes
+        """
+        anynode = next(iter(self.values()))
+        return Lineage(anynode)[-1]
+
     def copy(self) -> Taxonomy:
         """
         Create a deepcopy of the current Taxonomy instance.
@@ -751,17 +762,6 @@ class Taxonomy(UserDict):
                             indent=4)
         with open(path, 'w') as fi:
             fi.write(writer)
-    
-    @property
-    def root(self) -> Node:
-        """
-        Returns the root Node, assumes a single root shared by all Nodes
-        """
-        anynode = next(iter(self.values()))
-        return Lineage(anynode)[-1]
-        
-    def __repr__(self):
-        return f"{set(self.values())}"
 
 
 def load(path: str) -> Taxonomy:

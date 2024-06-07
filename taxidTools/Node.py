@@ -5,7 +5,6 @@ Should be used internally only.
 
 
 from __future__ import annotations
-import os
 from typing import Union, Optional
 from .utils import _rand_id
 
@@ -27,7 +26,10 @@ class _BaseNode:
         self._taxid = str(taxid) if taxid != None else taxid
         
         self._updateParent()
-    
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.taxid})"
+
     # Property methods
     @property
     def taxid(self) -> str:
@@ -59,13 +61,13 @@ class _BaseNode:
         """
         Node information
         """
-        return f"{self.__repr__()}{os.linesep}" \
-               f"type: {self.__class__.__name__}{os.linesep}" \
-               f"taxid: {self.taxid}{os.linesep}" \
-               f"name: {self.name}{os.linesep}" \
-               f"rank: {self.rank}{os.linesep}" \
-               f"parent: {self.parent}{os.linesep}" \
-               f"children: {self.children}{os.linesep}"
+        return f"{self.__repr__()}\n" \
+               f"type: {self.__class__.__name__}\n" \
+               f"taxid: {self.taxid}\n" \
+               f"name: {self.name}\n" \
+               f"rank: {self.rank}\n" \
+               f"parent: {self.parent}\n" \
+               f"children: {self.children}\n"
     
     # Setter methods
     @taxid.setter
@@ -177,9 +179,6 @@ class _BaseNode:
         dic['type'] = self.__class__.__name__
         del dic['_children']
         return dic
-    
-    def __repr__(self) -> str:
-        return f"{self.__class__.__name__}({self.taxid})"
 
 
 class Node(_BaseNode):
