@@ -11,11 +11,11 @@ def read_taxdump(nodes: str, rankedlineage: str) -> Taxonomy:
 
     Parameters
     ----------
-    nodes: 
+    nodes:
         Path to the nodes.dmp file
-    rankedlineage: 
+    rankedlineage:
         Path to the rankedlineage.dmp file
-    
+
     Examples
     --------
     >>> tax = read_taxdump("nodes.dmp', 'rankedlineage.dmp')
@@ -26,16 +26,16 @@ def read_taxdump(nodes: str, rankedlineage: str) -> Taxonomy:
     """
     txd = {}
     parent_dict = {}
-    
+
     # Creating nodes
     for line in _parse_dump(nodes):
         txd[line[0]] = Node(taxid=line[0], rank=str(line[2]))
         parent_dict[str(line[0])] = line[1]  # storing parent id
-    
+
     # Add names from rankedlineage
     for line in _parse_dump(rankedlineage):
         txd[line[0]].name = line[1]
-    
+
     # Update parent info
     for k, v in parent_dict.items():
         txd[k].parent = txd[v]
@@ -46,12 +46,12 @@ def read_taxdump(nodes: str, rankedlineage: str) -> Taxonomy:
 def read_json(path: str) -> Taxonomy:
     """
     Load a Taxonomy from a previously exported json file.
-    
+
     Parameters
     ----------
     path:
         Path of file to load
-    
+
     See Also
     --------
     Taxonomy.write
@@ -60,10 +60,10 @@ def read_json(path: str) -> Taxonomy:
     # parse json
     with open(path, 'r') as fi:
         parser = json.loads(fi.read())
-    
+
     txd = {}
     parent_dict = {}
-    
+
     # Create nodes from records
     for record in parser:
         class_call = eval(record['type'])
@@ -71,14 +71,14 @@ def read_json(path: str) -> Taxonomy:
                                             name=record['_name'],
                                             rank=record['_rank'])
         parent_dict[record['_taxid']] = record['_parent']
-    
+
     # Update parent info
     for k, v in parent_dict.items():
         try:
             txd[k].parent = txd[v]
         except KeyError:
             pass
-    
+
     return Taxonomy(txd)
 
 
