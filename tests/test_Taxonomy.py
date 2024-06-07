@@ -9,6 +9,7 @@ import taxidTools
 current_path = os.path.dirname(__file__)
 nodes = os.path.join(current_path, "data", "mininodes.dmp")
 rankedlineage = os.path.join(current_path, "data", "minirankedlineage.dmp")
+merged = os.path.join(current_path, "data", "minimerged.dmp")
 
 
 class TestTaxdump(unittest.TestCase):
@@ -43,7 +44,7 @@ class TestTaxdump(unittest.TestCase):
         ancestry = taxidTools.Lineage(self.txd["9903"])
         self.assertEqual(len(ancestry), 29)
         self.assertEqual(ancestry[-1].taxid, "1")
-    
+
     def test_IO_json(self):
         self.txd = taxidTools.read_taxdump(nodes, rankedlineage)
         self.txd.write(os.path.join(self.workdir.name, "test.json"))

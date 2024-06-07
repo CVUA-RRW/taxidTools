@@ -13,18 +13,18 @@ class _BaseNode:
     """
     Base object for Node classes
     """
-    
     def __init__(self,
                  taxid: Union[str, int] = None, 
                  name: Optional[str] = None, 
                  rank: Optional[str] = None, 
-                 parent: Optional[str] = None) -> None:
+                 parent: Optional[str] = None
+                ) -> None:
         self._children = set()
         self._name = name
         self._rank = rank
         self._parent = parent
         self._taxid = str(taxid) if taxid != None else taxid
-        
+
         self._updateParent()
 
     def __repr__(self) -> str:
@@ -151,8 +151,8 @@ class _BaseNode:
         """
         Add self to parent's children list
         """
-        if self.parent:
-            self.parent.children.add(self)
+        if self._parent:
+            self._parent.children.add(self)
     
     def _relink(self) -> None:
         """
@@ -372,4 +372,3 @@ class DummyNode(_BaseNode):
     def parent(self, parent: Node) -> None:
         """Set parent node and update children attribute of parent node"""
         super(DummyNode, self.__class__).parent.fset(self, parent)
-
