@@ -91,5 +91,4 @@ class TestTaxdump(unittest.TestCase):
         self.assertIsNotNone(self.new.get('0', None))
     
     def test_InvalidNodeError(self):
-        with self.assertRaises(taxidTools.InvalidNodeError):
-            _ = self.txd["notataxid"]
+        self.assertRaises(taxidTools.InvalidNodeError, self.txd.__getitem__, "notataxid")

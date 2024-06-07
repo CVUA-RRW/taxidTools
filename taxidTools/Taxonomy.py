@@ -624,26 +624,28 @@ class Taxonomy(UserDict):
         >>> tax.getAncestry('12')
         Lineage([Node(12), Node(1), Node(0)])
         """
+        if inplace:
+            tax = self
+        else:
+            tax = self.copy()
+
         # Getting upstream nodes
-        nodes = self.getAncestry(taxid)
-        
+        nodes = tax.getAncestry(taxid)
+
         # Unlinking other branches from upstream nodes
         # No need to change parents of the other nodes, 
         # they will be removed from Taxonomy
         for i in range(1, len(nodes)):
             nodes[i].children = [nodes[i - 1]]
-        
+
         # Adding all downstream nodes
-        nodes.extend(self.listDescendant(taxid))
-        
+        nodes.extend(tax.listDescendant(taxid))
+
         # Update taxonomy
-        if inplace:
-            self.data = {node.taxid: node for node in nodes}
-            # return None
-        else:
-            new = self.copy()
-            new.data = {node.taxid: node for node in nodes}
-            return new
+        tax.data = {node.taxid: node for node in nodes}
+
+        if not inplace:
+            return tax
     
     def filterRanks(self, ranks: list[str] = linne(), inplace = True) -> None:
         """
@@ -701,12 +703,17 @@ class Taxonomy(UserDict):
         >>> tax
         {DummyNode(wmnar5QT), Node(001), Node(1), Node(11), Node(111)}
         """
+        if inplace:
+            tax = self
+        else:
+            tax = self.copy()
+
         # Create a list of nodes that will be used to update self
         new_nodes = []
-        
+
         # First step, reduce tree
         # Remove unwanted nodes
-        for node in self.values():
+        for node in tax.values():
             if node.rank in ranks:
                 new_nodes.append(node)
             else:
@@ -716,22 +723,19 @@ class Taxonomy(UserDict):
                     # relinking a parent-less node raises TypeError
                     # The root will be kept whatever is asked to keep coherence
                     new_nodes.append(node)
-        
+
         # Second step, expand tree
         # Reccursively add DummyNode to fill gaps
-        root = self.root
-        if ranks[-1] == self.root:
+        root = tax.root
+        if ranks[-1] == tax.root:
             ranks = ranks[:-1]
         new_nodes.extend(_insert_nodes_recc(root, ranks))
 
         # Update self
-        if inplace:
-            self.data = {node.taxid: node for node in new_nodes}
-            # return None
-        else:
-            new = self.copy()
-            new.data = {node.taxid: node for node in new_nodes}
-            return new
+        tax.data = {node.taxid: node for node in new_nodes}
+
+        if not inplace:
+            return tax
 
     def write(self, path: str) -> None:
         """
@@ -822,10 +826,11 @@ def _insert_nodes_recc(node: Node, ranks: list[str]) -> list[Node]:
     
     Reccursively relinks all nodes under node
     to follow the order given by ranks.
+    Note that parents will be relinked with one dummy pro child!
     
     Notes:
     ------
-    Assumes that the Taxonomy has bee purged of non wanted 
+    Assumes that the Taxonomy has been purged of not wanted 
     ranks.
     
     Parameter:
@@ -841,16 +846,19 @@ def _insert_nodes_recc(node: Node, ranks: list[str]) -> list[Node]:
     --------
     list of added nodes
     """
+    if 'root' in ranks:
+        raise ValueError("'root' should not be included when filtering ranks. Use the Taxonomy.root property instead.")
+
     # if no ranks left return an empty list
     if not ranks:
         return []
-    
+
     # Keep track of created dummyNodes 
     new_nodes = _insert_dummies(node, ranks[-1])
-    
+
     for child in node.children:
         new_nodes.extend(_insert_nodes_recc(child, ranks[:-1]))
-    
+
     return new_nodes
 
 

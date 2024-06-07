@@ -5,8 +5,7 @@ from taxidTools.Taxonomy import _insert_nodes_recc, _insert_dummies
 class TestComplexTree(unittest.TestCase):
     # Test Tree
     #
-    # 0(-/ --/ -- 001) for testing filterRanks
-    # |(-3) for testing filterRanks
+    # 0(-/-  /- 001) for testing filterRanks
     # |- 1
     # |  |- 11
     # |  |- 12
@@ -16,6 +15,7 @@ class TestComplexTree(unittest.TestCase):
     #    |- 21
     #    |- 22
     #    |- 23
+    # (|-3) for testing _insert_nodes_recc
     
     def setUp(self):
         self.node0 = taxidTools.Node(taxid = 0, name = "root", rank = "root", parent = None)
@@ -135,9 +135,9 @@ class TestComplexTree(unittest.TestCase):
         self.assertEqual(self.node121.parent, self.node1)
         self.assertIsInstance(node001.parent, taxidTools.DummyNode)
 
-        self.new = self.txd.filterRanks(ranks=["root"], inplace=False)
+        self.new = self.txd.filterRanks(ranks=["rank1"], inplace=False)
         self.assertEqual(len(self.txd), 8)
-        self.assertEqual(len(self.new), 1)  # Fails FIXME
+        self.assertEqual(len(self.new), 4)
     
     def test_insert_dummies(self):
         new = _insert_dummies(self.node1, 'newrank')
@@ -146,8 +146,9 @@ class TestComplexTree(unittest.TestCase):
             self.assertIsInstance(node, taxidTools.DummyNode)
         
     def test_insert_nodes_recc(self):
-        node001 = taxidTools.Node('001', name = "node0011", rank = "rank3", parent = self.node0)
         node3 = taxidTools.Node('3', name = "node3", rank = "rank1", parent = self.node0)
         self.txd.addNode(node3)
         new_nodes = _insert_nodes_recc(self.node0, ['rank3', 'rank2', 'rank1.5', 'rank1'])
-        self.assertEqual(len(new_nodes), 15)
+        self.assertEqual(len(new_nodes), 12)
+
+        self.assertRaises(ValueError, _insert_nodes_recc, self.node0, ['root'])
