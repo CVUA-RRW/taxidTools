@@ -1,5 +1,29 @@
 # Release History
 
+## 2.4.0
+
+**New features**
+
+* Added a `Taxonomy.copy()` method as a shorthand for `copy.deepcopy(Taxonomy)`
+* Added an `inplace` argument to `Taxonomy` methods `filterRanks()` and `prune()`, allowing chose whether to return a modified deepcopy of the instance od modifiy it in place
+
+**Improvements**
+
+* Unit tests now use temporary directories to test IO methods
+* The `Taxonomy.filter()` method will now return a `ValueError` when attempting to use `root` rank in the filtering instead of creating new root Nodes
+
+**Pending deprecation**
+
+* `Taxonomy.from_json` will be removed in 3.0.0, it is replaced by `read_json`, a module level constructor.
+* `load` will be removed in 3.0.0, it is replaced by `read_json`, a module level constructor.
+* `Taxonomy.from_taxdump` will be removed in 3.0.0, it is replaced by `read_taxdump`, a module level constructor.
+* `load_ncbi` will be removed in 3.0.0, it is replaced by `read_ncbi`, a better-named module level constructor.
+
+**Bug Fix**
+
+* `Taxonomy.listDescendant` now does filter output based on the ranks parameter
+* Repaired `Node.node_info` output to actually use newlines instead of printing '\n'
+
 ## 2.3.1 (2024-06-04)
 
 **Distribution**
