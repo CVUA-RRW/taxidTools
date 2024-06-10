@@ -1,4 +1,4 @@
-# TaxidTools - A Python Toolkit for Taxonomy
+
 
 [![Python package](https://github.com/CVUA-RRW/taxidTools/actions/workflows/python-package.yml/badge.svg?branch=main)](https://github.com/CVUA-RRW/taxidTools/actions/workflows/python-package.yml)
 [![PyPI - License](https://img.shields.io/pypi/l/Django?style=flat)](LICENSE)
@@ -7,6 +7,8 @@
 [![Pypi Version](https://img.shields.io/pypi/v/taxidTools?style=flat?logo=pypi)](https://pypi.org/project/taxidTools/)
 [![Docker Image Version](https://img.shields.io/docker/v/gregdenay/taxidtools?logo=Docker&label=DockerHub)](https://hub.docker.com/r/gregdenay/taxidtools/tags)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5556006.svg?logo=doi)](https://doi.org/10.5281/zenodo.5556006)
+
+# TaxidTools - A Python Toolkit for Taxonomy
 
 ## Overview
 
