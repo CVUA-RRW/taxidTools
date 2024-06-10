@@ -14,6 +14,8 @@ def read_taxdump(nodes: str, rankedlineage: str, merged: Optional[str] = None) -
         Path to the nodes.dmp file
     rankedlineage:
         Path to the rankedlineage.dmp file
+    merged:
+        Path tothe merged.mp file
 
     Examples
     --------
