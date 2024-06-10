@@ -1,11 +1,10 @@
 import json
-from copy import copy
 from typing import Iterator, Optional
 from .Taxonomy import Taxonomy
-from .Node import Node, DummyNode, _BaseNode
+from .Node import Node, DummyNode, _BaseNode, MergedNode
 
 
-def read_taxdump(nodes: str, rankedlineage: str) -> Taxonomy:
+def read_taxdump(nodes: str, rankedlineage: str, merged: Optional[str] = None) -> Taxonomy:
     """
     Read a Taxonomy from the NCBI`s taxdump files
 
@@ -40,6 +39,11 @@ def read_taxdump(nodes: str, rankedlineage: str) -> Taxonomy:
     for k, v in parent_dict.items():
         txd[k].parent = txd[v]
 
+    # parsing merged
+    if merged:
+        for line in _parse_dump(merged):
+            txd[line[0]] = MergedNode(line[0],line[1])
+
     return Taxonomy(txd)
 
 
@@ -66,18 +70,20 @@ def read_json(path: str) -> Taxonomy:
 
     # Create nodes from records
     for record in parser:
-        class_call = eval(record['type'])
-        txd[record['_taxid']] = class_call(taxid=record['_taxid'],
-                                            name=record['_name'],
-                                            rank=record['_rank'])
-        parent_dict[record['_taxid']] = record['_parent']
+        class_call = eval(record.pop('type'))
+        if '_parent' in record:
+            parent_dict[record['_taxid']] = record.pop('_parent')
+
+        # Class attributes are hidden and therefore start with "_"
+        # Init takes same named arguments with the "_"
+        txd[record['_taxid']] = class_call(
+            **{k[1:]: v for k, v in record.items()}
+        )
 
     # Update parent info
     for k, v in parent_dict.items():
-        try:
+        if v:
             txd[k].parent = txd[v]
-        except KeyError:
-            pass
 
     return Taxonomy(txd)
 

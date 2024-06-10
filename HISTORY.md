@@ -1,5 +1,16 @@
 # Release History
 
+## Dev
+
+**New features**
+
+* It is now possible to provide merged nodes, either form the taxdump file `merged.dmp` or directly via instances of the class `MergedNode`
+* Attempting to retrieve a MergedNode from a Taxonomy instance will return the node it was merged with.
+
+**Bug Fix**
+
+* Instanciating a Lineagefrom a DummyNode doesn't raise an Error anymore
+
 ## 2.4.0
 
 **New features**

@@ -60,9 +60,10 @@ Source code documentation.
 .. toctree::
    :maxdepth: 2
    
-   Taxonomy module <taxidTools.Taxonomy.rst>
+   Taxonomy module <taxidTools.Taxonomy>
    Lineage module <taxidTools.Lineage>
    Node module <taxidTools.Node>
+   factories module <taxidTools.factories>
    utils module <taxidTools.utils>
 
 Cite us
