@@ -5,7 +5,7 @@ Lineage object definition
 
 from __future__ import annotations
 from collections import UserList
-from .Node import Node, DummyNode
+from .Node import Node, DummyNode, _BaseNode, MergedNode
 from .utils import linne
 
 
@@ -56,7 +56,7 @@ class Lineage(UserList):
     """
 
     def __init__(self, base_node: Node, ascending: bool = True) -> None:
-        if not isinstance(base_node, Node):
+        if not isinstance(base_node, (_BaseNode,MergedNode)):
             raise ValueError(
                 "Lineage should be instanciated with a Node or list of Nodes")
 

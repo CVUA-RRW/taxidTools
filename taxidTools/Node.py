@@ -17,7 +17,7 @@ class _BaseNode:
                  taxid: Union[str, int] = None,
                  name: Optional[str] = None,
                  rank: Optional[str] = None,
-                 parent: Optional[str] = None
+                 parent: Optional[_BaseNode] = None
                 ) -> None:
         self._children = set()
         self._name = name
@@ -235,7 +235,7 @@ class Node(_BaseNode):
                  taxid: Union[str, int],
                  name: Optional[str] = None,
                  rank: Optional[str] = None,
-                 parent: Optional[str] = None) -> None:
+                 parent: Optional[_BaseNode] = None) -> None:
         super().__init__(taxid, name, rank, parent)
 
     # Property methods
@@ -299,13 +299,24 @@ class DummyNode(_BaseNode):
     A placeholder for a non-existing Node.
 
     Will be assigned a random hash id in place of a taxid
-    upon creation.
+    upon creation. Can be inserted between two existing nodes.
+
+    Parameters
+    ---------
+    taxid:
+        Taxonomic identification number
+    name:
+        Node name
+    rank:
+        Node rank
+    parent:
+        The parent Node object
     """
     def __init__(self,
-                 taxid: Optional[str] = None,
+                 taxid: Optional[Union[str, int]] = None,
                  name: Optional[str] = None,
                  rank: Optional[str] = None,
-                 parent: Optional[str] = None) -> None:
+                 parent: Optional[_BaseNode] = None) -> None:
         if not taxid:
             taxid = _rand_id() # generating random taxid
         super().__init__(taxid, name, rank, parent)
@@ -346,9 +357,7 @@ class DummyNode(_BaseNode):
 
     @property
     def node_info(self) -> str:
-        """
-        Node information
-        """
+        """Node information"""
         return super().node_info
 
     # Setter methods
@@ -372,3 +381,49 @@ class DummyNode(_BaseNode):
     def parent(self, parent: Node) -> None:
         """Set parent node and update children attribute of parent node"""
         super(DummyNode, self.__class__).parent.fset(self, parent)
+
+
+class MergedNode:
+    """
+    Simple class linking to an instance of (a subclass of) _BaseNode
+
+    Represents a taxonomic node that has been merged with another node and is therefore not
+    part of the taxonomy anymore.
+
+    Parameters
+    ---------
+    taxid:
+        Taxonomic identification number
+    new_node:
+        Taxid of node this node has been merged with
+    *args:
+        ignored
+    **kwargs:
+        ignored
+
+    Note
+    ----
+    `new_node` is provided as a taxid and not as an instance of a Node class.
+    An Error will be raised upon trying to access a MergedNode from Taxonomy object if it is linked to a non-existing Node. 
+    """
+    def __init__(self, taxid: Union [str, int], new_node: Union [str, int], *args, **kwargs) -> None:
+        self._taxid = str(taxid)
+        self._new_node = str(new_node)
+
+    @property
+    def taxid(self) -> str:
+        """Taxonomic identification number"""
+        return self._taxid
+
+    @property
+    def new_node(self) -> str:
+        """Node this node has been merged with"""
+        return self._new_node
+
+    @taxid.setter
+    def taxid(self, taxid: Union[str, int]) -> None:
+        self._taxid = str(taxid)
+
+    @new_node.setter
+    def new_node(self, new_node: Union[str, int]) -> None:
+        self._new_node = str(new_node)

@@ -38,17 +38,21 @@ class TestTaxdump(unittest.TestCase):
         self.assertEqual(len(self.txd.keys()), 2)
 
     def test_factory_taxdump(self):
-        self.txd = taxidTools.read_taxdump(nodes, rankedlineage)
+        self.txd = taxidTools.read_taxdump(nodes, rankedlineage, merged)
         self.assertEqual(self.txd["9913"].parent.taxid, "9903")
 
         ancestry = taxidTools.Lineage(self.txd["9903"])
         self.assertEqual(len(ancestry), 29)
         self.assertEqual(ancestry[-1].taxid, "1")
 
+        self.assertEqual(self.txd["999999"], self.txd["9103"])
+
     def test_IO_json(self):
-        self.txd = taxidTools.read_taxdump(nodes, rankedlineage)
+        self.txd = taxidTools.read_taxdump(nodes, rankedlineage, merged)
         self.txd.write(os.path.join(self.workdir.name, "test.json"))
         self.reload = taxidTools.read_json(os.path.join(self.workdir.name, "test.json"))
+
+        self.assertEqual(self.txd["999999"], self.txd["9103"])
 
         ancestry = taxidTools.Lineage(self.reload["9903"])
         self.assertEqual(len(ancestry), 29)
@@ -89,3 +93,11 @@ class TestTaxdump(unittest.TestCase):
 
     def test_InvalidNodeError(self):
         self.assertRaises(taxidTools.InvalidNodeError, self.txd.__getitem__, "notataxid")
+    
+    def test_MergedNnode(self):
+        self.merged = taxidTools.MergedNode(10, 1)
+        self.txd = taxidTools.Taxonomy.from_list([self.parent, self.child, self.merged])
+        self.assertEqual(self.txd['1'], self.txd['10'])
+        # assign a non-existing node and raise anerror
+        self.merged = taxidTools.MergedNode(11, 99)
+        self.assertRaises(taxidTools.InvalidNodeError, self.txd.__getitem__, "11")

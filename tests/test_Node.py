@@ -49,3 +49,8 @@ class TestNode(unittest.TestCase):
         self.assertEqual(self.lownode.parent, self.node)
         self.assertEqual(len(self.node.children), 1)
         self.assertIn(self.lownode, self.node.children)
+
+    def test_merged(self):
+        self.merged = taxidTools.MergedNode(1234, 2)
+        self.assertEqual(self.merged.new_node, "2")
+        self.assertEqual(self.merged.taxid, "1234")

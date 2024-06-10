@@ -8,9 +8,6 @@ name: Docker Dev
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
 
 jobs:
   push_dockerhub:

@@ -8,7 +8,7 @@ from typing import Union, Iterator, Optional
 from collections import UserDict, Counter
 from copy import copy, deepcopy
 import json
-from .Node import Node, DummyNode, _BaseNode
+from .Node import Node, DummyNode, _BaseNode, MergedNode
 from .Lineage import Lineage
 from .utils import linne, deprecation
 from .exceptions import InvalidNodeError
@@ -83,10 +83,21 @@ class Taxonomy(UserDict):
                 self._namedict[v.name] = k
 
     def __getitem__(self, key: str) -> Node:
+        """
+        Element getter with brackets
+        
+        Overloading default behavior to:
+        - return a specific error on non-existing key
+        - handle MergedNodes to return the new node
+        """
         try:
-            return super().__getitem__(key)
+            node = super().__getitem__(key)
         except KeyError:
             raise InvalidNodeError(f"There is no Node with taxid '{key}' in this Taxonomy")
+        if isinstance(node, MergedNode):
+            # call to getitem in case new_node was merged too
+            return self.__getitem__(node.new_node)
+        return node
 
     def __repr__(self):
         return f"{set(self.values())}"
@@ -109,7 +120,7 @@ class Taxonomy(UserDict):
         >>> txd = Taxonomy.from_list([Node(1), Node(2)])
         """
         for node in node_list:
-            if not isinstance(node, _BaseNode):
+            if not isinstance(node, (_BaseNode, MergedNode)):
                 raise ValueError("Elements of node_list must be of type Node")
 
         as_dict = {node.taxid: node for node in node_list}
