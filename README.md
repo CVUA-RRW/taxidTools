@@ -1,11 +1,12 @@
 # TaxidTools - A Python Toolkit for Taxonomy
 
 [![Python package](https://github.com/CVUA-RRW/taxidTools/actions/workflows/python-package.yml/badge.svg?branch=main)](https://github.com/CVUA-RRW/taxidTools/actions/workflows/python-package.yml)
-[![PyPI - License](https://img.shields.io/pypi/l/Django?style=flat)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/CVUA-RRW/taxidTools)
-[![Conda Version](https://img.shields.io/conda/vn/conda-forge/taxidtools.svg)](https://anaconda.org/conda-forge/taxidtools)
-[![Pypi Version](https://img.shields.io/pypi/v/taxidTools?style=flat)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5556006.svg)](https://doi.org/10.5281/zenodo.5556006)
+[![PyPI - License](https://img.shields.io/pypi/l/Django?style=flat)](LICENSE)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/CVUA-RRW/taxidTools?logo=GitHub)](https://github.com/CVUA-RRW/taxidtools/releases)
+[![Conda Version](https://img.shields.io/conda/vn/conda-forge/taxidtools.svg?logo=Conda-Forge)](https://anaconda.org/conda-forge/taxidtools)
+[![Pypi Version](https://img.shields.io/pypi/v/taxidTools?style=flat?logo=pypi)](https://pypi.org/project/taxidTools/)
+[![Docker Image Version](https://img.shields.io/docker/v/gregdenay/taxidtools?logo=Docker&label=DockerHub)](https://hub.docker.com/r/gregdenay/taxidtools/tags)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5556006.svg?logo=doi)](https://doi.org/10.5281/zenodo.5556006)
 
 ## Overview
 
