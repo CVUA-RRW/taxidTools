@@ -1,6 +1,6 @@
 # Release History
 
-## Dev
+## 2.5.0
 
 **New features**
 
