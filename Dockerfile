@@ -1,15 +1,18 @@
-FROM python:3.11.9-slim
-
 LABEL authors="Gregoire Denay" \
       description="Docker image to run this package"
-
-RUN apt-get -y update
+      
+FROM ubuntu:24.04
+RUN apt-get update -y
+RUN apt-get upgrade -y
+RUN apt-get install -y curl
 
 COPY requirements.txt ./
 
-RUN pip install --no-cache-dir --upgrade pip \
-  && pip install --no-cache-dir -r requirements.txt
+RUN python -m pip install --no-cache-dir --upgrade pip \
+  && python -m pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN pip install taxidtools
+RUN python -m pip install . -vv --no-deps --no-build-isolation
+
+CMD ["python"]
