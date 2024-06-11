@@ -5,12 +5,12 @@ LABEL authors="Gregoire Denay" \
 
 RUN apt-get update -y
 RUN apt-get upgrade -y
-RUN apt-get install -y python3 python3-pip python3-venv
+RUN apt-get install -y python3
 
 COPY requirements.txt ./
 
 RUN python3 -m venv .venv
-RUN source .venv/bin/activate
+RUN . .venv/bin/activate
 RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
 COPY . .
