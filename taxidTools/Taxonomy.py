@@ -34,9 +34,9 @@ class Taxonomy(UserDict):
 
     See Also
     --------
-    Taxonomy.from_taxdump: load a Taxonomy object from taxdump files
     Taxonomy.from_list: load a Taxonomy object from a list of Node
-    Taxonomy.from_json: load a Taxonomy from a previously exported json file
+    read_taxdump: load a Taxonomy object from taxdump files
+    read_json: load a Taxonomy from a previously exported json file
     Taxonomy.addNode: add a Node to a Taxonomy
 
     Examples
@@ -71,7 +71,7 @@ class Taxonomy(UserDict):
 
     Or from the taxdump files:
 
-    >>> tax = Taxonomy.from_taxdump("nodes.dmp', 'rankedlineage.dmp')
+    >>> tax = Taxonomy.read_taxdump("nodes.dmp', 'rankedlineage.dmp', 'merged.dmp')
     """
 
     def __init__(self, *args, **kwargs) -> None:
