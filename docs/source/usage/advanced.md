@@ -20,11 +20,11 @@ Nodes after unwanted ranks have been discarded in the case of `filterRanks`
 for example.
 
 Should you want to keep a copy of the original Taxonomy (and the Nodes), you should 
-do a deep copy:
+do a copy:
 
 ```python
 >>> import copy
->>> tax_copy = copy.deepcopy(tax)
+>>> backup = tax.copy()
 ```
 
 Alternatively you can save the Taxonomy in JSON format for a later use (see next sections).
@@ -120,7 +120,7 @@ it can be beneficial to save a filtered version to a JSON file and to reload it 
 
 ```python
 >>> tax.write("my_filtered_taxonomy.json")
->>> new_tax = taxidTools.load("my_filtered_taxonomy.json")
+>>> new_tax = taxidTools.read_json("my_filtered_taxonomy.json")
 ```
 
 ## Working with non-NCBI taxonomies
@@ -174,5 +174,5 @@ def custom_parser(file):
     return taxidTools.Taxonomy(txd)
 ```
 
-Also check the implementations of `Taxonomy.from_taxdump` and `Taxonomy.from_json` for 
+Also check the implementations of `Taxonomy.read_taxdump` and `Taxonomy.read_json` for 
 specific examples.
