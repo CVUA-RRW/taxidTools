@@ -1,9 +1,10 @@
-FROM python:3.11.9-slim
+FROM ubuntu:22.04
 
 LABEL authors="Gregoire Denay" \
       description="Docker image to run this package"
 
 RUN apt-get -y update
+RUN apt-get -y install python3-pip
 
 COPY requirements.txt ./
 
