@@ -5,7 +5,7 @@ LABEL authors="Gregoire Denay" \
 
 RUN apt-get update -y
 RUN apt-get upgrade -y
-RUN apt-get install -y python3
+RUN apt-get install -y python3-full
 
 COPY requirements.txt ./
 
