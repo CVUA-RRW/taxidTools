@@ -43,5 +43,3 @@ your own Python package or install it using pip:
 $ cd taxidTools
 $ python -m pip install .
 ```
-
-Or use the Docker image:
