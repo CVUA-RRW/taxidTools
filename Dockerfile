@@ -9,11 +9,11 @@ RUN apt-get install -y python3 python3-pip
 
 COPY requirements.txt ./
 
-RUN python -m pip install --no-cache-dir --upgrade pip \
-  && python -m pip install --no-cache-dir -r requirements.txt
+RUN python3 -m pip3 install --no-cache-dir --upgrade pip \
+  && python3 -m pip3 install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN python -m pip install . -vv --no-deps --no-build-isolation
+RUN python3 -m pip3 install . -vv --no-deps --no-build-isolation
 
-CMD ["python"]
+CMD ["python3"]
