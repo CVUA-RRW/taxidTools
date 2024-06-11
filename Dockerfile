@@ -11,10 +11,10 @@ COPY requirements.txt ./
 
 RUN python3 -m venv .venv
 RUN . .venv/bin/activate
-RUN python3 -m pip3 install --no-cache-dir -r requirements.txt
+RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN python3 -m pip3 install . -vv --no-deps --no-build-isolation
+RUN python3 -m pip install . -vv --no-deps --no-build-isolation
 
 CMD ["python3"]
