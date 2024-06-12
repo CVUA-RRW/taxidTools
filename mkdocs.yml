@@ -13,7 +13,7 @@ nav:
      - Avanced usage: usage/advanced.md
   - API reference: api.md
   - About:
-      - Contributing: about/contributing.md
+      - Contributing: about/contribute.md
       - License: about/license.md
       - History: about/history.md
 
