@@ -1,11 +1,7 @@
 # API Reference
 
-## ::: taxidTools.Taxonomy
+## ::: taxidTools.Taxonomy.Taxonomy
 
-## ::: taxidTools.Lineage
+## ::: taxidTools.Lineage.Lineage
 
-## ::: taxidTools.Node
-
-## ::: taxidtools.factories
-
-## ::: taxidTools.utils
+## ::: taxidTools.Node.Node
