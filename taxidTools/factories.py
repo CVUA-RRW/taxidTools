@@ -1,3 +1,7 @@
+"""
+Factory functions for instanciating `taxidTools.Taxonomy` objects
+"""
+
 import json
 from typing import Iterator, Optional
 from .Taxonomy import Taxonomy
@@ -10,12 +14,16 @@ def read_taxdump(nodes: str, rankedlineage: str, merged: Optional[str] = None) -
 
     Parameters
     ----------
-    nodes:
+    nodes: str
         Path to the nodes.dmp file
-    rankedlineage:
+    rankedlineage: str
         Path to the rankedlineage.dmp file
-    merged:
+    merged: str, optional
         Path tothe merged.mp file
+
+    Returns
+    -------
+    taxidTools.Taxonomy
 
     Examples
     --------
@@ -55,13 +63,17 @@ def read_json(path: str) -> Taxonomy:
 
     Parameters
     ----------
-    path:
+    path: str
         Path of file to load
+
+    Returns
+    -------
+    taxidTools.Taxonomy
 
     See Also
     --------
-    Taxonomy.write
-    load_ncbi
+    taxidTools.Taxonomy.write
+    read_taxdump
     """
     # parse json
     with open(path, 'r') as fi:

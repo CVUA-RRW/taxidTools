@@ -4,6 +4,7 @@ Lineage object definition
 
 
 from __future__ import annotations
+from typing import Optional
 from collections import UserList
 from .Node import Node, DummyNode, _BaseNode, MergedNode
 from .utils import linne
@@ -20,9 +21,10 @@ class Lineage(UserList):
 
     Parameters
     ----------
-    base_node:
-        The base node, from which the ancestry should be retrieved
-    ascending:
+    base_node: taxidTools._Basenode
+        An instance of a `taxidTools._BaseNode`subclass from which the ancestry
+        should be retrieved
+    ascending: bool, optional
         Should the Lineage by sorted by ascending ranks?
 
     Notes
@@ -55,7 +57,7 @@ class Lineage(UserList):
     Lineage([Node(1), Node(2), Node(3)])
     """
 
-    def __init__(self, base_node: Node, ascending: bool = True) -> None:
+    def __init__(self, base_node: _BaseNode, ascending: Optional[bool] = True) -> None:
         if not isinstance(base_node, (_BaseNode,MergedNode)):
             raise ValueError(
                 "Lineage should be instanciated with a Node or list of Nodes")
@@ -72,7 +74,7 @@ class Lineage(UserList):
         if not ascending:
             self.reverse()
 
-    def filter(self, ranks: list[str] = linne()) -> None:
+    def filter(self, ranks: Optional[list[str]] = linne()) -> None:
         """
         Filter a Lineage to a set of specified ranks.
 
@@ -82,12 +84,9 @@ class Lineage(UserList):
 
         Parameters
         ----------
-        ranks:
+        ranks: list, optional
             List of ranks to filter. It is assumed to be sorted
             in the same order as Lineage.
-        no_check:
-            Do not check the length of the ouput. This can result in
-            the output being longer than the input list of ranks.
 
         Notes
         -----
@@ -123,5 +122,5 @@ class Lineage(UserList):
 
         self.data = new
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Lineage({[node for node in self]})"
