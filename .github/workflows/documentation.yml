@@ -29,7 +29,7 @@ jobs:
         run: cat CONTRIBUTING.md > docs/about/contributing.md
 
       - name: Update Changelog
-        run: cat CHANGELOG.md > docs/about/changelog.md
+        run: cat HISTORY.md > docs/about/history.md
 
       - name: Update License
         run: cat LICENSE > docs/about/license.md
