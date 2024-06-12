@@ -1,5 +1,9 @@
 # Release History
 
+## dev
+
+* Update docstrings
+
 ## 2.5.1
 
 **Improvements**
