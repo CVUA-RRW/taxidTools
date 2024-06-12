@@ -35,7 +35,7 @@ jobs:
         run: cat LICENSE > docs/about/license.md
 
       - name: Install Dependencies
-        run: pip install mkdocs-material 'mkdocstrings[python]' 'ytkdocs[numpy-style]''
+        run: pip install mkdocs-material 'mkdocstrings[python]' 'ytkdocs[numpy-style]'
 
       - name: Publish Docs
         run: mkdocs gh-deploy --force
