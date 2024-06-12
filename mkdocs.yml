@@ -61,6 +61,7 @@ plugins:
           options:
             docstring_style: numpy
             show_source: False
+            inherited_members: True
 
 extra:
   analytics:
