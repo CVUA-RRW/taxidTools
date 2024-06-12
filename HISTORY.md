@@ -1,5 +1,11 @@
 # Release History
 
+## 2.5.1
+
+**Improvements**
+
+* taxidTools.InvalidNodeError now ihnerits from KeyError as well, this might be more intuitive for some users
+
 ## 2.5.0
 
 **New features**

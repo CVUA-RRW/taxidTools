@@ -92,7 +92,9 @@ class TestTaxdump(unittest.TestCase):
         self.assertIsNotNone(self.new.get('0', None))
 
     def test_InvalidNodeError(self):
+        # Making sure InvalidNodeError can also be caught as a KeyError
         self.assertRaises(taxidTools.InvalidNodeError, self.txd.__getitem__, "notataxid")
+        self.assertRaises(KeyError, self.txd.__getitem__, "notataxid")
     
     def test_MergedNnode(self):
         self.merged = taxidTools.MergedNode(10, 1)
