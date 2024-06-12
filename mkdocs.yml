@@ -13,7 +13,7 @@ nav:
      - Avanced usage: usage/advanced.md
   - API reference: api.md
   - About:
-      - Contributing: about/contribute.md
+      - Contributing: about/contributing.md
       - License: about/license.md
       - History: about/history.md
 
@@ -52,6 +52,9 @@ plugins:
   - autorefs
   - mkdocstrings:
       default_handler: python
+      handlers:
+        python:
+          paths: [taxidTools]
 
 extra:
   analytics:
