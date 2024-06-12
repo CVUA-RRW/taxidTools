@@ -26,7 +26,7 @@ jobs:
           python-version: 3.x
 
       - name: Update Contributing
-        run: cat CONTRIBUTING.md > docs/about/contribute.md
+        run: cat CONTRIBUTING.md > docs/about/contributing.md
 
       - name: Update Changelog
         run: cat HISTORY.md > docs/about/history.md

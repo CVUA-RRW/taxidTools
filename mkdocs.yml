@@ -16,7 +16,7 @@ nav:
       - Nodes: api_doc/nodes.md
       - Lineage: api_doc/lineage.md
   - About:
-      - Contributing: about/contribute.md
+      - Contributing: about/contributing.md
       - License: about/license.md
       - History: about/history.md
 
