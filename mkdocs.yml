@@ -55,6 +55,9 @@ plugins:
       handlers:
         python:
           paths: [taxidTools]
+          options:
+            docstring_style: numpy
+            show_source: False
 
 extra:
   analytics:
