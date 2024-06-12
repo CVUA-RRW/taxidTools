@@ -1,4 +1,4 @@
-__version__ = "2.5.0"
+__version__ = "2.5.1"
 __title__ = "taxidTools"
 __description__ = "A Python Toolkit for Taxonomy"
 __author__ = "Gregoire Denay"
