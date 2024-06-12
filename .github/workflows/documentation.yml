@@ -38,4 +38,4 @@ jobs:
         run: pip install mkdocs-material 'mkdocstrings[python]' 'pytkdocs[numpy-style]'
 
       - name: Publish Docs
-        run: mkdocs gh-deploy --force
+        run: mkdocs gh-deploy -v --force
