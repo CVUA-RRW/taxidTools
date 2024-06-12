@@ -10,15 +10,18 @@ import string
 
 def linne() -> list:
     """
-    Returns the linnean Taxonomy:
+    Linnean Taxonomy:
 
-    species,
-    genus,
-    family,
-    order,
-    class,
-    phylum,
-    kingdom
+    Returns
+    -------
+    list
+        ['species',
+        'genus',
+        'family',
+        'order',
+        'class',
+        'phylum',
+        'kingdom']
     """
     return ['species',
             'genus',
@@ -37,6 +40,7 @@ def _rand_id(ncar: int = 8) -> str:
 
 
 def deprecation(depr, replace):
+    """Standard deprecation warning"""
     warnings.warn(
         f"'{depr}' is pending deprecation, use the '{replace}' instead",
         DeprecationWarning, stacklevel=2

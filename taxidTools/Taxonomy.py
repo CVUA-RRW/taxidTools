@@ -16,13 +16,24 @@ from .exceptions import InvalidNodeError
 
 class Taxonomy(UserDict):
     """
-    Store Taxonomy nodes
+    Stores Taxonomy nodes and their relationships
 
     A Taxonomy is instanciated as a dictionnary and
     each Node can be accessed by its taxid.
     A Taoxonomy object can be instanciated directly from a dictionnary,
     iteratively with the method `Taxonomy.addNode` method or from a
     list of taxdump files..
+
+    Attributes
+    ----------
+    root
+    data: dict
+        data store
+
+    Raises
+    ------
+    taxidTools.InvalidNodeError
+        If trying to access a Node that doesn't exist with a bracket expression
 
     Notes
     -----
@@ -48,6 +59,8 @@ class Taxonomy(UserDict):
     >>> leaf2 = Node(112, "node112", "leaf", branch1)
     >>> leaf3 = Node(121, "node121", "leaf", branch2)
     >>> leaf4 = Node(13, "node13", "leaf", root)
+
+    From a dictionnary of Nodes:
 
     >>> tax = Taxonomy({"1" : root,
     ...     11: branch1,
@@ -85,7 +98,7 @@ class Taxonomy(UserDict):
     def __getitem__(self, key: str) -> Node:
         """
         Element getter with brackets
-        
+
         Overloading default behavior to:
         - return a specific error on non-existing key
         - handle MergedNodes to return the new node
@@ -114,6 +127,10 @@ class Taxonomy(UserDict):
         ----------
         node_list:
             List of Node objects
+
+        Returns
+        -------
+        Taxonomy
 
         Examples
         --------
@@ -219,6 +236,10 @@ class Taxonomy(UserDict):
         Create a deepcopy of the current Taxonomy instance.
 
         Equivalent to running copy.deepcopy()
+
+        Returns
+        -------
+        Taxonomy
         """
         new = deepcopy(self.data)
         return Taxonomy(new)
@@ -239,7 +260,7 @@ class Taxonomy(UserDict):
 
         Parameters
         ----------
-        node:
+        node: taxidTools._BaseNode
             A Node to add to the Taxonomy
 
         Examples
@@ -251,14 +272,18 @@ class Taxonomy(UserDict):
         if node.name:
             self._namedict[node.name] = node.taxid
 
-    def getTaxid(self, name: str) -> str:
+    def getTaxid(self, name: Union[int, str]) -> str:
         """
         Get taxid from name
 
         Parameters
         ----------
-        name:
+        name: str or int
             Node name
+
+        Returns
+        -------
+        str
 
         Examples
         --------
@@ -275,8 +300,12 @@ class Taxonomy(UserDict):
 
         Parameters
         ----------
-        taxid:
+        taxid: str or int
             Taxonomic identification number
+
+        Returns
+        -------
+        str
 
         Examples
         --------
@@ -293,8 +322,12 @@ class Taxonomy(UserDict):
 
         Parameters
         ----------
-        taxid:
+        taxid: str or int
             Taxonomic identification number
+
+        Returns
+        -------
+        str
 
         Examples
         --------
@@ -305,14 +338,18 @@ class Taxonomy(UserDict):
         """
         return self[str(taxid)].rank
 
-    def getParent(self, taxid: Union[str, int]) -> Node:
+    def getParent(self, taxid: Union[str, int]) -> _BaseNode:
         """
         Retrieve parent Node
 
         Parameters
         ----------
-        taxid:
+        taxid: str or int
             Taxonomic identification number
+
+        Returns
+        -------
+        taxidTools._BaseNode
 
         Examples
         --------
@@ -330,8 +367,12 @@ class Taxonomy(UserDict):
 
         Parameters
         ----------
-        taxid:
+        taxid: str or int
             Taxonomic identification number
+
+        Returns
+        -------
+        list
 
         Examples
         --------
@@ -349,8 +390,12 @@ class Taxonomy(UserDict):
 
         Parameters
         ----------
-        taxid:
+        taxid: str or int
             Taxonomic identification number
+
+        Returns
+        -------
+        taxidTools.Lineage
 
         Examples
         --------
@@ -369,10 +414,14 @@ class Taxonomy(UserDict):
 
         Parameters
         ----------
-        taxid:
+        taxid: str or int
             Taxonomic identification number
-        child:
+        child: str or int
             Taxonomic identification number
+
+        Returns
+        -------
+        bool
 
         See Also
         --------
@@ -397,10 +446,14 @@ class Taxonomy(UserDict):
 
         Parameters
         ----------
-        taxid:
+        taxid: str or int
             Taxonomic identification number
-        parent:
+        parent: str or int
             Taxonomic identification number
+
+        Returns
+        -------
+        bool
 
         See Also
         --------
@@ -426,12 +479,16 @@ class Taxonomy(UserDict):
 
         Parameters
         ----------
-        taxid_list:
+        taxid_list: list
             list of taxonomic identification numbers
-        min_consensus:
+        min_consensus: float
             minimal consensus level, between 0.5 and 1.
             Note that a minimal consensus of 1 will
             return the same result as `lastCommonNode()`
+
+        Returns
+        -------
+        taxidTools._BaseNode
 
         Notes
         -----
@@ -502,8 +559,12 @@ class Taxonomy(UserDict):
 
         Parameters
         ----------
-        taxid_list:
+        taxid_list: list
             list of taxonomic identification numbers
+
+        Returns
+        -------
+        taxidTools._BasNode
 
         See Also
         --------
@@ -534,10 +595,14 @@ class Taxonomy(UserDict):
 
         Parameters
         ----------
-        taxid1:
+        taxid1: str or int
             Taxonomic identification number
-        taxid2:
+        taxid2: str or int
             Taxonomic identification number
+
+        Returns
+        -------
+        int
 
         Examples
         --------
@@ -572,10 +637,14 @@ class Taxonomy(UserDict):
 
         Parameters
         ----------
-        taxid:
+        taxid: str or int
             Taxonomic identification number
-        ranks:
+        ranks: list, optional
             list of ranks for which to return nodes
+
+        Returns
+        -------
+        list
 
         Examples
         --------
@@ -610,7 +679,7 @@ class Taxonomy(UserDict):
             return [e for e in all if e.rank in ranks]
         return all
 
-    def prune(self, taxid: Union[str, int], inplace: bool = True) -> None:
+    def prune(self, taxid: Union[str, int], inplace: Optional[bool] = True) -> None:
         """
         Prune the Taxonomy at the given taxid
 
@@ -620,11 +689,15 @@ class Taxonomy(UserDict):
 
         Parameters
         ----------
-        taxid:
+        taxid: str or int
             taxid whose Lineage to keep
-        inplace:
+        inplace: bool, optional
             perfrom the operation inplace and mutate the underlying objects
             or return a mutated copy of the instance, keep the original unchanged
+
+        Returns
+        -------
+        None
 
         Examples
         --------
@@ -682,7 +755,7 @@ class Taxonomy(UserDict):
         if not inplace:
             return tax
 
-    def filterRanks(self, ranks: list[str] = linne(), inplace = True) -> None:
+    def filterRanks(self, ranks: Optional[list[str]] = linne(), inplace: Optional[bool] = True) -> None:
         """
         Filter a Taxonomy to keep only the ranks provided as arguments.
 
@@ -691,11 +764,15 @@ class Taxonomy(UserDict):
 
         Parameters
         ----------
-        ranks:
+        ranks: list
             List of ranks to keep. Must be sorted by ascending ranks.
-        inplace:
+        inplace: bool, optional
             perfrom the operation inplace and mutate the underlying objects
             or return a mutated copy of the instance, keep the original unchanged
+
+        Returns
+        -------
+        None
 
         Notes
         -----
@@ -778,8 +855,12 @@ class Taxonomy(UserDict):
 
         Parameters
         ----------
-        path:
+        path: str
             File path for the output
+
+        See Also
+        --------
+        taxidTools.read_json
         """
         writer = json.dumps([node._to_dict()
                              for node in self.values()],
