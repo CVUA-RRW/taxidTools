@@ -7,9 +7,9 @@ are in agreement with the expected composition of the sample to calculate to per
 of a method for example.
 
 First things first, let`s load the taxdump file in a Taxonomy object:
-```python
+``` py
 import taxidTools
-tax = read_taxdump("nodes.dmp", "rankedlineage.dmp", "merged.dmp")
+tax = taxidTools.read_taxdump("nodes.dmp", "rankedlineage.dmp", "merged.dmp")
 ```
 
 ## Getting a taxid for each sequence
@@ -26,7 +26,7 @@ Gallus gallus   species 0.9
 
 In order to work with these nodes later we want to create a list of Nodes from this output:
 
-```python
+``` py
 # This allows you to run the code in your interpreter
 # in practice you should parse the sintax output into a list of names
 names = ["Bos", "Gallus gallus"]
@@ -42,7 +42,7 @@ one of our sequences. BLAST can typically output taxids directly, otherwise get 
 names like above. Let`s say we parsed our BLAST file in a list of list of taxids. Each element of
 the outer list is a list of hits for a single sequence:
 
-```python
+``` py
 res = [
     [9913, 9913, 72004],
     [9031, 9031]
@@ -52,9 +52,9 @@ res = [
 Ideally we would like to have a single assignement for each sequence. We can do this by assigning the last common ancestor 
 of all the hits for this sequence, or use a less stringent approach, like a majority agreement:
 
-```python
+``` py
 # Here we could also choose to use tax.lca() instead
-nodes = [tax.consensus(ids, 0.51) fir ids in res]
+nodes = [tax.consensus(ids, 0.51) for ids in res]
 ```
 
 We now have a single Node object for each sequence, neatly organized in a list!
@@ -65,7 +65,7 @@ In order to verify that our results are correct, we want to compare
 this list to a list of expected taxids, for example Bos taurus (cattle) and 
 Gallus gallus (chicken), bot at the species level:
 
-```python
+``` py
 expected = [9913, 9031] 
 ```
 
@@ -79,9 +79,8 @@ expected components. The smallest distance indicates the correponding expected c
 One has to keep in mind that different branches of the taxonomy can have a wildly different number of nodes,
 so it can greatly simplify things first normalize to taxonomy for such an approach:
 
-```python
-norm = tax.copy()
-norm.filterRanks(inplace=False)
+``` py
+norm = tax.filterRanks(inplace=False)
 
 distances = []
 for n in nodes:
@@ -95,14 +94,14 @@ index_corr = [d.index(min(d)) for d in distances]
 Now that we have a list which links each consensus to the index of its closest match in the list of 
 expected species, it is straightforward to determine the agreement rank between result and expectation:
 
-```python
-rank = []
+``` py
+ranks = []
 for i in range(len(nodes)):
-    rank.append(
+    ranks.append(
         tax.lca(
-            nodes[i].taxid,
-            expected[index_corr[i]]
-        )
+            [nodes[i].taxid,
+            expected[index_corr[i]]]
+        ).rank
     )
 ```
 
@@ -112,8 +111,8 @@ Let's say we want to determine these values at the genus resolution. The advanta
 the taxonomy earlier is that we don't need to care about the precise order of ranks in each branch,
 we can simply check wether the agreement rank in either of 'genus' or 'species':
 
-```python
-[1 if r in ['genus', 'species'] else 0 for r in ranks]
+``` py
+[True if r in ['genus', 'species'] else False for r in ranks]
 ```
 
 ### Unnormalized taxonomy
@@ -122,9 +121,8 @@ Of course it is possible to follow a similar approach without normalizing the ta
 significantly more complicated. For example checking wether *Bos taurus* (9913) consensus (here genus) is
 under the genus level involves determining the correpsonding expected node as before with the unnormalized taxonomy.
 
-```python
+``` py
 distances = [tax.distance(9913, e) for e in expected]
-# Getting the index of the minimum distance
 index_corr = distances.index(min(distances))
 agreement = expected[index_corr]
 ```
@@ -132,17 +130,18 @@ agreement = expected[index_corr]
 Now instead of simply checking the rank of the agreement, we will rather determine the ancestor
 node of the expected species at the required resolution:
 
-```python
-lin = txd.getLineage(agreement) 
-target = lin.filter('genus')[0]
+``` py
+lin = tax.getAncestry(agreement)
+lin.filter(['genus'])
+target = lin[0]
 ```
 
 Now the last common ancestor of our result and the corresponding expected species is either
 an ancestor of `target`, in which case the result did not reach the expected resolution,
 or its descendant or the target itself, in which case the required resolution is attained:
 
-```python
-not tax.isAncestor(target, tax.lca(agreement, 9913))
+``` py
+not tax.isAncestorOf(target.taxid, tax.lca([agreement, 9913]))
 ```
 
 Note that in the last expression above we added `not` in order to have the results in the same form 

@@ -14,13 +14,13 @@ using the Taxdump files is the easiest solution.
 
 Start by importing taxidTools:
 
-```python
+``` py
 >>> import taxidTools
 ```
 
 Then load the taxdump files that you saved and unpacked locally:
 
-```python
+``` py
 >>> tax = taxidTools.read_taxdump(
         "path/to/nodes.dmp", 
         "path/to/rankedlineage.dmp",
@@ -53,7 +53,7 @@ is refered to as root node and represents the top of the taxonomy.
 
 All these properties can be easily accessed, using the taxid number:
 
-```python
+``` py
 >>> tax.getName('9606')
 'Homo sapiens'
 >>> tax.getRank('9606')
@@ -67,7 +67,7 @@ Node(9605)
 It is also possible to etrieve the taxid number for a name. However be careful that
 this can lead to unexpected results if the names are not unique!
 
-```python
+``` py
 >>> tax.getTaxid('Homo sapiens')
 '9606'
 >>> tax.addNode(Node(taxid = 0, name = 'Homo sapiens'))
@@ -81,7 +81,7 @@ Actually the Taxonomy object is just a dictionnary of Nodes.
 You can access a Node object directly by passing its taxid as a key
 to a Taxonomy object and retrieve the Node properties:
 
-```python
+``` py
 >>> hs = tax.get('9606')
 >>> hs.name
 'Homo sapiens'
@@ -100,7 +100,7 @@ Node(9605)
 It is possible to test directly the relationships betwen two nodes.
 Note that a Node is neither an ancestor or descendant of itself.
 
-```python
+``` py
 >>> tax.isDescendantOf('9606', '9605')
 True
 >>> tax.isAncestorOf('9606', '9605')
@@ -113,7 +113,7 @@ It is also possible to retrieve the whole ancestry of a given node.
 Ancestries are stored in list-like Lineage objects, Nodes indices follow 
 the taxonomy order.
 
-```python
+``` py
 >>> lin = tax.getAncestry('9606')
 >>> lin[0]
 Node(9606)
@@ -123,7 +123,7 @@ Node(9606)
 
 It is possible to filter a Lineage for specific ranks:
 
-```python
+``` py
 >>> lin.filter(['genus', 'family'])
 >>> lin
 Lineage([Node(9605), Node(9604)])
@@ -132,7 +132,7 @@ Lineage([Node(9605), Node(9604)])
 This mutates the Lineage object, if you want to keep the object intact
 you should use list comprehensions to filter specific nodes:
 
-```python
+``` py
 >>> lin = tax.getAncestry('9606')
 >>> [node for node in lin if node.rank in ['genus', 'family']]
 [Node(9605), Node(9604)]

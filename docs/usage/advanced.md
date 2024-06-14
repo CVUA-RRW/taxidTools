@@ -22,7 +22,7 @@ for example.
 Should you want to keep a copy of the original Taxonomy (and the Nodes), you should 
 do a copy:
 
-```python
+``` py
 >>> import copy
 >>> backup = tax.copy()
 ```
@@ -33,7 +33,7 @@ Alternatively you can save the Taxonomy in JSON format for a later use (see next
 
 Determining a consensus node from a bunch of taxid can be done as easily as:
 
-```python
+``` py
 >>> tax.lca(['9606', '10090']).name  # Mice and men
 'Euarchontoglires'
 ```
@@ -43,7 +43,7 @@ frequencies of a bunch of taxids. You can set a minimal frequency threshold (bet
 As soon a a single node meets this threshold, it will be returned as a consensus. If this threshold is 
 not met with the given input, then the parents of the input will be considered, and so on.
 
-```python
+``` py
 >>> tax_list = ['9606']*6 + ['314146']*3 + ['4641']*8  # Mice and men and bananas
 >>> tax.consensus(tax_list, 0.51).name
 'Euarchontoglires'
@@ -55,7 +55,7 @@ not met with the given input, then the parents of the input will be considered, 
 
 Distance between two nodes is straightforward to calculate:
 
-```python
+``` py
 >>> tax.distance('9606', '10090')
 18
 ```
@@ -69,7 +69,7 @@ If you don't care about part of the Taxonomy
 you can extract a subtree and/or filter the Taxonomy to keep only specific 
 ranks.
 
-```python
+``` py
 >>> tax.prune('40674') # mammals class
 >>> tax.filterRanks(['species', 'genus', 'family', 'order', 'class', 'phylum', 'kingdom'])
 >>> tax.getAncestry('9606')
@@ -85,7 +85,7 @@ to calculate internode distances or comparing Lineages. When requesting a rank
 which nodes are missing, these nodes will be replaced by a DummyNode.
 These special kind of nodes act as place-holders for non-existing nodes.
 
-```python
+``` py
 >>> tax.filterRanks(['species', 'subgenus', 'genus', 'family', 'order', 'class', 'phylum', 'kingdom'])
 >>> tax.getAncestry('9606')
 Lineage([Node(9606), DummyNode(AAeFFWcs), Node(9605), Node(9604), Node(9443), Node(40674), 
@@ -94,7 +94,7 @@ Node(7711), Node(33208), Node(1)])
 
 Note that the above methods **mutate** the nodes:
 
-```python
+``` py
 >>> tax.getParent('9606')
 DummyNode(AAeFFWcs)
 >>> tax.getRank('AAeFFWcs')
@@ -104,7 +104,7 @@ DummyNode(AAeFFWcs)
 The formatted Linaean taxonomy ranks can be retrieved from the utility function `linne()`
 for use in diverse methods:
 
-```python
+``` py
 >>> taxidTools.linne()
 ['species', 'genus', 'family', 'order', 'class', 'phylum', 'kingdom']
 >>> tax.filterRanks(taxidTools.linne())
@@ -118,7 +118,7 @@ As you probably already noticed, parsing the Taxonomy definition can
 take a couple of minutes. If you plan on regularly using a subset of the Taxonomy, 
 it can be beneficial to save a filtered version to a JSON file and to reload it later.
 
-```python
+``` py
 >>> tax.write("my_filtered_taxonomy.json")
 >>> new_tax = taxidTools.read_json("my_filtered_taxonomy.json")
 ```
@@ -128,7 +128,7 @@ it can be beneficial to save a filtered version to a JSON file and to reload it 
 Creating a Taxonomy object can also be done without the Taxdump files.
 You can either manually create Nodes and build a Taxonomy from them:
 
-```python
+``` py
 >>> root = taxidTools.Node(taxid = 1, name = 'root', rank = 'root')
 >>> node1 = taxidTools.Node(taxid = 2, name = 'node1', rank = 'rank1', parent = root)
 >>> tax = taxidTools.Taxonomy.from_list([root, node1])
@@ -145,7 +145,7 @@ to create a parsing function to:
 Here is a boilerplate code for such a function, assuming that each node 
 is defined on a single line:
 
-```python
+``` py
 def custom_parser(file):
     # Create two empty dict that will store the node
     # information and parent information respectively

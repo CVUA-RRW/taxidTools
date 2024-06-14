@@ -42,7 +42,7 @@ docker pull gregdenay/taxidtools
 
 With the [NCBI's taxdump files](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/new_taxdump/) installed locally:
 
-```python
+``` py
 >>> import taxidTools as txd
 >>> ncbi = txd.read_taxdump('nodes.dmp', 'rankedlineage.dmp', 'merged.dmp')
 >>> tax.getName('9606')
