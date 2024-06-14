@@ -4,10 +4,3 @@ requires = [
     "wheel"
 ]
 build-backend = "setuptools.build_meta"
-
-[project]
-dynamic = ["version", "name", "author", "author_email", "description", "long_description",
-    "license", "classifiers"]
-dependencies = [
-    "mkdocstrings-python",
-]
