@@ -9,8 +9,10 @@ repo_url: https://github.com/CVUA-RRW/taxidtools
 nav:
   - Home: index.md
   - Usage:
-     - Quickstart: usage/quickstart.md
-     - Avanced usage: usage/advanced.md
+      - Quickstart: usage/quickstart.md
+      - Avanced usage: usage/advanced.md
+  - Recipes:
+      - Predictions vs. expectations: recipes/verify_blast.md
   - API reference: 
       - Taxonomy: api_doc/taxonomy.md
       - Nodes: api_doc/nodes.md

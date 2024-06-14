@@ -4,7 +4,7 @@
 [![Conda Version](https://img.shields.io/conda/vn/conda-forge/taxidtools.svg?logo=Conda-Forge)](https://anaconda.org/conda-forge/taxidtools)
 [![Pypi Version](https://img.shields.io/pypi/v/taxidTools?style=flat?logo=pypi)](https://pypi.org/project/taxidTools/)
 [![Docker Image Version](https://img.shields.io/docker/v/gregdenay/taxidtools?logo=Docker&label=DockerHub)](https://hub.docker.com/r/gregdenay/taxidtools/tags)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5556006.svg?logo=doi)](https://doi.org/10.5281/zenodo.5556006)
+[![DOI](https://zenodo.org/badge/300595196.svg)](https://zenodo.org/doi/10.5281/zenodo.5094583)
 
 # TaxidTools - A Python Toolkit for Taxonomy
 

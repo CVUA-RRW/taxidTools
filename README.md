@@ -1,66 +1,68 @@
 
-
-[![Python package](https://github.com/CVUA-RRW/taxidTools/actions/workflows/python-package.yml/badge.svg?branch=main)](https://github.com/CVUA-RRW/taxidTools/actions/workflows/python-package.yml)
+[![CD/CI](https://github.com/CVUA-RRW/taxidTools/actions/workflows/python-package.yml/badge.svg?branch=main)](https://github.com/CVUA-RRW/taxidTools/actions/workflows/python-package.yml)
 [![PyPI - License](https://img.shields.io/pypi/l/Django?style=flat)](LICENSE)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/CVUA-RRW/taxidTools?logo=GitHub)](https://github.com/CVUA-RRW/taxidtools/releases)
 [![Conda Version](https://img.shields.io/conda/vn/conda-forge/taxidtools.svg?logo=Conda-Forge)](https://anaconda.org/conda-forge/taxidtools)
 [![Pypi Version](https://img.shields.io/pypi/v/taxidTools?style=flat?logo=pypi)](https://pypi.org/project/taxidTools/)
 [![Docker Image Version](https://img.shields.io/docker/v/gregdenay/taxidtools?logo=Docker&label=DockerHub)](https://hub.docker.com/r/gregdenay/taxidtools/tags)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5556006.svg?logo=doi)](https://doi.org/10.5281/zenodo.5556006)
+[![DOI](https://zenodo.org/badge/300595196.svg)](https://zenodo.org/doi/10.5281/zenodo.5094583)
 
 # TaxidTools - A Python Toolkit for Taxonomy
 
-## Overview
+**taxidTools** is a Python library to handle Taxonomy definitions.
 
-Provides a set of classes and tools to work with taxonomy data.
-Although built to work with the NCBI Taxdump files it can also work with other taxonomy definitions.
-Currently impelemented:
-* Easily load the NCBI taxdump files
-* Retrieve name, rank, parent or full ancestry from a unique taxonomic identifier
-* Test if a node is parent or descendant of an other 
-* Find last common ancestor or consensus node from a list of ids
-* Calculate the distance between two nodes
-* List all children of a given node
-* Re-root Taxonomy
-* Format to given ranks
+## Highlights
 
-## Requirements
-
-Python >= 3.9 
-Optionally some taxonomy definiton files usch as the [Taxdump definition files](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/new_taxdump/) from the NCBI server.
+* Load taxonomy defintions for the NCBI's taxdump files
+* Prune, filter, and normalize branches
+* Save as JSON for later use
+* Determine consensus, last common ancestor, or distances
+* Retrieve ancestries or list descendants
 
 ## Installation
 
-Install from pip or conda :
+With `pip`:
 
 ```bash
-python3 -m pip install taxidTools
+pip install taxidtools
+```
 
+With `conda`:
+
+```bash
 conda install -c conda-forge taxidtools
 ```
 
-Clone or copy the github repository to your project for the developement version.
+With `docker`:
 
-## Usage 
+```bash
+docker pull gregdenay/taxidtools
+```
 
-Check our [homepage](https://cvua-rrw.github.io/taxidTools/index.html) !
+## Quickstart
 
-## Contributing
+With the [NCBI's taxdump files](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/new_taxdump/) installed locally:
 
-I add new functionnalities as I need them, if you think of a cool new thing you would like to see implemented, post an issue 
-or a pull request! 
+```python
+>>> import taxidTools as txd
+>>> ncbi = txd.read_taxdump('nodes.dmp', 'rankedlineage.dmp', 'merged.dmp')
+>>> tax.getName('9606')
+'Homo sapiens'
+>>> lineage = tax.getAncestry('9606')
+>>> lineage.filter()
+>>> [node.name for node in lineage]
+['Homo sapiens', 'Homo', 'Hominidae', 'Primates', 'Mammalia', 'Chordata', 'Metazoa']
+>>> tax.lca(['9606', '10090']).name
+'Euarchontoglires'
+>>> tax.distance('9606', '10090')
+18
+```
 
-## License
+## Documentation
 
-This project is licensed under a BSD 3-Clauses License, see the LICENSE file for details.
+Full documentation is hosted on the [homepage](https://cvua-rrw.github.io/taxidtools/)
 
-## Author
+## Cite us
 
-For questions, problems, suggestions or requests, feel free to contact:
-
-Grégoire Denay, Chemisches- und Veterinär-Untersuchungsamt Rhein-Ruhr-Wupper 
-
-<gregoire.denay@cvua-rrw.de>
-
-
-
+If you use taxidTools for your reasearch, you can cite it using the 
+DOI at the top of this page.

@@ -4,13 +4,13 @@ Taxonomy object definition
 
 
 from __future__ import annotations
-from typing import Union, Iterator, Optional
+from typing import Union, Iterator, Optional, Any
 from collections import UserDict, Counter
 from copy import copy, deepcopy
 import json
 from .Node import Node, DummyNode, _BaseNode, MergedNode
 from .Lineage import Lineage
-from .utils import linne, deprecation
+from .utils import linne, _deprecation
 from .exceptions import InvalidNodeError
 
 
@@ -167,7 +167,7 @@ class Taxonomy(UserDict):
         --------
         >>> tax = Taxonomy.from_taxdump("nodes.dmp', 'rankedlineage.dmp')
         """
-        deprecation('Taxonomy.from_taxdump()', 'read_taxdump()')
+        _deprecation('Taxonomy.from_taxdump()', 'read_taxdump()')
 
         txd = {}
         parent_dict = {}
@@ -205,7 +205,7 @@ class Taxonomy(UserDict):
         --------
         Taxonomy.write
         """
-        deprecation('Taxonomy.from_json()', 'read_json()')
+        _deprecation('Taxonomy.from_json()', 'read_json()')
 
         # parse json
         with open(path, 'r') as fi:
@@ -272,14 +272,17 @@ class Taxonomy(UserDict):
         if node.name:
             self._namedict[node.name] = node.taxid
 
-    def getTaxid(self, name: Union[int, str]) -> str:
+    def getTaxid(self, name: Union[int, str], value: Optional[Any] = None) -> str:
         """
         Get taxid from name
+
 
         Parameters
         ----------
         name: str or int
             Node name
+        value:
+            A value to return if name does not exist
 
         Returns
         -------
@@ -292,9 +295,12 @@ class Taxonomy(UserDict):
         >>> tax.getTaxid('node')
         '1'
         """
-        return self._namedict[name]
+        try:
+            return self._namedict[name]
+        except KeyError:
+            return value
 
-    def getName(self, taxid: Union[str, int]) -> str:
+    def getName(self, taxid: Union[str, int], value: Optional[Any] = None) -> str:
         """
         Get taxid name
 
@@ -302,6 +308,8 @@ class Taxonomy(UserDict):
         ----------
         taxid: str or int
             Taxonomic identification number
+        value:
+            A value to return if name does not exist
 
         Returns
         -------
@@ -314,9 +322,12 @@ class Taxonomy(UserDict):
         >>> tax.getName(1)
         'node'
         """
-        return self[str(taxid)].name
+        try:
+            return self[str(taxid)].name
+        except InvalidNodeError:
+            return value
 
-    def getRank(self, taxid: Union[str, int]) -> str:
+    def getRank(self, taxid: Union[str, int], value: Optional[Any] = None) -> str:
         """
         Get taxid rank
 
@@ -324,6 +335,8 @@ class Taxonomy(UserDict):
         ----------
         taxid: str or int
             Taxonomic identification number
+        value:
+            A value to return if name does not exist
 
         Returns
         -------
@@ -336,9 +349,12 @@ class Taxonomy(UserDict):
         >>> tax.getRank(1)
         'rank'
         """
-        return self[str(taxid)].rank
+        try:
+            return self[str(taxid)].rank
+        except InvalidNodeError:
+            return value
 
-    def getParent(self, taxid: Union[str, int]) -> _BaseNode:
+    def getParent(self, taxid: Union[str, int], value: Optional[Any] = None) -> _BaseNode:
         """
         Retrieve parent Node
 
@@ -346,6 +362,8 @@ class Taxonomy(UserDict):
         ----------
         taxid: str or int
             Taxonomic identification number
+        value:
+            A value to return if name does not exist
 
         Returns
         -------
@@ -359,9 +377,12 @@ class Taxonomy(UserDict):
         >>> tax.getParent(2)
         Node(1)
         """
-        return self[str(taxid)].parent
+        try:
+            return self[str(taxid)].parent
+        except InvalidNodeError:
+            return value
 
-    def getChildren(self, taxid: Union[str, int]) -> list[Node]:
+    def getChildren(self, taxid: Union[str, int], value: Optional[Any] = None) -> list[Node]:
         """
         Retrieve the children Nodes
 
@@ -369,6 +390,8 @@ class Taxonomy(UserDict):
         ----------
         taxid: str or int
             Taxonomic identification number
+        value:
+            A value to return if name does not exist
 
         Returns
         -------
@@ -382,7 +405,10 @@ class Taxonomy(UserDict):
         >>> tax.getChildren(1)
         [Node(2)]
         """
-        return self[str(taxid)].children
+        try:
+            return self[str(taxid)].children
+        except InvalidNodeError:
+            return value
 
     def getAncestry(self, taxid: Union[str, int]) -> Lineage:
         """
@@ -887,7 +913,7 @@ def load(path: str) -> Taxonomy:
     Taxonomy.write
     load_ncbi
     """
-    deprecation('load()', 'read_json()')
+    _deprecation('load()', 'read_json()')
     return Taxonomy.from_json(path)
 
 
@@ -915,7 +941,7 @@ def load_ncbi(nodes: str, rankedlineage: str) -> Taxonomy:
     Taxonomy.from_taxdump
     load
     """
-    deprecation('load_ncbi()', 'read_taxdump()')
+    _deprecation('load_ncbi()', 'read_taxdump()')
     return Taxonomy.from_taxdump(nodes, rankedlineage)
 
 

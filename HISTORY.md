@@ -2,7 +2,11 @@
 
 ## dev
 
+**Improvements**
+
 * Update docstrings
+* Rework documentation
+* Taxonomy.getXXX methods now behave like dict.get: allow default return value if key is not found, never raises an error
 
 ## 2.5.1
 

@@ -39,7 +39,7 @@ def _rand_id(ncar: int = 8) -> str:
                     for n in range(ncar)])
 
 
-def deprecation(depr, replace):
+def _deprecation(depr, replace):
     """Standard deprecation warning"""
     warnings.warn(
         f"'{depr}' is pending deprecation, use the '{replace}' instead",
