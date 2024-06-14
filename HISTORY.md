@@ -1,6 +1,6 @@
 # Release History
 
-## dev
+## 2.5.2
 
 **Improvements**
 
