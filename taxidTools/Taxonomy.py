@@ -144,93 +144,6 @@ class Taxonomy(UserDict):
 
         return cls(as_dict)
 
-    @classmethod
-    def from_taxdump(cls, nodes: str, rankedlineage: str) -> Taxonomy:
-        """
-        Create a Taxonomy object from the NBI Taxdump files
-
-        .. deprecated:: 2.4.0
-            `Taxonomy.from_taxdump` will be removed in 3.0.0, it is replaced by
-            `read_taxdump`, a module level constructor.
-
-        Load the taxonomic infromation form the nodes.dmp and
-        rankedlineage.dmp files available from the NCBI servers.
-
-        Parameters
-        ----------
-        nodes:
-            Path to the nodes.dmp file
-        rankedlineage:
-            Path to the rankedlineage.dmp file
-
-        Examples
-        --------
-        >>> tax = Taxonomy.from_taxdump("nodes.dmp', 'rankedlineage.dmp')
-        """
-        _deprecation('Taxonomy.from_taxdump()', 'read_taxdump()')
-
-        txd = {}
-        parent_dict = {}
-
-        # Creating nodes
-        for line in _parse_dump(nodes):
-            txd[line[0]] = Node(taxid=line[0], rank=str(line[2]))
-            parent_dict[str(line[0])] = line[1]  # storing parent id
-
-        # Add names form rankedlineage
-        for line in _parse_dump(rankedlineage):
-            txd[line[0]].name = line[1]
-
-        # Update parent info
-        for k, v in parent_dict.items():
-            txd[k].parent = txd[v]
-
-        return cls(txd)
-
-    @classmethod
-    def from_json(cls, path: str) -> Taxonomy:
-        """
-        Load a Taxonomy from a previously exported json file.
-
-        .. deprecated:: 2.4.0
-            `Taxonomy.from_json` will be removed in 3.0.0, it is replaced by
-            `read_json`, a module level constructor.
-
-        Parameters
-        ----------
-        path:
-            Path of file to load
-
-        See Also
-        --------
-        Taxonomy.write
-        """
-        _deprecation('Taxonomy.from_json()', 'read_json()')
-
-        # parse json
-        with open(path, 'r') as fi:
-            parser = json.loads(fi.read())
-
-        txd = {}
-        parent_dict = {}
-
-        # Create nodes from records
-        for record in parser:
-            class_call = eval(record['type'])
-            txd[record['_taxid']] = class_call(taxid=record['_taxid'],
-                                               name=record['_name'],
-                                               rank=record['_rank'])
-            parent_dict[record['_taxid']] = record['_parent']
-
-        # Update parent info
-        for k, v in parent_dict.items():
-            try:
-                txd[k].parent = txd[v]
-            except KeyError:
-                pass
-
-        return cls(txd)
-
     def copy(self) -> Taxonomy:
         """
         Create a deepcopy of the current Taxonomy instance.
@@ -725,6 +638,10 @@ class Taxonomy(UserDict):
         -------
         None
 
+        See Also
+        --------
+        Taxonomy.clip
+
         Examples
         --------
         >>> node0 = Node(taxid = 0, name = "root",
@@ -748,7 +665,7 @@ class Taxonomy(UserDict):
         But other branches are gone
 
         >>> tax.get('2')
-        KeyError: '2'
+        None
 
         We can keep a copy of the:
 
@@ -894,55 +811,108 @@ class Taxonomy(UserDict):
         with open(path, 'w') as fi:
             fi.write(writer)
 
+    def clip(self, taxid: Union[str, int], inplace: Optional[bool] = True) -> None:
+        """
+        Clip the Taxonomy at the given taxid
 
-def load(path: str) -> Taxonomy:
-    """
-    Load a Taxonomy from a previously exported json file.
+        Nodes not in the lineage (upwards and downwards)
+        of the given taxid will be discarded.
+        The Ancestors of the given taxid will NOT be kept and the given
+        node will become the new root!
 
-    .. deprecated:: 2.4.0
-        `load` will be removed in 3.0.0, it is replaced by
-        `read_json`, a module level constructor.
+        Parameters
+        ----------
+        taxid: str or int
+            taxid whose Lineage to keep
+        inplace: bool, optional
+            perfrom the operation inplace and mutate the underlying objects
+            or return a mutated copy of the instance, keep the original unchanged
 
-    Parameters
-    ----------
-    path:
-        Path of file to load
+        Returns
+        -------
+        None
 
-    See Also
-    --------
-    Taxonomy.write
-    load_ncbi
-    """
-    _deprecation('load()', 'read_json()')
-    return Taxonomy.from_json(path)
+        See Also
+        --------
+        Taxonomy.prune
 
+        Examples
+        --------
+        >>> node0 = Node(taxid = 0, name = "root",
+                         rank = "root", parent = None)
+        >>> node1 = Node(taxid = 1, name = "node1",
+                         rank = "rank1", parent = node0)
+        >>> node2 = Node(taxid = 2, name = "node2",
+                         rank = "rank1", parent = node0)
+        >>> node11 = Node(taxid = 11, name = "node11",
+                          rank = "rank2", parent = node1)
+        >>> node12 = Node(taxid = 12, name = "node12",
+                          rank = "rank2", parent = node1)
+        >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
+        >>> tax.clip(1)
 
-def load_ncbi(nodes: str, rankedlineage: str) -> Taxonomy:
-    """
-    Load a Taxonomy from the NCBI`s taxdump files
+        Ancestry not kept
 
-    .. deprecated:: 2.4.0
-        `load_ncbi` will be removed in 3.0.0, it is replaced by
-        `read_ncbi`, a better-named module level constructor.
+        >>> tax.getAncestry(11)
+        Lineage([Node(11)])
 
-    Parameters
-    ----------
-    nodes:
-        Path to the nodes.dmp file
-    rankedlineage:
-        Path to the rankedlineage.dmp file
+        Other branches are gone
 
-    Examples
-    --------
-    >>> tax = load_ncbi("nodes.dmp', 'rankedlineage.dmp')
+        >>> tax.get('2')
+        None
+        """
+        if inplace:
+            tax = self
+        else:
+            tax = self.copy()
 
-    See Also
-    --------
-    Taxonomy.from_taxdump
-    load
-    """
-    _deprecation('load_ncbi()', 'read_taxdump()')
-    return Taxonomy.from_taxdump(nodes, rankedlineage)
+        # Getting upstream nodes
+        nodes = tax.getAncestry(taxid)
+
+        # Removing upstream nodes
+        for i in range(1, len(nodes)):
+            tax.pop(nodes[i])
+
+        # Rerooting taxonomy
+        taxid.parent = None
+        tax.root = taxid
+
+        if not inplace:
+            return tax
+
+    def toNewick(self, names: str = 'name') -> str:
+        """
+        Generate a Newock string fro the current taxonomy
+
+        Export as Newick tree string for compatibility with other packages
+        Import in ETE with format 8 (all names).
+        Experimental feature
+
+        Parameters
+        ----------
+        names: str
+            Node attribute to use as node name, choice of 'name' or 'taxid'
+
+        Returns
+        -------
+        str
+        """
+
+        def subtree(node, names):
+            if names == 'name':
+                namestring = str(node.name.replace(" ", "_"))
+            elif names == 'taxid':
+                namestring = str(node.taxid)
+
+            if not node.children:
+                return namestring
+            subtrees = [subtree(child) for child in node.children]
+            return f"({','.join(subtrees)}){namestring}"
+
+        if names not in ['name', 'taxid']:
+            raise ValueError("Parameter 'names' must be either 'name' or 'taxid'")
+
+        return f"{subtree(self.root, names)};"
 
 
 def _flatten(t: list) -> list:
@@ -1015,13 +985,3 @@ def _insert_dummies(node, next_rank):
         dummy = DummyNode(rank=next_rank, parent=node)
         dummies.append(dummy)
     return dummies
-
-
-# Class methods using this here are pending deprecation, remove form this module in 3.0.0
-def _parse_dump(filepath: str) -> Iterator:
-    """
-    Dump file line iterator, returns a yields of fields
-    """
-    with open(filepath, 'r') as dmp:
-        for line in dmp:
-            yield [item.strip() for item in line.split("|")]

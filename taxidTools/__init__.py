@@ -1,5 +1,5 @@
 from .Node import Node, DummyNode, MergedNode
-from .Taxonomy import Taxonomy, load, load_ncbi
+from .Taxonomy import Taxonomy
 from .Lineage import Lineage
 from .factories import read_json, read_taxdump
 from .utils import linne
@@ -9,7 +9,7 @@ from .__version__ import __author__, __author_email__, __licence__
 from .__version__ import __url__
 
 __all__ = ['Node', 'DummyNode', 'MergedNode',
-           'Taxonomy', 'load', 'load_ncbi',
+           'Taxonomy',
            'Lineage',
            'read_json', 'read_taxdump',
            'linne',

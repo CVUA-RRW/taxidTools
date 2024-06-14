@@ -2,6 +2,17 @@
 
 ## dev
 
+**Deprecation**
+
+* `Taxonomy.from_json`, `load`, `Taxonomy.from_taxdump` and `load_ncbi` are deprecated. See v2.4.0 notes for replacements
+
+**New features**
+
+* It is now possible to create Newick tree with `Taxonomy.toNewick`
+* It is now possible to clip Taxonomies with `Taxonomy.clip()`, which behaves similarly to `Taxonomy.prune()` but removes upstream nodes and reroots tree.
+
+## 2.5.2
+
 **Improvements**
 
 * Update docstrings

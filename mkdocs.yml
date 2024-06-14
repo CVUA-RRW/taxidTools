@@ -15,7 +15,7 @@ nav:
       - Predictions vs. expectations: recipes/verify_blast.md
   - API reference: 
       - Taxonomy: api_doc/taxonomy.md
-      - Constructors: api_doc/constructors.md
+      - Constructors: api_doc/factories.md
       - Nodes: api_doc/nodes.md
       - Lineage: api_doc/lineage.md
   - About:

@@ -2,6 +2,7 @@ import unittest
 import taxidTools
 from taxidTools.Taxonomy import _insert_nodes_recc, _insert_dummies
 
+
 class TestComplexTree(unittest.TestCase):
     # Test Tree
     #
@@ -152,3 +153,10 @@ class TestComplexTree(unittest.TestCase):
         self.assertEqual(len(new_nodes), 12)
 
         self.assertRaises(ValueError, _insert_nodes_recc, self.node0, ['root'])
+
+    def test_clip(self):
+        subtree = self.txd.clip(1)
+        self.assertEqual(self.txd.root, self.txd['1'])
+        self.assertIsNone(self.txd['1'].parent)
+        self.assertRaises(taxidTools.InvalidNodeError, self.txd.__getitem__, '0')
+        self.assertRaises(taxidTools.InvalidNodeError, self.txd.__getitem__, '2')
