@@ -1,6 +1,6 @@
 # Release History
 
-## dev
+## 3.0.0
 
 **Deprecation**
 
@@ -8,7 +8,7 @@
 
 **New features**
 
-* It is now possible to create Newick tree with `Taxonomy.toNewick`
+* It is now possible to create Newick tree with `Taxonomy.toNewick` (Experimental)
 
 ## 2.5.2
 
