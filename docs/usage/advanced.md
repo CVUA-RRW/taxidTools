@@ -23,7 +23,6 @@ Should you want to keep a copy of the original Taxonomy (and the Nodes), you sho
 do a copy:
 
 ``` py
->>> import copy
 >>> backup = tax.copy()
 ```
 

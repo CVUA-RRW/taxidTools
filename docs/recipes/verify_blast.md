@@ -118,7 +118,7 @@ we can simply check wether the agreement rank in either of 'genus' or 'species':
 ### Unnormalized taxonomy
 
 Of course it is possible to follow a similar approach without normalizing the taxonomy. It is however
-significantly more complicated. For example checking wether *Bos taurus* (9913) consensus (here genus) is
+slightly more complicated. For example checking wether *Bos taurus* (9913) consensus (here genus) is
 under the genus level involves determining the correpsonding expected node as before with the unnormalized taxonomy.
 
 ``` py
