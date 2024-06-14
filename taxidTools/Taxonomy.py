@@ -638,10 +638,6 @@ class Taxonomy(UserDict):
         -------
         None
 
-        See Also
-        --------
-        Taxonomy.clip
-
         Examples
         --------
         >>> node0 = Node(taxid = 0, name = "root",
