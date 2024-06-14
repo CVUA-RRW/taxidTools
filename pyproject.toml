@@ -6,6 +6,8 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
+dynamic = ["version"]
+name = "taxidtools"
 dependencies = [
     "mkdocstrings-python",
 ]
