@@ -151,12 +151,5 @@ class TestComplexTree(unittest.TestCase):
         self.txd.addNode(node3)
         new_nodes = _insert_nodes_recc(self.node0, ['rank3', 'rank2', 'rank1.5', 'rank1'])
         self.assertEqual(len(new_nodes), 12)
-
-        self.assertRaises(ValueError, _insert_nodes_recc, self.node0, ['root'])
-
-    def test_clip(self):
-        subtree = self.txd.clip(1)
-        self.assertEqual(self.txd.root, self.txd['1'])
-        self.assertIsNone(self.txd['1'].parent)
-        self.assertRaises(taxidTools.InvalidNodeError, self.txd.__getitem__, '0')
-        self.assertRaises(taxidTools.InvalidNodeError, self.txd.__getitem__, '2')
+        with self.assertRaises(ValueError):
+            _insert_nodes_recc(self.node0, ['root'])

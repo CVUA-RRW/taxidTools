@@ -9,7 +9,6 @@
 **New features**
 
 * It is now possible to create Newick tree with `Taxonomy.toNewick`
-* It is now possible to clip Taxonomies with `Taxonomy.clip()`, which behaves similarly to `Taxonomy.prune()` but removes upstream nodes and reroots tree.
 
 ## 2.5.2
 

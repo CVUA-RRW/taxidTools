@@ -681,7 +681,7 @@ class Taxonomy(UserDict):
             tax = self.copy()
 
         # Getting upstream nodes
-        nodes = tax.getAncestry(taxid)
+        nodes = self.getAncestry(taxid)
 
         # Unlinking other branches from upstream nodes
         # No need to change parents of the other nodes,
@@ -810,75 +810,6 @@ class Taxonomy(UserDict):
                             indent=4)
         with open(path, 'w') as fi:
             fi.write(writer)
-
-    def clip(self, taxid: Union[str, int], inplace: Optional[bool] = True) -> None:
-        """
-        Clip the Taxonomy at the given taxid
-
-        Nodes not in the lineage (upwards and downwards)
-        of the given taxid will be discarded.
-        The Ancestors of the given taxid will NOT be kept and the given
-        node will become the new root!
-
-        Parameters
-        ----------
-        taxid: str or int
-            taxid whose Lineage to keep
-        inplace: bool, optional
-            perfrom the operation inplace and mutate the underlying objects
-            or return a mutated copy of the instance, keep the original unchanged
-
-        Returns
-        -------
-        None
-
-        See Also
-        --------
-        Taxonomy.prune
-
-        Examples
-        --------
-        >>> node0 = Node(taxid = 0, name = "root",
-                         rank = "root", parent = None)
-        >>> node1 = Node(taxid = 1, name = "node1",
-                         rank = "rank1", parent = node0)
-        >>> node2 = Node(taxid = 2, name = "node2",
-                         rank = "rank1", parent = node0)
-        >>> node11 = Node(taxid = 11, name = "node11",
-                          rank = "rank2", parent = node1)
-        >>> node12 = Node(taxid = 12, name = "node12",
-                          rank = "rank2", parent = node1)
-        >>> tax = Taxonomy.from_list([node0, node1, node2, node11, node12])
-        >>> tax.clip(1)
-
-        Ancestry not kept
-
-        >>> tax.getAncestry(11)
-        Lineage([Node(11)])
-
-        Other branches are gone
-
-        >>> tax.get('2')
-        None
-        """
-        if inplace:
-            tax = self
-        else:
-            tax = self.copy()
-
-        # Getting upstream nodes
-        nodes = tax.getAncestry(taxid)
-
-        # Removing upstream nodes
-        for i in range(1, len(nodes)):
-            tax.pop(nodes[i])
-
-        # Rerooting taxonomy
-        taxid.parent = None
-        tax.root = taxid
-
-        if not inplace:
-            return tax
 
     def toNewick(self, names: str = 'name') -> str:
         """

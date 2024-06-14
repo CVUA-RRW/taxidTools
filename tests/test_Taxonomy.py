@@ -87,7 +87,7 @@ class TestTaxdump(unittest.TestCase):
     def test_copy(self):
         self.new = self.txd.copy()
         self.txd.data = {}
-        self.assertRaises(taxidTools.InvalidNodeError, self.txd[0])
+        self.assertIsNone(self.txd.get('0'))
         self.assertIsNotNone(self.new.get('0', None))
 
     def test_InvalidNodeError(self):
