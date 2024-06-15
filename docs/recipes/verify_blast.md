@@ -119,10 +119,12 @@ we can simply check wether the agreement rank in either of 'genus' or 'species':
 
 Of course it is possible to follow a similar approach without normalizing the taxonomy. It is however
 slightly more complicated. For example checking wether *Bos taurus* (9913) consensus (here genus) is
-under the genus level involves determining the correpsonding expected node as before with the unnormalized taxonomy.
+under the genus level involves determining the correpsonding expected node with the unnormalized taxonomy.
+The trick here is to calculate the distance to the last common ancestor so that different branches length 
+don't bias the analysis:
 
 ``` py
-distances = [tax.distance(9913, e) for e in expected]
+distances = [tax.distance(9913, tax.lca(9913, e)) for e in expected]
 index_corr = distances.index(min(distances))
 agreement = expected[index_corr]
 ```
