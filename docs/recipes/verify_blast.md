@@ -124,7 +124,7 @@ The trick here is to calculate the distance to the last common ancestor so that 
 don't bias the analysis:
 
 ``` py
-distances = [tax.distance(9913, tax.lca(9913, e)) for e in expected]
+distances = [tax.distance(9913, tax.lca(9913, e).taxid) for e in expected]
 index_corr = distances.index(min(distances))
 agreement = expected[index_corr]
 ```
