@@ -83,10 +83,10 @@ One has to keep in mind that different branches of the taxonomy can have a wildl
 so it can greatly simplify things first normalize to taxonomy for such an approach:
 
 ``` py
-norm = tax.filterRanks(inplace=False) # ()!
+norm = tax.filterRanks(inplace=False) # (1)!
 
 distances = []
-for n in nodes: # (5)!
+for n in nodes: # (2)!
     distances.append(
         [norm.distance(n.taxid, e) for e in expected]
     )
