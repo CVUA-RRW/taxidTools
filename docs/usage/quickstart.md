@@ -4,7 +4,7 @@ No time to read everything, here is how to start
 using the package:
 
 Make sure that:
-* taxidTools is [installed](install.md)
+* taxidTools is installed
 * You have a local copy of the [NCBI taxdump files](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/new_taxdump/)
 
 While you can use the package with other taxonomy definitions (or none!),

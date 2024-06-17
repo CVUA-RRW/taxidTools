@@ -411,7 +411,7 @@ class Taxonomy(UserDict):
         return self[str(taxid)].isDescendantOf(self[str(parent)])
 
     def consensus(self, taxid_list: list[Union[str, int]],
-                  min_consensus: float) -> Node:
+                  min_consensus: float, ignore_missing: bool = False) -> Node:
         """
         Find a taxonomic consensus for the given
         taxid with a minimal agreement level.
@@ -424,6 +424,9 @@ class Taxonomy(UserDict):
             minimal consensus level, between 0.5 and 1.
             Note that a minimal consensus of 1 will
             return the same result as `lastCommonNode()`
+        ignore_missing: bool
+            if True will ignore missing taxids form the analysis. If False (default),
+            will raise an Error on missing taxids
 
         Returns
         -------
@@ -463,6 +466,11 @@ class Taxonomy(UserDict):
             raise ValueError(
                 "Minimal consensus should be above 0.5 and under 1")
 
+        # Filtering missing
+        if ignore_missing:
+            taxid_list = [self.get(txd, None) for txd in taxid_list]
+            taxid_list = [txd.taxid for txd in taxid_list if txd]
+
         # Get lineages in REVERSED order
         lineages = [Lineage(self[str(txd)], ascending=False)
                     for txd in taxid_list]
@@ -492,7 +500,7 @@ class Taxonomy(UserDict):
 
         return last
 
-    def lca(self, taxid_list: list[Union[str, int]]) -> Node:
+    def lca(self, taxid_list: list[Union[str, int]], ignore_missing: bool = False) -> Node:
         """
         Get lowest common node of a bunch of taxids
 
@@ -500,6 +508,9 @@ class Taxonomy(UserDict):
         ----------
         taxid_list: list
             list of taxonomic identification numbers
+        ignore_missing: bool
+            if True will ignore missing taxids form the analysis. If False (default),
+            will raise an Error on missing taxids
 
         Returns
         -------
@@ -525,7 +536,7 @@ class Taxonomy(UserDict):
         >>> tax.lca([11, 12, 2])
         Node(0)
         """
-        return self.consensus(taxid_list, 1)
+        return self.consensus(taxid_list, 1, ignore_missing=ignore_missing)
 
     def distance(self, taxid1: Union[str, int],
                  taxid2: Union[str, int]) -> int:
