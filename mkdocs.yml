@@ -52,6 +52,7 @@ theme:
     - navigation.path
     - toc.follow
     - content.code.copy
+    - content.code.annotate
 
 plugins:
   - search
@@ -65,6 +66,7 @@ plugins:
             docstring_style: numpy
             show_source: False
             inherited_members: True
+            docstring_section_style: list
 
 extra:
   analytics:

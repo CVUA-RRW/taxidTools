@@ -7,6 +7,7 @@ are in agreement with the expected composition of the sample to calculate to per
 of a method for example.
 
 First things first, let`s load the taxdump file in a Taxonomy object:
+
 ``` py
 import taxidTools
 tax = taxidTools.read_taxdump("nodes.dmp", "rankedlineage.dmp", "merged.dmp")
@@ -27,13 +28,14 @@ Gallus gallus   species 0.9
 In order to work with these nodes later we want to create a list of Nodes from this output:
 
 ``` py
-# This allows you to run the code in your interpreter
-# in practice you should parse the sintax output into a list of names
-names = ["Bos", "Gallus gallus"]
+names = ["Bos", "Gallus gallus"] # (1)!
 
 taxids = [tax.getTaxid(n) for n in names]
 nodes = [tax[t] for t in taxids]
 ```
+
+1.  This line is here to enable you to follow along by pasting code in your interpreter, 
+    in practice you should parse the names form the result file!
 
 ### From BLAST
 
@@ -53,9 +55,10 @@ Ideally we would like to have a single assignement for each sequence. We can do 
 of all the hits for this sequence, or use a less stringent approach, like a majority agreement:
 
 ``` py
-# Here we could also choose to use tax.lca() instead
-nodes = [tax.consensus(ids, 0.51) for ids in res]
+nodes = [tax.consensus(ids, 0.51, ignore_missing=True) for ids in res] #(2)!
 ```
+
+2.  The `ignore_missing` argument allows us to ignore taxids that could have been removed during taxonomy filtering without raising an error
 
 We now have a single Node object for each sequence, neatly organized in a list!
 
@@ -80,16 +83,22 @@ One has to keep in mind that different branches of the taxonomy can have a wildl
 so it can greatly simplify things first normalize to taxonomy for such an approach:
 
 ``` py
-norm = tax.filterRanks(inplace=False)
+norm = tax.filterRanks(inplace=False) # (3)!
 
 distances = []
-for n in nodes:
+for n in nodes: # (5)!
     distances.append(
         [norm.distance(n.taxid, e) for e in expected]
     )
-# Getting the index of the minimum distance
-index_corr = [d.index(min(d)) for d in distances]
+
+index_corr = [d.index(min(d)) for d in distances] # (4)!
 ```
+
+3.  This uses the default filtering with Linean ranks.
+
+4.  Here we get the index of the taxid with the minimal distance
+
+5.  The `nodes`list contains `Node` instaces, so we need to access its attributes (`taxid`, `rank`) through a dot notation.
 
 Now that we have a list which links each consensus to the index of its closest match in the list of 
 expected species, it is straightforward to determine the agreement rank between result and expectation:
@@ -99,8 +108,8 @@ ranks = []
 for i in range(len(nodes)):
     ranks.append(
         tax.lca(
-            [nodes[i].taxid,
-            expected[index_corr[i]]]
+            [nodes[i].taxid, expected[index_corr[i]]],
+            ignore_missing=True
         ).rank
     )
 ```
@@ -124,7 +133,10 @@ The trick here is to calculate the distance to the last common ancestor so that 
 don't bias the analysis:
 
 ``` py
-distances = [tax.distance(9913, tax.lca(9913, e).taxid) for e in expected]
+distances = [tax.distance(
+                9913,
+                tax.lca([9913, e], ignore_missing=True).taxid
+    ) for e in expected]
 index_corr = distances.index(min(distances))
 agreement = expected[index_corr]
 ```
@@ -143,8 +155,7 @@ an ancestor of `target`, in which case the result did not reach the expected res
 or its descendant or the target itself, in which case the required resolution is attained:
 
 ``` py
-not tax.isAncestorOf(target.taxid, tax.lca([agreement, 9913]))
+not tax.isAncestorOf(target.taxid, tax.lca([agreement, 9913], ignore_missing=True)) # (6)!
 ```
 
-Note that in the last expression above we added `not` in order to have the results in the same form 
-as previously.
+6.  We added `not` in order to have the results in the same form as previously.

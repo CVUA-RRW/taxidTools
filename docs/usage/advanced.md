@@ -173,5 +173,5 @@ def custom_parser(file):
     return taxidTools.Taxonomy(txd)
 ```
 
-Also check the implementations of `Taxonomy.read_taxdump` and `Taxonomy.read_json` for 
+Also check the implementations of `read_taxdump` and `read_json` for 
 specific examples.

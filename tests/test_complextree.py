@@ -85,6 +85,12 @@ class TestComplexTree(unittest.TestCase):
                          "0")
         self.assertEqual(self.txd.lca(["11", "11", "12"]).taxid,
                          "1")
+        with self.assertRaises(taxidTools.InvalidNodeError):
+            self.txd.consensus(["121", "121", "23", "22", "22", "notataxid"], 0.51)
+        self.assertEqual(
+            self.txd.consensus(["121", "121", "23", "22", "22", "notataxid"], 0.51, ignore_missing=True).taxid,
+            "2")
+
 
     def test_consensus_dummynodes(self):
         node0 = taxidTools.Node(0)
@@ -96,6 +102,7 @@ class TestComplexTree(unittest.TestCase):
         tax = taxidTools.Taxonomy.from_list([node0, node1, dummy1, node2, node3, node4])
         cons = tax.consensus(["2", "3", "4"], 0.51)
         self.assertEqual(cons, node0)
+
 
     def test_dist(self):
         self.assertEqual(self.txd.distance("11", "12"), 2)

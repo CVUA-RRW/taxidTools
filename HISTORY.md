@@ -1,5 +1,11 @@
 # Release History
 
+## 3.1.0
+
+**Improvements**
+
+* `Taxonomy.consensus` and `Taxonomy.lca` can now ignore missing taxa instead of raising an error
+
 ## 3.0.0
 
 **Deprecation**
