@@ -153,7 +153,10 @@ an ancestor of `target`, in which case the result did not reach the expected res
 or its descendant or the target itself, in which case the required resolution is attained:
 
 ``` py
-not tax.isAncestorOf(target.taxid, tax.lca([agreement, 9913], ignore_missing=True)) # (1)!
+not tax.isAncestorOf( # (1)!
+    target.taxid,
+    tax.lca([agreement, 9913], ignore_missing=True)
+)
 ```
 
 1.  We added `not` in order to have the results in the same form as previously.
