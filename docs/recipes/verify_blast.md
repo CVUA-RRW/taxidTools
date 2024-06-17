@@ -55,10 +55,10 @@ Ideally we would like to have a single assignement for each sequence. We can do 
 of all the hits for this sequence, or use a less stringent approach, like a majority agreement:
 
 ``` py
-nodes = [tax.consensus(ids, 0.51, ignore_missing=True) for ids in res] # (2)!
+nodes = [tax.consensus(ids, 0.51, ignore_missing=True) for ids in res] # (1)!
 ```
 
-2.  The `ignore_missing` argument allows us to ignore taxids that could have been removed during taxonomy filtering without raising an error
+1.  The `ignore_missing` argument allows us to ignore taxids that could have been removed during taxonomy filtering without raising an error
 
 We now have a single Node object for each sequence, neatly organized in a list!
 
@@ -83,7 +83,7 @@ One has to keep in mind that different branches of the taxonomy can have a wildl
 so it can greatly simplify things first normalize to taxonomy for such an approach:
 
 ``` py
-norm = tax.filterRanks(inplace=False) # (3)!
+norm = tax.filterRanks(inplace=False) # ()!
 
 distances = []
 for n in nodes: # (5)!
@@ -91,14 +91,12 @@ for n in nodes: # (5)!
         [norm.distance(n.taxid, e) for e in expected]
     )
 
-index_corr = [d.index(min(d)) for d in distances] # (4)!
+index_corr = [d.index(min(d)) for d in distances] # (3)!
 ```
 
-3.  This uses the default filtering with Linean ranks.
-
-4.  Here we get the index of the taxid with the minimal distance
-
-5.  The `nodes`list contains `Node` instaces, so we need to access its attributes (`taxid`, `rank`) through a dot notation.
+1.  This uses the default filtering with Linean ranks.
+2.  The `nodes`list contains `Node` instaces, so we need to access its attributes (`taxid`, `rank`) through a dot notation.
+3.  Here we get the index of the taxid with the minimal distance
 
 Now that we have a list which links each consensus to the index of its closest match in the list of 
 expected species, it is straightforward to determine the agreement rank between result and expectation:
@@ -155,7 +153,7 @@ an ancestor of `target`, in which case the result did not reach the expected res
 or its descendant or the target itself, in which case the required resolution is attained:
 
 ``` py
-not tax.isAncestorOf(target.taxid, tax.lca([agreement, 9913], ignore_missing=True)) # (6)!
+not tax.isAncestorOf(target.taxid, tax.lca([agreement, 9913], ignore_missing=True)) # (1)!
 ```
 
-6.  We added `not` in order to have the results in the same form as previously.
+1.  We added `not` in order to have the results in the same form as previously.
