@@ -55,7 +55,7 @@ Ideally we would like to have a single assignement for each sequence. We can do 
 of all the hits for this sequence, or use a less stringent approach, like a majority agreement:
 
 ``` py
-nodes = [tax.consensus(ids, 0.51, ignore_missing=True) for ids in res] #(2)!
+nodes = [tax.consensus(ids, 0.51, ignore_missing=True) for ids in res] # (2)!
 ```
 
 2.  The `ignore_missing` argument allows us to ignore taxids that could have been removed during taxonomy filtering without raising an error
