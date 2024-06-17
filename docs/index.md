@@ -17,6 +17,7 @@
 * Save as JSON for later use
 * Determine consensus, last common ancestor, or distances
 * Retrieve ancestries or list descendants
+* Export as Newick trees
 
 ## Installation
 
