@@ -432,6 +432,13 @@ class Taxonomy(UserDict):
         -------
         taxidTools._BaseNode
 
+        Raises
+        ------
+        ValueError
+            If `taxid_list` contains no valid taxid and `ignore_missing` is `True`
+        taxidTools.InvalidNodeError
+            If `taxid_list` contains invalid taxids and `ignore_missing` is `False`
+
         Notes
         -----
         If no consensus can be found (for example because
@@ -515,6 +522,13 @@ class Taxonomy(UserDict):
         Returns
         -------
         taxidTools._BasNode
+
+        Raises
+        ------
+        ValueError
+            If `taxid_list` contains no valid taxid and `ignore_missing` is `True`
+        taxidTools.InvalidNodeError
+            If `taxid_list` contains invalid taxids and `ignore_missing` is `False`
 
         See Also
         --------
