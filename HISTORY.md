@@ -1,5 +1,11 @@
 # Release History
 
+## 3.1.1
+
+**Bugfix**
+
+* `Taxonomy.consensus` now correctly handles list of taxids as int
+
 ## 3.1.0
 
 **Improvements**
