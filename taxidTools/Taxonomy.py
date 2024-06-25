@@ -475,7 +475,7 @@ class Taxonomy(UserDict):
 
         # Filtering missing
         if ignore_missing:
-            taxid_list = [self.get(txd, None) for txd in taxid_list]
+            taxid_list = [self.get(str(txd), None) for txd in taxid_list]
             taxid_list = [txd.taxid for txd in taxid_list if txd]
 
         # Get lineages in REVERSED order
